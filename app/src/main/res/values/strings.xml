@@ -294,4 +294,25 @@
         <item>Howrah</item>
     </string-array>
 
+    <string-array name="array_org_types">
+        <item>Select an Organization Type</item>
+        <item>International Volunteer Organizations</item>
+        <item>National and Local Nonprofits</item>
+        <item>Community Service Organizations</item>
+        <item>Environmental and Conservation Organizations</item>
+        <item>Crisis and Disaster Relief Organizations</item>
+        <item>Health and Healthcare Organizations</item>
+        <item>Youth and Education Organizations</item>
+        <item>Animal Welfare and Rescue Organizations</item>
+        <item>Arts and Cultural Organizations</item>
+        <item>Advocacy and Human Rights Groups</item>
+        <item>Sports and Recreation Organizations</item>
+        <item>Senior and Elderly Care Organizations</item>
+        <item>International Development and Aid Organizations</item>
+        <item>Online Volunteer Platforms</item>
+        <item>Emergency Response and Disaster Management Teams</item>
+        <item>Professional and Industry Associations</item>
+    </string-array>
+
+
 </resources>
