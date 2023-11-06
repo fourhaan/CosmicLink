@@ -1,0 +1,297 @@
+<resources>
+    <string name="app_name">volunteerApp</string>
+    <string name="crisis_text">\n \n \n \n \n \nOur Planet Earth \n is in deep <font color="#FF0000">Crisis !</font></string>
+
+    <!-- Array of Indian states -->
+    <string-array name ="array_states" >
+        <item>Select Your State</item>
+        <item>Andaman and Nicobar Islands</item>
+        <item>Andhra Pradesh</item>
+        <item>Arunachal Pradesh</item>
+        <item>Assam</item>
+        <item>Bihar</item>
+        <item>Chandigarh</item>
+        <item>Chhattisgarh</item>
+        <item>Dadra and Nagar Haveli</item>
+        <item>Daman and Diu</item>
+        <item>Delhi</item>
+        <item>Goa</item>
+        <item>Gujarat</item>
+        <item>Haryana</item>
+        <item>Himachal Pradesh</item>
+        <item>Jammu and Kashmir</item>
+        <item>Jharkhand</item>
+        <item>Karnataka</item>
+        <item>Kerala</item>
+        <item>Ladakh</item>
+        <item>Lakshadweep</item>
+        <item>Madhya Pradesh</item>
+        <item>Maharashtra</item>
+        <item>Manipur</item>
+        <item>Meghalaya</item>
+        <item>Mizoram</item>
+        <item>Nagaland</item>
+        <item>Orissa</item>
+        <item>Puducherry</item>
+        <item>Punjab</item>
+        <item>Rajasthan</item>
+        <item>Sikkim</item>
+        <item>Tamil Nadu</item>
+        <item>Telangana</item>
+        <item>Tripura</item>
+        <item>Uttarakhand</item>
+        <item>Uttar Pradesh</item>
+        <item>West Bengal</item>
+    </string-array>
+
+    <!-- Arrays of cities for Indian states -->
+    <string-array name="array_default_cities">
+        <item>Select Your City</item>
+    </string-array>
+
+    <string-array name="array_andaman_and_nicobar_cities">
+        <item>Select Your City</item>
+        <item>Port Blair</item>
+    </string-array>
+
+    <string-array name="array_andhra_pradesh_cities">
+        <item>Select Your City</item>
+        <item>Visakhapatnam</item>
+        <item>Vijayawada</item>
+        <item>Guntur</item>
+        <item>Nellore</item>
+        <item>Kurnool</item>
+        <item>Rajahmundry</item>
+    </string-array>
+
+    <string-array name="array_arunachal_pradesh_cities">
+        <item>Select Your City</item>
+        <item>Itanagar</item>
+    </string-array>
+
+    <string-array name="array_assam_cities">
+        <item>Select Your City</item>
+        <item>Guwahati</item>
+        <item>Dibrugarh</item>
+        <item>Jorhat</item>
+        <item>Nagaon</item>
+        <item>Silchar</item>
+    </string-array>
+
+    <string-array name="array_bihar_cities">
+        <item>Select Your City</item>
+        <item>Patna</item>
+        <item>Gaya</item>
+        <item>Muzaffarpur</item>
+        <item>Bhagalpur</item>
+    </string-array>
+
+    <string-array name="array_chandigarh_cities">
+        <item>Select Your City</item>
+        <item>Chandigarh</item>
+    </string-array>
+
+    <string-array name="array_chhattisgarh_cities">
+        <item>Select Your City</item>
+        <item>Raipur</item>
+        <item>Bilaspur</item>
+    </string-array>
+
+    <string-array name="array_dadra_and_nagar_haveli_cities">
+        <item>Select Your City</item>
+        <item>Silvassa</item>
+    </string-array>
+
+    <string-array name="array_daman_and_diu_cities">
+        <item>Select Your City</item>
+        <item>Daman</item>
+    </string-array>
+
+    <string-array name="array_delhi_cities">
+        <item>Select Your City</item>
+        <item>New Delhi</item>
+    </string-array>
+
+    <string-array name="array_goa_cities">
+        <item>Select Your City</item>
+        <item>Panaji</item>
+        <item>Vasco da Gama</item>
+    </string-array>
+
+    <string-array name="array_gujarat_cities">
+        <item>Select Your City</item>
+        <item>Ahmedabad</item>
+        <item>Surat</item>
+        <item>Vadodara</item>
+        <item>Rajkot</item>
+        <item>Gandhinagar</item>
+    </string-array>
+
+    <string-array name="array_haryana_cities">
+        <item>Select Your City</item>
+        <item>Faridabad</item>
+        <item>Gurgaon</item>
+        <item>Rohtak</item>
+        <item>Hisar</item>
+        <item>Karnal</item>
+    </string-array>
+
+    <string-array name="array_himachal_pradesh_cities">
+        <item>Select Your City</item>
+        <item>Shimla</item>
+        <item>Manali</item>
+    </string-array>
+
+    <string-array name="array_jammu_and_kashmir_cities">
+        <item>Select Your City</item>
+        <item>Srinagar</item>
+        <item>Jammu</item>
+    </string-array>
+
+    <string-array name="array_jharkhand_cities">
+        <item>Select Your City</item>
+        <item>Ranchi</item>
+        <item>Jamshedpur</item>
+        <item>Dhanbad</item>
+    </string-array>
+
+    <string-array name="array_karnataka_cities">
+        <item>Select Your City</item>
+        <item>Bangalore</item>
+        <item>Mysore</item>
+        <item>Hubli</item>
+        <item>Mangalore</item>
+        <item>Belgaum</item>
+    </string-array>
+
+    <string-array name="array_kerala_cities">
+        <item>Select Your City</item>
+        <item>Thiruvananthapuram</item>
+        <item>Kochi</item>
+        <item>Kozhikode</item>
+    </string-array>
+
+    <string-array name="array_ladakh_cities">
+        <item>Select Your City</item>
+        <item>Leh</item>
+    </string-array>
+
+    <string-array name="array_lakshadweep_cities">
+        <item>Select Your City</item>
+        <item>Kavaratti</item>
+    </string-array>
+
+    <string-array name="array_madhya_pradesh_cities">
+        <item>Select Your City</item>
+        <item>Bhopal</item>
+        <item>Indore</item>
+        <item>Jabalpur</item>
+        <item>Gwalior</item>
+        <item>Ujjain</item>
+    </string-array>
+
+    <string-array name="array_maharashtra_cities">
+        <item>Select Your City</item>
+        <item>Mumbai</item>
+        <item>Pune</item>
+        <item>Nagpur</item>
+        <item>Thane</item>
+        <item>Nashik</item>
+    </string-array>
+
+    <string-array name="array_manipur_cities">
+        <item>Select Your City</item>
+        <item>Imphal</item>
+    </string-array>
+
+    <string-array name="array_meghalaya_cities">
+        <item>Select Your City</item>
+        <item>Shillong</item>
+    </string-array>
+
+    <string-array name="array_mizoram_cities">
+        <item>Select Your City</item>
+        <item>Aizawl</item>
+    </string-array>
+
+    <string-array name="array_nagaland_cities">
+        <item>Select Your City</item>
+        <item>Dimapur</item>
+        <item>Kohima</item>
+    </string-array>
+
+    <string-array name="array_odisha_cities">
+        <item>Select Your City</item>
+        <item>Bhubaneswar</item>
+        <item>Cuttack</item>
+    </string-array>
+
+    <string-array name="array_puducherry_cities">
+        <item>Select Your City</item>
+        <item>Puducherry</item>
+    </string-array>
+
+    <string-array name="array_punjab_cities">
+        <item>Select Your City</item>
+        <item>Amritsar</item>
+        <item>Ludhiana</item>
+        <item>Jalandhar</item>
+    </string-array>
+
+    <string-array name="array_rajasthan_cities">
+        <item>Select Your City</item>
+        <item>Jaipur</item>
+        <item>Jodhpur</item>
+        <item>Udaipur</item>
+        <item>Kota</item>
+        <item>Ajmer</item>
+    </string-array>
+
+    <string-array name="array_sikkim_cities">
+        <item>Select Your City</item>
+        <item>Gangtok</item>
+    </string-array>
+
+    <string-array name="array_tamil_nadu_cities">
+        <item>Select Your City</item>
+        <item>Chennai</item>
+        <item>Coimbatore</item>
+        <item>Madurai</item>
+        <item>Trichy</item>
+        <item>Salem</item>
+    </string-array>
+
+    <string-array name="array_telangana_cities">
+        <item>Select Your City</item>
+        <item>Hyderabad</item>
+        <item>Secunderabad</item>
+        <item>Warangal</item>
+    </string-array>
+
+    <string-array name="array_tripura_cities">
+        <item>Select Your City</item>
+        <item>Agartala</item>
+    </string-array>
+
+    <string-array name="array_uttarakhand_cities">
+        <item>Select Your City</item>
+        <item>Dehradun</item>
+        <item>Haridwar</item>
+    </string-array>
+
+    <string-array name="array_uttar_pradesh_cities">
+        <item>Select Your City</item>
+        <item>Lucknow</item>
+        <item>Kanpur</item>
+        <item>Agra</item>
+        <item>Varanasi</item>
+        <item>Allahabad</item>
+    </string-array>
+
+    <string-array name="array_west_bengal_cities">
+        <item>Select Your City</item>
+        <item>Kolkata</item>
+        <item>Howrah</item>
+    </string-array>
+
+</resources>
