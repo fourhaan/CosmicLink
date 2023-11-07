@@ -24,6 +24,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -100,13 +105,45 @@ public class LoginActivity extends AppCompatActivity {
                     FirebaseUser currentUser = authProfile.getCurrentUser();
                     // check if user's email is verified or not
                     if(currentUser.isEmailVerified()) {
-                        Toast.makeText(LoginActivity.this, "Login was successful", Toast.LENGTH_SHORT).show();
-                        //Open profile page after successful login
-                        Intent intent = new Intent(LoginActivity.this, VolunteerLandingPageActivity.class);
-                        //this make sures that if we login then we cant go back to previous activities using back button
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
+                        // Get the UID of the logged-in user
+                        String uid = currentUser.getUid();
+
+                        // Retrieve the user's data from Firebase Realtime Database
+                        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Registered Users").child(uid);
+                        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    String userType = snapshot.child("usertype").getValue(String.class);
+                                    // Check the user type
+                                    if ("volunteer".equals(userType)) {
+                                        // Redirect to the Volunteer Landing Page
+                                        Intent intent = new Intent(LoginActivity.this, VolunteerLandingPageActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    } else if ("organisation".equals(userType)) {
+                                        // Redirect to the Organization Landing Page (change to the appropriate activity name)
+                                        Intent intent = new Intent(LoginActivity.this, OrganisationLandingPageActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        // Handle unknown user type
+                                        Toast.makeText(LoginActivity.this, "Unknown user type", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    // Handle missing user data
+                                    Toast.makeText(LoginActivity.this, "User data not found", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // Handle database error
+                                Toast.makeText(LoginActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                     //else send email verification , open email app and sign out
                     else {

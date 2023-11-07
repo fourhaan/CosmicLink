@@ -17,7 +17,7 @@ public class OrganisationLandingPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_volunteer_landing_page);
+        setContentView(R.layout.activity_organisation_landing_page);
 
         //logging out for now
         logout = findViewById(R.id.log_out);
