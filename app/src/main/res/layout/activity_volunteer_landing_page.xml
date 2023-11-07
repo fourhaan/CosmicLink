@@ -6,10 +6,18 @@
     android:layout_height="match_parent"
     android:background="@color/lavender"
     tools:context=".volunteerSignUpActivity">
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent">
+
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <com.google.android.material.bottomappbar.BottomAppBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,8 +27,7 @@
         app:fabCradleMargin="10dp"
         app:fabCradleRoundedCornerRadius="10dp"
         app:fabCradleVerticalOffset="10dp"
-        app:fabAlignmentMode="center"
-        >
+        app:fabAlignmentMode="center">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:layout_width="wrap_content"
@@ -29,18 +36,27 @@
             android:layout_marginEnd="20dp"
             app:labelVisibilityMode="selected"
             android:background="@android:color/transparent"
-            app:menu="@menu/bottom_navigation_menu_vol"/>
+            app:menu="@menu/bottom_navigation_menu_vol" />
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/darkGrey"
         android:id="@+id/floating_action_button_vol"
         android:src="@drawable/baseline_search_24"
         app:layout_anchor="@id/bottomAppBarVol"
         app:maxImageSize="40dp"
-        app:tint="@color/lavender" />
+        app:tint="@color/lightGrey" />
+
+     <!--Add the view below the BottomAppBar
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1.75dp"
+        android:layout_gravity="bottom|center"
+        android:background="@color/lavender">
+        &lt;!&ndash; Add your content for the view here &ndash;&gt;
+    </FrameLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
