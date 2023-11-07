@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class ChoiceActivity extends AppCompatActivity {
 
-    private Button volunteerSignUp;
-    private Button organisationSignUp;
+    private ImageButton volunteerSignUp,organisationSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class ChoiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choice);
 
         //opens volunteer signup route
-        volunteerSignUp = (Button) findViewById(R.id.volunteer_button);
+        volunteerSignUp = (ImageButton) findViewById(R.id.volunteer_button);
         volunteerSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,7 +28,7 @@ public class ChoiceActivity extends AppCompatActivity {
         });
 
         //opens organisation signup route
-        organisationSignUp = (Button) findViewById(R.id.organisation_button);
+        organisationSignUp = (ImageButton) findViewById(R.id.organisation_button);
         organisationSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

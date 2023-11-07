@@ -16,7 +16,7 @@
             android:name=".OrganisationLandingPageActivity"
             android:exported="false" />
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".VolunteerProfileActivity"
             android:exported="false" />
         <activity
             android:name=".organisationSignUpActivity"

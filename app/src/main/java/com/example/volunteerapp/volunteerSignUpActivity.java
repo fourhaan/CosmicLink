@@ -2,6 +2,7 @@ package com.example.volunteerapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -402,6 +403,26 @@ public class volunteerSignUpActivity extends AppCompatActivity {
 
             }
         });
+        //on refreshing the scrollview we clear all the fields
+        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipeContainer);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                editTextfullName.setText("");
+                editTextemail.setText("");
+                editTextmobileNo.setText("");
+                editTextregPwd.setText("");
+                editTextconfirmPwd.setText("");
+                editTextdob.setText("");
+                stateSpinner.setSelection(0);
+                citySpinner.setSelection(0);
+                radioGroupRegisterGender.clearCheck();
+
+                // After all the fields are cleared, call setRefreshing(false) to stop the loading indicator.
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
 
     }
 
@@ -437,8 +458,7 @@ public class volunteerSignUpActivity extends AppCompatActivity {
                                 //Open profile page after successful registration
                                 Intent intent = new Intent(volunteerSignUpActivity.this, VolunteerLandingPageActivity.class);
                                 //this make sures that if we registered then we cant go back to previous activities using back button
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);                                startActivity(intent);
                                 finish(); //closes the registration activity
                             } else {
                                 Toast.makeText(volunteerSignUpActivity.this, "Registration was unsuccessful. PLease try again.", Toast.LENGTH_LONG).show();
