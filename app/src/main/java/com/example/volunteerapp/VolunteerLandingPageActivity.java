@@ -19,18 +19,18 @@ public class VolunteerLandingPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_landing_page);
 
-        //logging out for now
-        logout = findViewById(R.id.log_out);
-        FirebaseAuth Auth = FirebaseAuth.getInstance();
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Auth.signOut();
-                Intent intent = new Intent(VolunteerLandingPageActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        //logging out for now
+//        logout = findViewById(R.id.log_out);
+//        FirebaseAuth Auth = FirebaseAuth.getInstance();
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Auth.signOut();
+//                Intent intent = new Intent(VolunteerLandingPageActivity.this,MainActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
     }
 

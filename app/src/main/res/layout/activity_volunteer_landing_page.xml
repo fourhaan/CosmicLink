@@ -1,26 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VolunteerLandingPageActivity">
+    android:background="@color/lavender"
+    tools:context=".volunteerSignUpActivity">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottomAppBarVol"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="10dp"
+        app:fabCradleVerticalOffset="10dp"
+        app:fabAlignmentMode="center"
+        >
 
-    <TextView
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bottomNavigationViewVol"
+            android:layout_marginEnd="20dp"
+            app:labelVisibilityMode="selected"
+            android:background="@android:color/transparent"
+            app:menu="@menu/bottom_navigation_menu_vol"/>
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="volunteer page"
-        android:layout_alignParentTop="true"
-        android:textSize="50sp" />
+        android:backgroundTint="@color/white"
+        android:id="@+id/floating_action_button_vol"
+        android:src="@drawable/baseline_search_24"
+        app:layout_anchor="@id/bottomAppBarVol"
+        app:maxImageSize="40dp"
+        app:tint="@color/lavender" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="log out"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/black"
-        android:id="@+id/log_out"
-        android:layout_centerInParent="true"/>
-
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
