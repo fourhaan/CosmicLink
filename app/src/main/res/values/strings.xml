@@ -3,7 +3,7 @@
     <string name="crisis_text">\n \n \n \n \n \nOur Planet Earth \n is in deep <font color="#FF0000">Crisis !</font></string>
 
     <!-- Array of Indian states -->
-    <string-array name ="array_states" >
+    <string-array name="array_states">
         <item>Select Your State</item>
         <item>Andaman and Nicobar Islands</item>
         <item>Andhra Pradesh</item>
@@ -314,6 +314,8 @@
         <item>Professional and Industry Associations</item>
         <item>Government Agency</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

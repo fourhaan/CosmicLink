@@ -12,5 +12,14 @@
     <color name="_bg__daily_ui_challenege_01_ek2_color">#FCF9FF</color>
     <color name="_bg__group_4_ek1_color">#000000</color>
     <color name="login_with_others_color">#FFFFFF</color>
-    <color name="rectangle_7_color">#ffffff</color>
+
+    <color name="black2.0">#1E1F20</color>
+    <color name="cyan">#52CFC5</color>
+    <color name="purple_blue">#5b3db7</color>
+    <color name="pink">#c6419e</color>
+    <color name="yellow">#e5a818</color>
+
+    <color name="lightGrey">#CCCCCC</color>
+    <color name="darkGrey">#333333</color>
+    <color name="teal">#009688</color>
 </resources>

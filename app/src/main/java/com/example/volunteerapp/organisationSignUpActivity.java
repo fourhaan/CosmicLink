@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,18 +16,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -402,6 +397,8 @@ public class organisationSignUpActivity extends AppCompatActivity {
     //registering a user to firebase database
     private void registerUser(String TextfullName,String Textemail,String TextmobileNo,String Textpwd){
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        String bio = "";
+        String imgUrl = "https://firebasestorage.googleapis.com/v0/b/volunteerapp-f6acb.appspot.com/o/placeholder.png?alt=media&token=6cac78e0-6d59-44cd-a844-d4bb8ca1727d";
         auth.createUserWithEmailAndPassword(Textemail,Textpwd).addOnCompleteListener(organisationSignUpActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             //first onComplete method is to create data and get uid
@@ -411,7 +408,7 @@ public class organisationSignUpActivity extends AppCompatActivity {
                     String userType = "organisation"; //set userType to organisation
 
                     //next 2 lines are used to get data and get uid
-                    ReadWriteOrganisationDetails writeUserDetails = new ReadWriteOrganisationDetails(TextfullName,TextmobileNo,userType,selectedState,selectedCity,joiningDate,selectedOrgType);
+                    OrganisationDetails writeUserDetails = new OrganisationDetails(TextfullName,TextmobileNo,userType,selectedState,selectedCity,joiningDate,selectedOrgType,bio,imgUrl);
                     //it creates a data node called registered volunteers under which the user data is stored.
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Registered Users");
                     reference.child(regUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
