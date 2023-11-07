@@ -28,7 +28,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -434,6 +433,8 @@ public class volunteerSignUpActivity extends AppCompatActivity {
     //registering a user to firebase database
     private void registerUser(String TextfullName,String Textemail,String Textdob,String Textgender,String TextmobileNo,String Textpwd){
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        String bio = "";
+        String imgUrl = "https://firebasestorage.googleapis.com/v0/b/volunteerapp-f6acb.appspot.com/o/placeholder.png?alt=media&token=6cac78e0-6d59-44cd-a844-d4bb8ca1727d";
         auth.createUserWithEmailAndPassword(Textemail,Textpwd).addOnCompleteListener(volunteerSignUpActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             //first onComplete method is to create data and get uid
@@ -443,7 +444,7 @@ public class volunteerSignUpActivity extends AppCompatActivity {
                     String userType = "volunteer"; //set userType to volunteer
 
                     //next 2 lines are used to get data and get uid
-                    ReadWriteVolunteerDetails writeUserDetails = new ReadWriteVolunteerDetails(TextfullName,Textgender,Textdob,TextmobileNo,userType,selectedState,selectedCity,joiningDate);
+                    VolunteerDetails writeUserDetails = new VolunteerDetails(TextfullName,Textgender,Textdob,TextmobileNo,userType,selectedState,selectedCity,joiningDate,bio,imgUrl);
                     //it creates a data node called registered volunteers under which the user data is stored.
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Registered Users");
                     reference.child(regUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
