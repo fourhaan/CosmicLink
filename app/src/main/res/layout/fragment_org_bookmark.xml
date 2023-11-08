@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.VolHomeFragment">
+    tools:context=".Fragment.OrgBookmarkFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Home"
-        android:textSize="100sp"/>
-
-
+        android:text="Bookmark"
+        android:textSize="80sp"/>
 
 </FrameLayout>

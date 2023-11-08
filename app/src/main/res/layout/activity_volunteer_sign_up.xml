@@ -30,7 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:text="Registration"
+                    android:text="Volunteer Registration"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/white" />
@@ -90,6 +90,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_register_full_name"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewName"
                         android:background="@android:color/darker_gray" />
 
                     <EditText
@@ -110,10 +111,62 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/RL_userName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@id/RL_name"
+                    android:background="@drawable/border">
+
+                    <ImageView
+                        android:id="@+id/imageViewUserName"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/baseline_manage_accounts_24" />
+
+                    <TextView
+                        android:id="@+id/textView_register_user_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/imageViewUserName"
+                        android:padding="6dp"
+                        android:text="Username"
+                        android:textColor="@color/black" />
+
+                    <View
+                        android:id="@+id/divider_user_name"
+                        android:layout_width="250dp"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/textView_register_user_name"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewUserName"
+                        android:background="@android:color/darker_gray" />
+
+                    <EditText
+                        android:id="@+id/editText_register_user_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView_register_user_name"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_toEndOf="@id/imageViewUserName"
+                        android:background="@android:color/transparent"
+                        android:hint="Create an unique username"
+                        android:inputType="textCapWords"
+                        android:padding="6dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/RL_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/RL_name"
+                    android:layout_below="@id/RL_userName"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/border">
 
@@ -141,6 +194,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_register_email"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewEmail"
                         android:background="@android:color/darker_gray" />
 
                     <EditText
@@ -194,28 +248,50 @@
                         android:layout_centerHorizontal="true"
                         android:background="@android:color/darker_gray" />
 
-                    <Spinner
-                        android:id="@+id/state_spinner"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/ll_state"
+                        android:layout_toRightOf="@id/imageViewSpinner"
                         android:layout_below="@id/divider_spinner"
-                        android:layout_toEndOf="@id/imageViewSpinner"
-                        android:padding="6dp"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:ignore="TouchTargetSizeCheck" />
+                        android:background="@drawable/spinner_border">
 
-                    <Spinner
-                        android:id="@+id/city_spinner"
+                        <Spinner
+                            android:id="@+id/state_spinner"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="6dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/state_spinner"
-                        android:layout_marginBottom="10dp"
-                        android:layout_toEndOf="@id/imageViewSpinner"
-                        android:padding="6dp"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:ignore="TouchTargetSizeCheck" />
+                        android:orientation="horizontal"
+                        android:id="@+id/ll_city"
+                        android:layout_toRightOf="@id/imageViewSpinner"
+                        android:layout_below="@id/ll_state"
+                        android:background="@drawable/spinner_border">
+
+                        <Spinner
+                            android:id="@+id/city_spinner"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="6dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </LinearLayout>
+
                 </RelativeLayout>
 
 
@@ -251,6 +327,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_register_dob"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewDoB"
                         android:background="@android:color/darker_gray" />
 
                     <EditText
@@ -313,6 +390,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_register_gender"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewGender"
                         android:background="@android:color/darker_gray" />
 
                     <RadioGroup
@@ -377,6 +455,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_register_mobile"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewMobile"
                         android:background="@android:color/darker_gray" />
 
                     <EditText
@@ -428,6 +507,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_register_password"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewPwd"
                         android:background="@android:color/darker_gray" />
 
                     <EditText
@@ -490,6 +570,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_confirm_password"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewConfPwd"
                         android:background="@android:color/darker_gray" />
 
                     <EditText

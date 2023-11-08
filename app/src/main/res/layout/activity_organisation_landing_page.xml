@@ -1,26 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lavender"
     tools:context=".OrganisationLandingPageActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_layout_org"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottomAppBarOrg"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="10dp"
+        app:fabCradleVerticalOffset="10dp"
+        app:fabAlignmentMode="center">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bottomNavigationViewOrg"
+            android:layout_marginEnd="20dp"
+            app:labelVisibilityMode="selected"
+            android:background="@android:color/transparent"
+            app:menu="@menu/bottom_navigation_menu_vol" />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Organisation page"
-        android:layout_alignParentTop="true"
-        android:textSize="50sp" />
+        android:backgroundTint="@color/darkGrey"
+        android:id="@+id/floating_action_button_vol"
+        android:src="@drawable/baseline_add_to_photos_24"
+        app:layout_anchor="@id/bottomAppBarOrg"
+        app:maxImageSize="40dp"
+        app:tint="@color/lightGrey" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="log out"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/black"
-        android:id="@+id/log_out"
-        android:layout_centerInParent="true"/>
+    <!--Add the view below the BottomAppBar
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="1.75dp"
+       android:layout_gravity="bottom|center"
+       android:background="@color/lavender">
+       &lt;!&ndash; Add your content for the view here &ndash;&gt;
+   </FrameLayout>-->
 
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

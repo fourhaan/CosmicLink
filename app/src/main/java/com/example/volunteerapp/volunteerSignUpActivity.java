@@ -34,8 +34,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -45,7 +48,7 @@ import java.util.regex.Pattern;
 
 public class volunteerSignUpActivity extends AppCompatActivity {
 
-    private EditText editTextfullName, editTextemail, editTextdob, editTextmobileNo, editTextregPwd, editTextconfirmPwd;
+    private EditText editTextfullName, editTextemail, editTextdob, editTextmobileNo, editTextregPwd, editTextconfirmPwd, editTextuserName;
     private ProgressBar progressBar;
     private RadioGroup radioGroupRegisterGender;
     private RadioButton radioButtonRegisterGenderSelected;
@@ -69,6 +72,7 @@ public class volunteerSignUpActivity extends AppCompatActivity {
         editTextmobileNo = findViewById(R.id.editText_register_mobile);
         editTextregPwd = findViewById(R.id.editText_register_password);
         editTextconfirmPwd = findViewById(R.id.editText_confirm_password);
+        editTextuserName = findViewById(R.id.editText_register_user_name);
 
         //Gender RadioButton
         radioGroupRegisterGender = findViewById(R.id.radio_group_register_gender);
@@ -291,6 +295,7 @@ public class volunteerSignUpActivity extends AppCompatActivity {
                 String TextmobileNo = editTextmobileNo.getText().toString();
                 String Textpwd = editTextregPwd.getText().toString();
                 String TextconfirmPwd = editTextconfirmPwd.getText().toString();
+                String TextuserName = editTextuserName.getText().toString();
                 String Textgender; //cant be initialised directly w/o checking null exception
 
                 //using java.util.regex for regular expressions
@@ -309,6 +314,14 @@ public class volunteerSignUpActivity extends AppCompatActivity {
                     Toast.makeText(volunteerSignUpActivity.this,"Please enter the full name",Toast.LENGTH_SHORT).show();
                     editTextfullName.setError("Full name is required");
                     editTextfullName.requestFocus();
+                }
+                else if(TextUtils.isEmpty(TextuserName)) {
+                    editTextuserName.setError("Username is required");
+                    editTextuserName.requestFocus();
+                }
+                else if (TextuserName.length() < 4) {
+                    editTextuserName.setError("Username should be at least 4 characters");
+                    editTextuserName.requestFocus();
                 }
                 else if(TextUtils.isEmpty(Textdob)){
                     Toast.makeText(volunteerSignUpActivity.this,"Please enter the dob",Toast.LENGTH_SHORT).show();
@@ -397,7 +410,7 @@ public class volunteerSignUpActivity extends AppCompatActivity {
                 else{
                     Textgender = radioButtonRegisterGenderSelected.getText().toString();
                     progressBar.setVisibility(View.VISIBLE); //starts loading animation in centre
-                    registerUser(TextfullName, Textemail, Textdob, Textgender, TextmobileNo, Textpwd);
+                    registerUser(TextfullName, Textemail, Textdob, Textgender, TextmobileNo, Textpwd, TextuserName);
                 }
 
             }
@@ -431,7 +444,83 @@ public class volunteerSignUpActivity extends AppCompatActivity {
     }
 
     //registering a user to firebase database
-    private void registerUser(String TextfullName,String Textemail,String Textdob,String Textgender,String TextmobileNo,String Textpwd){
+//    private void registerUser(String TextfullName, String Textemail, String Textdob, String Textgender, String TextmobileNo, String Textpwd, String TextuserName) {
+//        FirebaseAuth auth = FirebaseAuth.getInstance();
+//        String bio = "";
+//        String imgUrl = "https://firebasestorage.googleapis.com/v0/b/volunteerapp-f6acb.appspot.com/o/placeholder.png?alt=media&token=6cac78e0-6d59-44cd-a844-d4bb8ca1727d";
+//        String username = TextuserName;
+//        // Check if the username is not taken
+//        DatabaseReference usernameReference = FirebaseDatabase.getInstance().getReference("Registered Users");
+//        usernameReference.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    // The username is already taken
+//                    editTextuserName.setError("Username is already taken");
+//                    editTextuserName.requestFocus();
+//                } else {
+//                    // Username is available, proceed with registration
+//                    auth.createUserWithEmailAndPassword(Textemail, Textpwd).addOnCompleteListener(volunteerSignUpActivity.this, new OnCompleteListener<AuthResult>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<AuthResult> task) {
+//                            if (task.isSuccessful()) {
+//                                FirebaseUser regUser = auth.getCurrentUser();
+//                                String userType = "volunteer";
+//
+//                                // Create a data node under "Registered Users" with user details
+//                                VolunteerDetails writeUserDetails = new VolunteerDetails(TextfullName, TextuserName, Textgender, Textdob, TextmobileNo, userType, selectedState, selectedCity, joiningDate, bio, imgUrl);
+//                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Registered Users");
+//                                reference.child(regUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//                                        if (task.isSuccessful()) {
+//                                            // Send a confirmation email
+//                                            regUser.sendEmailVerification();
+//                                            Toast.makeText(volunteerSignUpActivity.this, "Registration was successful. Please verify your email address.", Toast.LENGTH_LONG).show();
+//
+//                                            // Open the profile page after successful registration
+//                                            Intent intent = new Intent(volunteerSignUpActivity.this, VolunteerLandingPageActivity.class);
+//                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                            startActivity(intent);
+//                                            finish();
+//                                        } else {
+//                                            Toast.makeText(volunteerSignUpActivity.this, "Registration was unsuccessful. Please try again.", Toast.LENGTH_LONG).show();
+//                                            progressBar.setVisibility(View.GONE);
+//                                        }
+//                                    }
+//                                });
+//                            } else {
+//                                // Handle registration failures
+//                                try {
+//                                    throw task.getException();
+//                                } catch (FirebaseAuthWeakPasswordException e) {
+//                                    editTextregPwd.setError("Weak Password. Please use a mix of alphabets and numbers");
+//                                    editTextregPwd.requestFocus();
+//                                } catch (FirebaseAuthInvalidCredentialsException e) {
+//                                    editTextemail.setError("Your email is invalid or already in use. Please re-enter the email");
+//                                    editTextemail.requestFocus();
+//                                } catch (FirebaseAuthUserCollisionException e) {
+//                                    editTextemail.setError("Your email is already registered. Please use another email or login");
+//                                    editTextemail.requestFocus();
+//                                } catch (Exception e) {
+//                                    Log.e(TAG, e.getMessage());
+//                                    Toast.makeText(volunteerSignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+//                                }
+//                                progressBar.setVisibility(View.GONE);
+//                            }
+//                        }
+//                    });
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // Handle the error here
+//                Log.e(TAG, "Database error: " + databaseError.getMessage());
+//                Toast.makeText(volunteerSignUpActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
+    private void registerUser(String TextfullName,String Textemail,String Textdob,String Textgender,String TextmobileNo,String Textpwd, String TextuserName){
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String bio = "";
         String imgUrl = "https://firebasestorage.googleapis.com/v0/b/volunteerapp-f6acb.appspot.com/o/placeholder.png?alt=media&token=6cac78e0-6d59-44cd-a844-d4bb8ca1727d";
@@ -444,7 +533,7 @@ public class volunteerSignUpActivity extends AppCompatActivity {
                     String userType = "volunteer"; //set userType to volunteer
 
                     //next 2 lines are used to get data and get uid
-                    VolunteerDetails writeUserDetails = new VolunteerDetails(TextfullName,Textgender,Textdob,TextmobileNo,userType,selectedState,selectedCity,joiningDate,bio,imgUrl);
+                    VolunteerDetails writeUserDetails = new VolunteerDetails(TextfullName,TextuserName,Textgender,Textdob,TextmobileNo,userType,selectedState,selectedCity,joiningDate,bio,imgUrl);
                     //it creates a data node called registered volunteers under which the user data is stored.
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Registered Users");
                     reference.child(regUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -486,7 +575,7 @@ public class volunteerSignUpActivity extends AppCompatActivity {
                         editTextemail.setError("Your email is already registered. Please use another email or login");
                         editTextemail.requestFocus();
                     } //this will handle all the renaming exception and help us debug later on while loggin the exception
-                        catch(Exception e){
+                    catch(Exception e){
                         Log.e(TAG, e.getMessage());
                         Toast.makeText(volunteerSignUpActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
 
@@ -496,7 +585,4 @@ public class volunteerSignUpActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }

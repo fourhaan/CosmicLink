@@ -30,7 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:text="Registration"
+                    android:text="Organisation Registration"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/white" />
@@ -90,6 +90,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_register_full_name"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewName"
                         android:background="@android:color/darker_gray" />
 
                     <EditText
@@ -141,6 +142,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_register_email"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewEmail"
                         android:background="@android:color/darker_gray" />
 
                     <EditText
@@ -192,30 +194,52 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_state_spinner"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewSpinner"
                         android:background="@android:color/darker_gray" />
 
-                    <Spinner
-                        android:id="@+id/state_spinner"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/ll_state"
+                        android:layout_toRightOf="@id/imageViewSpinner"
                         android:layout_below="@id/divider_spinner"
-                        android:layout_toEndOf="@id/imageViewSpinner"
-                        android:padding="6dp"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:ignore="TouchTargetSizeCheck" />
+                        android:background="@drawable/spinner_border">
 
-                    <Spinner
-                        android:id="@+id/city_spinner"
+                        <Spinner
+                            android:id="@+id/state_spinner"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="6dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/state_spinner"
-                        android:layout_marginBottom="10dp"
-                        android:layout_toEndOf="@id/imageViewSpinner"
-                        android:padding="6dp"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:ignore="TouchTargetSizeCheck" />
+                        android:orientation="horizontal"
+                        android:id="@+id/ll_city"
+                        android:layout_toRightOf="@id/imageViewSpinner"
+                        android:layout_below="@id/ll_state"
+                        android:background="@drawable/spinner_border">
+
+                        <Spinner
+                            android:id="@+id/city_spinner"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="6dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -249,20 +273,33 @@
                         android:layout_width="250dp"
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_register_org_type"
+                        android:layout_toRightOf="@+id/imageViewOrgType"
                         android:layout_centerHorizontal="true"
                         android:background="@android:color/darker_gray" />
 
-                    <Spinner
-                        android:id="@+id/spinner_organisation_type"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/textView_register_org_type"
-                        android:layout_toEndOf="@id/imageViewOrgType"
                         android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="20dp">
+                        android:id="@+id/ll_orgtype"
+                        android:layout_toRightOf="@id/imageViewOrgType"
+                        android:layout_below="@id/divider_org_type"
+                        android:background="@drawable/spinner_border">
 
-                    </Spinner>
+                        <Spinner
+                            android:id="@+id/spinner_organisation_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textView_register_org_type"
+                            android:layout_toEndOf="@id/imageViewOrgType"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="20dp">
+
+                        </Spinner>
+
+                    </LinearLayout>
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -297,6 +334,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_register_mobile"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewMobile"
                         android:background="@android:color/darker_gray" />
 
                     <EditText
@@ -348,6 +386,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_register_password"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewPwd"
                         android:background="@android:color/darker_gray" />
 
                     <EditText
@@ -410,6 +449,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/textView_confirm_password"
                         android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/imageViewConfPwd"
                         android:background="@android:color/darker_gray" />
 
                     <EditText
