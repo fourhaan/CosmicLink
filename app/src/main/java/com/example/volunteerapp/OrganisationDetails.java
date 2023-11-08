@@ -1,11 +1,11 @@
 package com.example.volunteerapp;
 
 public class OrganisationDetails {
-    public String fullname,mobile,usertype,state,city,joining_date,org_type,bio,image_url;
+    public String name_of_org,mobile,usertype,state,city,joining_date,org_type,bio,image_url;
 
     // Constructor to initialize values
     public OrganisationDetails(String TextfullName, String TextmobileNo, String userType, String selectedState, String selectedCity, String joiningDate, String selectedOrgType, String bio,String imgUrl ) {
-        this.fullname = TextfullName;
+        this.name_of_org = TextfullName;
         this.mobile = TextmobileNo;
         this.usertype = userType;
         this.state = selectedState;
