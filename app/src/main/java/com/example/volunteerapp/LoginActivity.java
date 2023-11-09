@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String textLoginInput = editTextloginInput.getText().toString();
+                String textLoginInput = editTextloginInput.getText().toString().trim();
                 String textPwd = editTextloginPwd.getText().toString();
 
                 //Basic checks for fields that are filled in editTexts
@@ -94,88 +94,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-    // Main login method using firebase Auth
-    /*private void loginUser(String email , String pwd){
-        authProfile.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
-
-                    //get instance of current user
-                    FirebaseUser currentUser = authProfile.getCurrentUser();
-                    // check if user's email is verified or not
-                    if(currentUser.isEmailVerified()) {
-                        // Get the UID of the logged-in user
-                        String uid = currentUser.getUid();
-
-                        // Retrieve the user's data from Firebase Realtime Database
-                        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Registered Users").child(uid);
-                        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) {
-                                    String userType = snapshot.child("usertype").getValue(String.class);
-                                    // Check the user type
-                                    if ("volunteer".equals(userType)) {
-                                        // Redirect to the Volunteer Landing Page
-                                        Intent intent = new Intent(LoginActivity.this, VolunteerLandingPageActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        finish();
-                                    } else if ("organisation".equals(userType)) {
-                                        // Redirect to the Organization Landing Page (change to the appropriate activity name)
-                                        Intent intent = new Intent(LoginActivity.this, OrganisationLandingPageActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        // Handle unknown user type
-                                        Toast.makeText(LoginActivity.this, "Unknown user type", Toast.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    // Handle missing user data
-                                    Toast.makeText(LoginActivity.this, "User data not found", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                // Handle database error
-                                Toast.makeText(LoginActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                    //else send email verification , open email app and sign out
-                    else {
-                        currentUser.sendEmailVerification();
-                        authProfile.signOut();
-                        progressBar.setVisibility(View.GONE);
-                        showAlertDialog(); //showing a alert dialog to inform user about email verification
-                    }
-                }
-                else {
-                    try{
-                        throw task.getException();
-                        //exception handling below
-                        //So according to https://github.com/firebase/firebase-js-sdk/issues/7661
-                        // new changes are made to firebase error handling for invalid credentials and user exception and credential exception not working
-                        // it is clubbed together as - An internal error has occurred. [ INVALID_LOGIN_CREDENTIALS ] according to logs.
-                    } catch(FirebaseAuthInvalidUserException e){
-                        editTextloginEmail.setError("The user is not yet registered on the platform. Please try again.");
-                        editTextloginEmail.requestFocus();
-                    }
-                    catch(FirebaseAuthInvalidCredentialsException e){
-                        editTextloginPwd.setError("The password entered is incorrect.");
-                        editTextloginPwd.requestFocus();
-                    } catch(Exception e){ //takes care of remaining exception
-                        Log.e(TAG, e.getMessage());
-                    }
-                    Toast.makeText(LoginActivity.this, "Login was unsuccessful", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                }
-            }
-        });
-    }*/
     private void loginUser(String loginInput, String pwd) {
         FirebaseAuth authProfile = FirebaseAuth.getInstance();
         DatabaseReference userNamesReference = FirebaseDatabase.getInstance().getReference("Usernames");
