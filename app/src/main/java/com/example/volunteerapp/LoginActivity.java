@@ -32,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText editTextloginEmail, editTextloginPwd;
+    private EditText editTextloginInput, editTextloginPwd;
     private FirebaseAuth authProfile;
     private ProgressBar progressBar;
     private TextView signUpRedirect;
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        editTextloginEmail = findViewById(R.id.editText_login_email);
+        editTextloginInput = findViewById(R.id.editText_login_input);
         editTextloginPwd = findViewById(R.id.editText_login_pwd);
         progressBar = findViewById(R.id.loginProgressBar);
         signUpRedirect = findViewById(R.id.signUpRedirectText);
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String textEmail = editTextloginEmail.getText().toString();
+                String textLoginInput = editTextloginInput.getText().toString().trim();
                 String textPwd = editTextloginPwd.getText().toString();
 
                 //Basic checks for fields that are filled in editTexts
@@ -73,108 +73,162 @@ public class LoginActivity extends AppCompatActivity {
                     editTextloginPwd.setError("password is required");
                     editTextloginPwd.requestFocus();
                 }
-                else if(TextUtils.isEmpty(textEmail)) {
-                    Toast.makeText(LoginActivity.this, "Please enter the Email", Toast.LENGTH_SHORT).show();
-                    editTextloginEmail.setError("Email is required");
-                    editTextloginEmail.requestFocus();
+                else if(TextUtils.isEmpty(textLoginInput)) {
+                    Toast.makeText(LoginActivity.this, "Please enter the Email or username", Toast.LENGTH_SHORT).show();
+                    editTextloginInput.setError("Email/username is required");
+                    editTextloginInput.requestFocus();
                 }
-                else if(!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()){
-                    Toast.makeText(LoginActivity.this,"Please re-enter your email",
-                            Toast.LENGTH_SHORT).show();
-                    editTextloginEmail.setError("Valid email is required");
-                    editTextloginEmail.requestFocus();
-                }
+//                else if(!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()){
+//                    Toast.makeText(LoginActivity.this,"Please re-enter your email",
+//                            Toast.LENGTH_SHORT).show();
+//                    editTextloginEmail.setError("Valid email is required");
+//                    editTextloginEmail.requestFocus();
+//                }
                 //this means all the data entered is correct and errors handled.
                 else {
                     progressBar.setVisibility(View.VISIBLE);  //starts loading animation in centre
-                    loginUser(textEmail, textPwd);
+                    loginUser(textLoginInput, textPwd);
                 }
 
             }
         });
 
     }
-    // Main login method using firebase Auth
-    private void loginUser(String email , String pwd){
-        authProfile.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
+    private void loginUser(String loginInput, String pwd) {
+        FirebaseAuth authProfile = FirebaseAuth.getInstance();
+        DatabaseReference userNamesReference = FirebaseDatabase.getInstance().getReference("Usernames");
 
-                    //get instance of current user
-                    FirebaseUser currentUser = authProfile.getCurrentUser();
-                    // check if user's email is verified or not
-                    if(currentUser.isEmailVerified()) {
-                        // Get the UID of the logged-in user
-                        String uid = currentUser.getUid();
-
-                        // Retrieve the user's data from Firebase Realtime Database
-                        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Registered Users").child(uid);
-                        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) {
-                                    String userType = snapshot.child("usertype").getValue(String.class);
-                                    // Check the user type
-                                    if ("volunteer".equals(userType)) {
-                                        // Redirect to the Volunteer Landing Page
-                                        Intent intent = new Intent(LoginActivity.this, VolunteerLandingPageActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        finish();
-                                    } else if ("organisation".equals(userType)) {
-                                        // Redirect to the Organization Landing Page (change to the appropriate activity name)
-                                        Intent intent = new Intent(LoginActivity.this, OrganisationLandingPageActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        // Handle unknown user type
-                                        Toast.makeText(LoginActivity.this, "Unknown user type", Toast.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    // Handle missing user data
-                                    Toast.makeText(LoginActivity.this, "User data not found", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                // Handle database error
-                                Toast.makeText(LoginActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                    //else send email verification , open email app and sign out
-                    else {
-                        currentUser.sendEmailVerification();
-                        authProfile.signOut();
-                        progressBar.setVisibility(View.GONE);
-                        showAlertDialog(); //showing a alert dialog to inform user about email verification
+        // Check if the login input is an email address
+        if (isEmail(loginInput)) {
+            // Log in using email
+            authProfile.signInWithEmailAndPassword(loginInput, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Email login successful, proceed with user data retrieval and validation
+                        handleSuccessfulLogin(authProfile.getCurrentUser());
+                    } else {
+                        // Email login failed, try username login
+                        tryUsernameLogin(loginInput, pwd);
                     }
                 }
-                else {
-                    try{
-                        throw task.getException();
-                        //exception handling below
-                        //So according to https://github.com/firebase/firebase-js-sdk/issues/7661
-                        // new changes are made to firebase error handling for invalid credentials and user exception and credential exception not working
-                        // it is clubbed together as - An internal error has occurred. [ INVALID_LOGIN_CREDENTIALS ] according to logs.
-                    } catch(FirebaseAuthInvalidUserException e){
-                        editTextloginEmail.setError("The user is not yet registered on the platform. Please try again.");
-                        editTextloginEmail.requestFocus();
-                    }
-                    catch(FirebaseAuthInvalidCredentialsException e){
-                        editTextloginPwd.setError("The password entered is incorrect.");
-                        editTextloginPwd.requestFocus();
-                    } catch(Exception e){ //takes care of remaining exception
-                        Log.e(TAG, e.getMessage());
-                    }
-                    Toast.makeText(LoginActivity.this, "Login was unsuccessful", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
+            });
+        } else {
+            // Not an email, try username login
+            tryUsernameLogin(loginInput, pwd);
+        }
+    }
+
+    private boolean isEmail(String input) {
+        // Simple email validation by checking for the presence of '@' character
+        return input.contains("@");
+    }
+
+    private void tryUsernameLogin(String username, String password) {
+        // Look up the UID for the given username from your Usernames database
+        DatabaseReference usernamesReference = FirebaseDatabase.getInstance().getReference("Usernames");
+        usernamesReference.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String uid = dataSnapshot.getValue(String.class);
+
+                    FirebaseAuth authProfile = FirebaseAuth.getInstance();
+                    // Sign in using the retrieved UID
+                    authProfile.signInWithEmailAndPassword(uid,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Username login successful, proceed with user data retrieval and validation
+                                handleSuccessfulLogin(authProfile.getCurrentUser());
+                            } else {
+                                // Handle username login failure
+                                handleLoginFailure(task.getException());
+                            }
+                        }
+                    });
+                } else {
+                    // Handle case where the provided username doesn't exist
+                    handleLoginFailure(new Exception("Username not found."));
                 }
             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle database error
+                handleLoginFailure(new Exception("Database error: " + databaseError.getMessage()));
+            }
         });
+    }
+
+    private void handleSuccessfulLogin(FirebaseUser currentUser) {
+        if (currentUser != null) {
+            // Check if the user's email is verified
+            if (currentUser.isEmailVerified()) {
+                String uid = currentUser.getUid();
+
+                // Retrieve the user's data from Firebase Realtime Database
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Registered Users").child(uid);
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            String userType = snapshot.child("usertype").getValue(String.class);
+                            // Check the user type and proceed accordingly
+                            handleUserType(userType);
+                        } else {
+                            // Handle missing user data
+                            handleLoginFailure(new Exception("User data not found."));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Handle database error
+                        handleLoginFailure(new Exception("Database error: " + error.getMessage()));
+                    }
+                });
+            } else {
+                // Handle email not verified
+                handleEmailNotVerified(currentUser);
+            }
+        } else {
+            // Handle null user
+            handleLoginFailure(new Exception("User is null."));
+        }
+    }
+
+    private void handleUserType(String userType) {
+        if ("volunteer".equals(userType)) {
+            // Redirect to the Volunteer Landing Page
+            Intent intent = new Intent(LoginActivity.this, VolunteerLandingPageActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        } else if ("organisation".equals(userType)) {
+            // Redirect to the Organization Landing Page (change to the appropriate activity name)
+            Intent intent = new Intent(LoginActivity.this, OrganisationLandingPageActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        } else {
+            // Handle unknown user type
+            handleLoginFailure(new Exception("Unknown user type."));
+        }
+    }
+
+    private void handleEmailNotVerified(FirebaseUser currentUser) {
+        currentUser.sendEmailVerification();
+        FirebaseAuth.getInstance().signOut();
+        progressBar.setVisibility(View.GONE);
+        showAlertDialog(); // Show an alert dialog to inform the user about email verification
+    }
+
+    private void handleLoginFailure(Exception exception) {
+        // Handle login failure and display appropriate error message
+        // This can be customized based on the specific use case
+        Toast.makeText(LoginActivity.this, "Login was unsuccessful: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.GONE);
     }
     private void showAlertDialog(){
         //structure of alertDialog

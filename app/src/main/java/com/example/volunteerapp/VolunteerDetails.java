@@ -3,6 +3,10 @@ package com.example.volunteerapp;
 public class VolunteerDetails {
     private String fullname, username, gender, dob, mobile, usertype, state, city, joining_date, bio, image_url;
 
+    public VolunteerDetails(String TextuserName){
+        this.username = TextuserName;
+    }
+
     // Constructor to initialize values
     public VolunteerDetails(String TextfullName, String TextuserName, String Textgender, String Textdob, String TextmobileNo, String userType, String selectedState, String selectedCity,
                             String joiningDate, String bio, String imgUrl) {

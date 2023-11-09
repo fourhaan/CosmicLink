@@ -24,7 +24,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText_login_email"
+            android:id="@+id/editText_login_input"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
@@ -34,7 +34,7 @@
             android:drawableLeft="@drawable/baseline_person_24"
             android:drawablePadding="8dp"
             android:ellipsize="end"
-            android:hint="Email"
+            android:hint="Email or username"
             android:inputType="textEmailAddress"
             android:padding="8dp"
             android:textColor="@color/white"
