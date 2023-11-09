@@ -74,6 +74,7 @@
 
                     <ImageView
                         android:layout_width="150dp"
+                        android:id="@+id/vol_profile_image"
                         android:layout_height="150dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/sky" />
@@ -123,7 +124,6 @@
                         <ImageView
                             android:layout_width="35dp"
                             android:layout_height="35dp"
-                            android:background="@drawable/circular_grey_bordersolid"
                             android:padding="10dp"
                             android:src="@drawable/ic_calendar" />
 
@@ -136,7 +136,6 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/vol_profile_joining_date"
                                 android:text="Joining date"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
@@ -145,6 +144,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
+                                android:id="@+id/vol_profile_joining_date"
                                 android:text="date"
                                 android:textSize="12sp" />
                         </LinearLayout>

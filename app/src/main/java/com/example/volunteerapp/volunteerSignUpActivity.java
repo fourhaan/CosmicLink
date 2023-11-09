@@ -468,7 +468,7 @@ public class volunteerSignUpActivity extends AppCompatActivity {
                                 regUser.delete();
                             } else {
                                 // Unique username
-                                VolunteerDetails writeUserDetails = new VolunteerDetails(TextfullName, TextuserName, Textgender, Textdob, TextmobileNo, userType, selectedState, selectedCity, joiningDate, bio, imgUrl);
+                                VolunteerDetails writeUserDetails = new VolunteerDetails(TextfullName,Textemail, TextuserName, Textgender, Textdob, TextmobileNo, userType, selectedState, selectedCity, joiningDate, bio, imgUrl);
 
                                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Registered Users");
                                 reference.child(regUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
