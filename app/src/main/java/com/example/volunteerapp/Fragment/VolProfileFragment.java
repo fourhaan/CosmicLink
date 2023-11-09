@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -26,6 +27,7 @@ public class VolProfileFragment extends Fragment {
     private Button logoutButton;
     private TextView fullnameTextView, usernameTextView, joiningdateTextView, bioTextView, mobileTextView, locationTextView, emailTextView;
     private ImageView profileImageView;
+    private ProgressBar profileProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +43,11 @@ public class VolProfileFragment extends Fragment {
         mobileTextView = view.findViewById(R.id.vol_profile_mobile);
         locationTextView = view.findViewById(R.id.vol_profile_location);
         profileImageView = view.findViewById(R.id.vol_profile_image);
+        profileProgressBar = view.findViewById(R.id.vol_profile_ProgressBar);
+
+        // Hide the progressbar and content initially
+        profileProgressBar.setVisibility(View.GONE);
+        view.findViewById(R.id.vol_profile_content).setVisibility(View.GONE);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +70,9 @@ public class VolProfileFragment extends Fragment {
 
             // Reference to the user's data in Firebase Realtime Database
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Registered Users").child(userId);
+
+            // Show the progress bar while loading
+            profileProgressBar.setVisibility(View.VISIBLE);
 
             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -97,6 +107,12 @@ public class VolProfileFragment extends Fragment {
                                     .centerCrop()      // Crop the image to fit the ImageView
                                     .into(profileImageView);
                         }
+
+                        // Hide the progress bar when data is ready
+                        profileProgressBar.setVisibility(View.GONE);
+
+                        // Show the content view
+                        view.findViewById(R.id.vol_profile_content).setVisibility(View.VISIBLE);
                     }
                 }
 
