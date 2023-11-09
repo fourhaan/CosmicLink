@@ -31,8 +31,8 @@ public class OrganisationLandingPageActivity extends AppCompatActivity {
         binding = ActivityOrganisationLandingPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        int flags = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        getWindow().getDecorView().setSystemUiVisibility(flags);
+        //to hide the bottom system nav bar.
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         // Starting at Home fragment that is the feed
         replaceFragment(new VolHomeFragment());
