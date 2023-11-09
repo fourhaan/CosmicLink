@@ -234,7 +234,7 @@ public class LoginActivity extends AppCompatActivity {
         //structure of alertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         builder.setTitle("Email Not Verified");
-        builder.setMessage("Please verify your email. You cannot login wihout email verification");
+        builder.setMessage("Please verify your email. You cannot login without email verification");
 
         //opening email app if button is clicked
         builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
