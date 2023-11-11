@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B8B3B3"
+    android:background="#ECE5E5"
     android:orientation="vertical"
     tools:context=".Fragment.VolProfileFragment">
     <RelativeLayout
@@ -259,18 +259,23 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Edit"
+                                    android:padding="5dp"
+                                    android:id="@+id/edit_vol_bio"
                                     android:fontFamily="@font/proximanovaregular"
                                     android:textColor="#FFCF66"
                                     android:layout_marginEnd="10dp"
                                     android:textSize="14sp" />
                             </LinearLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:layout_marginTop="10dp"
                                 android:id="@+id/vol_profile_bio"
-                                android:text="Bio here" />
+                                android:text="Bio here"
+                                android:inputType="textMultiLine"
+                                android:textColor="@color/black2.0"
+                                android:background="@null"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -305,7 +310,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Edit"
-                                android:textColor="#FFCF66"
+                                android:id="@+id/edit_vol_contact"
+                                android:textColor="#FAFAFA"
                                 android:layout_marginEnd="10dp"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -422,7 +428,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:id="@+id/edit_vol_skills"
                                 android:text="Edit"
+                                android:padding="5dp"
                                 android:textColor="#FFCF66"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -434,24 +442,33 @@
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:paddingRight="8dp">
 
-                                <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:background="@drawable/circular_grey_bordersolid"
-                                    android:padding="10dp"
-                                    android:src="@drawable/ic_profile" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:text="not good at anything :/"
-                                    android:textSize="15sp"/>
+                                    android:layout_centerInParent="true"
+                                    android:id="@+id/tagsLayout"
+                                    app:boxStrokeWidthFocused="0sp"
+                                    app:boxStrokeWidth="0sp"
+                                    app:boxCornerRadiusTopStart="10sp"
+                                    app:boxCornerRadiusTopEnd="10sp"
+                                    app:boxCornerRadiusBottomStart="10sp"
+                                    android:enabled="false"
+                                    app:boxCornerRadiusBottomEnd="10sp">
+
+                                    <com.example.volunteerapp.TagsInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"
+                                        android:id="@+id/tagsET"
+                                        android:enabled="false"
+                                        android:background="@android:color/transparent"/>
+
+                                </com.google.android.material.textfield.TextInputLayout>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
