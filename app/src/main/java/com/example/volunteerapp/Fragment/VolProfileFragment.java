@@ -1,7 +1,5 @@
 package com.example.volunteerapp.Fragment;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,8 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,41 +18,30 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
+
 import androidx.fragment.app.Fragment;
 
 import com.example.volunteerapp.MainActivity;
 import com.example.volunteerapp.R;
 import com.example.volunteerapp.TagsInputEditText;
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.UUID;
 
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 public class VolProfileFragment extends Fragment {
     private Button logoutButton;
@@ -91,7 +77,7 @@ public class VolProfileFragment extends Fragment {
         //initialising tags layout
         tagsLayout = view.findViewById(R.id.tagsLayout);
         tagsEditText = view.findViewById(R.id.tagsET);
-        editSkills = view.findViewById(R.id.edit_vol_skills); // Replace with your actual edit button ID
+        editSkills = view.findViewById(R.id.edit_vol_skills);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override

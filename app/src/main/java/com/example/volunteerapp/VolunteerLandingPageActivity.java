@@ -40,13 +40,13 @@ public class VolunteerLandingPageActivity extends AppCompatActivity {
 
         binding.bottomNavigationViewVol.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.home_vol) {
+            if (itemId == R.id.home) {
                 replaceFragment(new VolHomeFragment());
-            } else if (itemId == R.id.bookmark_vol) {
+            } else if (itemId == R.id.bookmark) {
                 replaceFragment(new VolBookmarkFragment());
             } else if (itemId == R.id.map) {
                 replaceFragment(new VolMapFragment());
-            } else if (itemId == R.id.profile_vol) {
+            } else if (itemId == R.id.profile) {
                 replaceFragment(new VolProfileFragment());
             }
             return true;

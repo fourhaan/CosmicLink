@@ -11,14 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.example.volunteerapp.Fragment.VolBookmarkFragment;
-import com.example.volunteerapp.Fragment.VolHomeFragment;
-import com.example.volunteerapp.Fragment.VolMapFragment;
-import com.example.volunteerapp.Fragment.VolProfileFragment;
+import com.example.volunteerapp.Fragment.OrgBookmarkFragment;
+import com.example.volunteerapp.Fragment.OrgHomeFragment;
+import com.example.volunteerapp.Fragment.OrgMapFragment;
+import com.example.volunteerapp.Fragment.OrgProfileFragment;
+
 import com.example.volunteerapp.databinding.ActivityOrganisationLandingPageBinding;
-import com.example.volunteerapp.databinding.ActivityVolunteerLandingPageBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
+
 
 public class OrganisationLandingPageActivity extends AppCompatActivity {
 
@@ -35,19 +34,19 @@ public class OrganisationLandingPageActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         // Starting at Home fragment that is the feed
-        replaceFragment(new VolHomeFragment());
+        replaceFragment(new OrgHomeFragment());
         binding.bottomNavigationViewOrg.setBackground(null);
 
         binding.bottomNavigationViewOrg.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.home_vol) {
-                replaceFragment(new VolHomeFragment());
-            } else if (itemId == R.id.bookmark_vol) {
-                replaceFragment(new VolBookmarkFragment());
+            if (itemId == R.id.home) {
+                replaceFragment(new OrgHomeFragment());
+            } else if (itemId == R.id.bookmark) {
+                replaceFragment(new OrgBookmarkFragment());
             } else if (itemId == R.id.map) {
-                replaceFragment(new VolMapFragment());
-            } else if (itemId == R.id.profile_vol) {
-                replaceFragment(new VolProfileFragment());
+                replaceFragment(new OrgMapFragment());
+            } else if (itemId == R.id.profile) {
+                replaceFragment(new OrgProfileFragment());
             }
             return true;
         });
