@@ -408,7 +408,7 @@ public class organisationSignUpActivity extends AppCompatActivity {
                     String userType = "organisation"; //set userType to organisation
 
                     //next 2 lines are used to get data and get uid
-                    OrganisationDetails writeUserDetails = new OrganisationDetails(TextfullName,TextmobileNo,userType,selectedState,selectedCity,joiningDate,selectedOrgType,bio,imgUrl);
+                    OrganisationDetails writeUserDetails = new OrganisationDetails(TextfullName,Textemail,TextmobileNo,userType,selectedState,selectedCity,joiningDate,selectedOrgType,bio,imgUrl);
                     //it creates a data node called registered volunteers under which the user data is stored.
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Registered Users");
                     reference.child(regUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {

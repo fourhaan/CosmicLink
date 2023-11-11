@@ -155,7 +155,6 @@
                         android:layout_toEndOf="@id/imageViewUserName"
                         android:background="@android:color/transparent"
                         android:hint="Create an unique username"
-                        android:inputType="textCapWords"
                         android:padding="6dp"
                         android:textColor="@color/black"
                         android:textSize="16sp"

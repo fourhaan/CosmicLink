@@ -1,12 +1,13 @@
 package com.example.volunteerapp;
 
 public class OrganisationDetails {
-    private String name_of_org,mobile,usertype,state,city,joining_date,org_type,bio,image_url;
+    private String name_of_org,email,mobile,usertype,state,city,joining_date,org_type,bio,image_url;
 
     // Constructor to initialize values
-    public OrganisationDetails(String TextfullName, String TextmobileNo, String userType, String selectedState, String selectedCity, String joiningDate, String selectedOrgType, String bio,String imgUrl ) {
+    public OrganisationDetails(String TextfullName, String Textemail, String TextmobileNo, String userType, String selectedState, String selectedCity, String joiningDate, String selectedOrgType, String bio,String imgUrl ) {
         this.name_of_org = TextfullName;
         this.mobile = TextmobileNo;
+        this.email = Textemail;
         this.usertype = userType;
         this.state = selectedState;
         this.city = selectedCity;
@@ -17,6 +18,12 @@ public class OrganisationDetails {
     }
 
     // Getter and Setter methods for name_of_org
+    public String getEmail(){
+        return email;
+    }
+    public void setEmail(){
+        this.email = email;
+    }
     public String getName_of_org() {
         return name_of_org;
     }

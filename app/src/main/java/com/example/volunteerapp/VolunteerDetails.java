@@ -1,16 +1,17 @@
 package com.example.volunteerapp;
 
 public class VolunteerDetails {
-    private String fullname, username, gender, dob, mobile, usertype, state, city, joining_date, bio, image_url;
+    private String fullname, username,email, gender, dob, mobile, usertype, state, city, joining_date, bio, image_url;
 
     public VolunteerDetails(String TextuserName){
         this.username = TextuserName;
     }
 
     // Constructor to initialize values
-    public VolunteerDetails(String TextfullName, String TextuserName, String Textgender, String Textdob, String TextmobileNo, String userType, String selectedState, String selectedCity,
+    public VolunteerDetails(String TextfullName, String Textemail, String TextuserName, String Textgender, String Textdob, String TextmobileNo, String userType, String selectedState, String selectedCity,
                             String joiningDate, String bio, String imgUrl) {
         this.fullname = TextfullName;
+        this.email = Textemail;
         this.username = TextuserName;
         this.gender = Textgender;
         this.dob = Textdob;
@@ -30,6 +31,14 @@ public class VolunteerDetails {
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
