@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.volunteerapp.Fragment.VolBookmarkFragment;
 import com.example.volunteerapp.Fragment.VolHomeFragment;
@@ -22,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class VolunteerLandingPageActivity extends AppCompatActivity {
 
     ActivityVolunteerLandingPageBinding binding;
+    private ImageView chatClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,13 @@ public class VolunteerLandingPageActivity extends AppCompatActivity {
 
         //to hide the bottom system nav bar.
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+        chatClick = binding.chatVol;
+
+        chatClick.setOnClickListener(v -> {
+            Intent intent = new Intent(VolunteerLandingPageActivity.this, ChatActivity.class);
+            startActivity(intent);
+        });
 
         // Starting at Home fragment that is the feed
         replaceFragment(new VolHomeFragment());

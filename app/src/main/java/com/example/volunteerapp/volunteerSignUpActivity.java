@@ -425,6 +425,7 @@ public class volunteerSignUpActivity extends AppCompatActivity {
                 editTextmobileNo.setText("");
                 editTextregPwd.setText("");
                 editTextconfirmPwd.setText("");
+                editTextuserName.setText("");
                 editTextdob.setText("");
                 stateSpinner.setSelection(0);
                 citySpinner.setSelection(0);
@@ -467,8 +468,9 @@ public class volunteerSignUpActivity extends AppCompatActivity {
                                 // deleting the user if it fails
                                 regUser.delete();
                             } else {
+                                String userId = regUser.getUid();
                                 // Unique username
-                                VolunteerDetails writeUserDetails = new VolunteerDetails(TextfullName,Textemail, TextuserName, Textgender, Textdob, TextmobileNo, userType, selectedState, selectedCity, joiningDate, bio, imgUrl);
+                                VolunteerDetails writeUserDetails = new VolunteerDetails(TextfullName,Textemail, TextuserName, Textgender, Textdob, TextmobileNo, userType, selectedState, selectedCity, joiningDate, bio, imgUrl,userId);
 
                                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Registered Users");
                                 reference.child(regUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {

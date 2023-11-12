@@ -1,7 +1,7 @@
 package com.example.volunteerapp;
 
 public class VolunteerDetails {
-    private String fullname, username,email, gender, dob, mobile, usertype, state, city, joining_date, bio, image_url;
+    private String fullname, username,email, gender, dob, mobile, usertype, state, city, joining_date, bio, image_url,userId;
 
     public VolunteerDetails(String TextuserName){
         this.username = TextuserName;
@@ -9,7 +9,7 @@ public class VolunteerDetails {
 
     // Constructor to initialize values
     public VolunteerDetails(String TextfullName, String Textemail, String TextuserName, String Textgender, String Textdob, String TextmobileNo, String userType, String selectedState, String selectedCity,
-                            String joiningDate, String bio, String imgUrl) {
+                            String joiningDate, String bio, String imgUrl, String userId) {
         this.fullname = TextfullName;
         this.email = Textemail;
         this.username = TextuserName;
@@ -22,6 +22,7 @@ public class VolunteerDetails {
         this.joining_date = joiningDate;
         this.bio = bio;
         this.image_url = imgUrl;
+        this.userId = userId;
     }
 
     // Getter and Setter methods for each field
@@ -119,6 +120,13 @@ public class VolunteerDetails {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
 
