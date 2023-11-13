@@ -5,13 +5,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lavender"
+    android:background="@color/blue"
     tools:context=".VolunteerLandingPageActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/upper_nav"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@id/frame_layout_vol"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="CosmicLink"
+            android:textColor="@color/white"
+            android:padding="5dp"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/megrim"
+            android:textSize="25sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_chat_24_white"
+            android:padding="10dp"
+            android:id="@+id/chat_vol"
+            android:layout_marginRight="10dp"
+            android:clickable="true"
+            android:layout_marginTop="5dp"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            />
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/frame_layout_vol"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/upper_nav"
         app:layout_constraintBottom_toTopOf="@+id/cl_vol_pro"
         />
 

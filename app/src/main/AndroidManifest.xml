@@ -6,12 +6,24 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/meme"
+        android:icon="@drawable/logorocket"
         android:label="CosmicLink"
-        android:roundIcon="@drawable/meme"
+        android:roundIcon="@drawable/logorocket"
         android:supportsRtl="true"
         android:theme="@style/Theme.VolunteerApp"
         tools:targetApi="31">
+        <activity
+            android:name=".messagesAdpter"
+            android:exported="false" />
+        <activity
+            android:name=".chatwindo"
+            android:exported="false" />
+        <activity
+            android:name=".SearchChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
         <activity
             android:name=".OrganisationLandingPageActivity"
             android:exported="false" />
