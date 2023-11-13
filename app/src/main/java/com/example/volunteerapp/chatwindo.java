@@ -60,7 +60,7 @@ public class chatwindo extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        reciverName = getIntent().getStringExtra("username");
+        reciverName = getIntent().getStringExtra("fullname");
         reciverimg = getIntent().getStringExtra("reciverImg");
         reciverUid = getIntent().getStringExtra("uid");
 
@@ -95,7 +95,7 @@ public class chatwindo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(chatwindo.this,ChatActivity.class);
-                startActivity(intent);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 finish();
             }
         });
@@ -194,7 +194,6 @@ public class chatwindo extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         // Receiver message sent successfully
-                                        // Optional: You can show a success message here if needed
                                         scrollToLatestMessage();
                                     } else {
                                         // Handle the error for receiver message

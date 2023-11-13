@@ -398,6 +398,7 @@ public class organisationSignUpActivity extends AppCompatActivity {
     private void registerUser(String TextfullName,String Textemail,String TextmobileNo,String Textpwd){
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String bio = "";
+        String username = TextfullName;
         String imgUrl = "https://firebasestorage.googleapis.com/v0/b/volunteerapp-f6acb.appspot.com/o/placeholder.png?alt=media&token=6cac78e0-6d59-44cd-a844-d4bb8ca1727d";
         auth.createUserWithEmailAndPassword(Textemail,Textpwd).addOnCompleteListener(organisationSignUpActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -405,10 +406,11 @@ public class organisationSignUpActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     FirebaseUser regUser = auth.getCurrentUser();
+                    String userId = regUser.getUid();
                     String userType = "organisation"; //set userType to organisation
 
                     //next 2 lines are used to get data and get uid
-                    OrganisationDetails writeUserDetails = new OrganisationDetails(TextfullName,Textemail,TextmobileNo,userType,selectedState,selectedCity,joiningDate,selectedOrgType,bio,imgUrl);
+                    OrganisationDetails writeUserDetails = new OrganisationDetails(TextfullName,username,Textemail,TextmobileNo,userType,selectedState,selectedCity,joiningDate,selectedOrgType,bio,imgUrl,userId);
                     //it creates a data node called registered volunteers under which the user data is stored.
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Registered Users");
                     reference.child(regUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
