@@ -80,7 +80,7 @@ public class chatwindo extends AppCompatActivity {
         messageAdpter.setAdapter(mmessagesAdpter);
 
         //to hide the bottom system nav bar.
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
 
         Picasso.get().load(reciverimg).into(profile);
@@ -114,6 +114,7 @@ public class chatwindo extends AppCompatActivity {
                     messagesArrayList.add(messages);
                 }
                 mmessagesAdpter.notifyDataSetChanged();
+                scrollToLatestMessage();
             }
 
             @Override
@@ -213,7 +214,7 @@ public class chatwindo extends AppCompatActivity {
     }
     private void scrollToLatestMessage() {
         // Scroll to the latest message in the RecyclerView
-        messageAdpter.smoothScrollToPosition(messagesArrayList.size() - 1);
+        messageAdpter.scrollToPosition(messagesArrayList.size() - 1);
     }
 
 }
