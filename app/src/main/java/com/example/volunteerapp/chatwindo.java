@@ -68,6 +68,7 @@ public class chatwindo extends AppCompatActivity {
 
 
 
+
         sendbtn = findViewById(R.id.sendbtnn);
         textmsg = findViewById(R.id.textmsg);
         reciverNName = findViewById(R.id.recivername);
