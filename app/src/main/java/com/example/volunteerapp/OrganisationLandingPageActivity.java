@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.volunteerapp.Fragment.OrgBookmarkFragment;
 import com.example.volunteerapp.Fragment.OrgHomeFragment;
@@ -22,6 +23,7 @@ import com.example.volunteerapp.databinding.ActivityOrganisationLandingPageBindi
 public class OrganisationLandingPageActivity extends AppCompatActivity {
 
     ActivityOrganisationLandingPageBinding binding;
+    private ImageView chatClick;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,13 @@ public class OrganisationLandingPageActivity extends AppCompatActivity {
 
         //to hide the bottom system nav bar.
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+        chatClick = binding.chatOrg;
+
+        chatClick.setOnClickListener(v -> {
+            Intent intent = new Intent(OrganisationLandingPageActivity.this, ChatActivity.class);
+            startActivity(intent);
+        });
 
         // Starting at Home fragment that is the feed
         replaceFragment(new OrgHomeFragment());

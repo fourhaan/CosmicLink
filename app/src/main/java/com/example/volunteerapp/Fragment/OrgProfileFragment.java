@@ -109,7 +109,7 @@ public class OrgProfileFragment extends Fragment {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     if (snapshot.exists()) {
-                        String fullName = snapshot.child("name_of_org").getValue(String.class);
+                        String fullName = snapshot.child("fullname").getValue(String.class);
                         String profileImageUrl = snapshot.child("image_url").getValue(String.class);
                         String bio = snapshot.child("bio").getValue(String.class);
                         String joiningDate = snapshot.child("joining_date").getValue(String.class);

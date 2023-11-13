@@ -1,13 +1,14 @@
 package com.example.volunteerapp;
 
 public class OrganisationDetails {
-    private String name_of_org,email,mobile,usertype,state,city,joining_date,org_type,bio,image_url;
+    private String fullname,email,mobile,usertype,state,city,joining_date,org_type,bio,image_url,username,userId;
 
     // Constructor to initialize values
-    public OrganisationDetails(String TextfullName, String Textemail, String TextmobileNo, String userType, String selectedState, String selectedCity, String joiningDate, String selectedOrgType, String bio,String imgUrl ) {
-        this.name_of_org = TextfullName;
+    public OrganisationDetails(String TextfullName, String username ,String Textemail, String TextmobileNo, String userType, String selectedState, String selectedCity, String joiningDate, String selectedOrgType, String bio,String imgUrl, String userId ) {
+        this.fullname = TextfullName;
         this.mobile = TextmobileNo;
         this.email = Textemail;
+        this.username = username;
         this.usertype = userType;
         this.state = selectedState;
         this.city = selectedCity;
@@ -15,6 +16,7 @@ public class OrganisationDetails {
         this.org_type = selectedOrgType;
         this.bio = bio;
         this.image_url = imgUrl;
+        this.userId = userId;
     }
 
     // Getter and Setter methods for name_of_org
@@ -24,12 +26,18 @@ public class OrganisationDetails {
     public void setEmail(){
         this.email = email;
     }
-    public String getName_of_org() {
-        return name_of_org;
+    public String getUsername(){
+        return username;
+    }
+    public void setUsername(String username){
+        this.username = username;
+    }
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setName_of_org(String name_of_org) {
-        this.name_of_org = name_of_org;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     // Getter and Setter methods for mobile
@@ -103,6 +111,12 @@ public class OrganisationDetails {
     public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
+    public String getUserId() {
+        return userId;
+    }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
 }

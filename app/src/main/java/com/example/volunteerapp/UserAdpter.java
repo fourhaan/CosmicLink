@@ -36,14 +36,15 @@ public class UserAdpter extends RecyclerView.Adapter<UserAdpter.viewholder> {
     public void onBindViewHolder(@NonNull UserAdpter.viewholder holder, int position) {
 
         Users users = usersArrayList.get(position);
-        holder.username.setText(users.getUsername());
+        holder.username.setText("@"+users.getUsername());
+        holder.fullname.setText(users.getFullname());
         Picasso.get().load(users.getImage_url()).into(holder.userimg);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(chatActivity, chatwindo.class);
-                intent.putExtra("username",users.getUsername());
+                intent.putExtra("fullname",users.getFullname());
                 intent.putExtra("reciverImg",users.getImage_url());
                 intent.putExtra("uid",users.getUserId());
                 chatActivity.startActivity(intent);
@@ -61,10 +62,12 @@ public class UserAdpter extends RecyclerView.Adapter<UserAdpter.viewholder> {
     public class viewholder extends RecyclerView.ViewHolder {
         CircleImageView userimg;
         TextView username;
+        TextView fullname;
         public viewholder(@NonNull View itemView) {
             super(itemView);
             userimg = itemView.findViewById(R.id.userimg);
             username = itemView.findViewById(R.id.username);
+            fullname = itemView.findViewById(R.id.fullname);
         }
     }
 }
