@@ -214,7 +214,7 @@ public class chatwindo extends AppCompatActivity {
     }
     private void scrollToLatestMessage() {
         // Scroll to the latest message in the RecyclerView
-        messageAdpter.scrollToPosition(messagesArrayList.size() - 1);
+        messageAdpter.smoothScrollToPosition(messagesArrayList.size() - 1);
     }
 
 }
