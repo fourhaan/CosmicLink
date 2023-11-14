@@ -1,13 +1,13 @@
 package com.example.volunteerapp.Models;
 
 public class modelPost {
-    private String pId, pTitle, pDescr, pImage, pTime, uid, uEmail, uDp, uName;
+    private String pId, pTitle, pDescr, pImage, pTime, uid, uEmail, uDp, uName, pTags;
 
     public modelPost() {
         // Default constructor required for Firebase
     }
 
-    public modelPost(String pId, String pTitle, String pDescr, String pImage, String pTime, String uid, String uEmail, String uDp, String uName) {
+    public modelPost(String pId, String pTitle, String pDescr, String pImage, String pTime, String uid, String uEmail, String uDp, String uName,String pTags) {
         this.pId = pId;
         this.pTitle = pTitle;
         this.pDescr = pDescr;
@@ -17,6 +17,7 @@ public class modelPost {
         this.uEmail = uEmail;
         this.uDp = uDp;
         this.uName = uName;
+        this.pTags = pTags;
     }
 
     public String getpId() {
@@ -89,5 +90,13 @@ public class modelPost {
 
     public void setuName(String uName) {
         this.uName = uName;
+    }
+
+    public String getpTags() {
+        return pTags;
+    }
+
+    public void setpTags(String pTags) {
+        this.pTags = pTags;
     }
 }

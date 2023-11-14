@@ -4,25 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#E3DED6"
     tools:context=".Activities.AddPostActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="50dp" />
-        </androidx.cardview.widget.CardView>
+            android:text="Add A Post!"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:minHeight="50dp" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -35,8 +34,8 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:hint="Enter the title of the mission"
                 android:background="@null"
+                android:hint="Enter the title of the mission"
                 android:singleLine="true" />
         </androidx.cardview.widget.CardView>
 
@@ -49,7 +48,7 @@
                 android:id="@+id/imageIv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="200dp" />
+                android:src="@drawable/image_holder" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -58,12 +57,12 @@
             android:layout_margin="8dp">
 
             <EditText
+                android:id="@+id/descriptionEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:id="@+id/descriptionEt"
-                android:hint="Add description about the mission"
                 android:background="@null"
+                android:gravity="start"
+                android:hint="Add description about the mission"
                 android:inputType="textCapSentences|textMultiLine"
                 android:minHeight="120dp"
                 android:padding="10dp" />
@@ -80,13 +79,13 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:hint="Add any 3 Tags"
-                app:hintTextColor="@color/black"
                 app:boxCornerRadiusBottomEnd="10sp"
                 app:boxCornerRadiusBottomStart="10sp"
                 app:boxCornerRadiusTopEnd="10sp"
                 app:boxCornerRadiusTopStart="10sp"
                 app:boxStrokeWidth="0sp"
-                app:boxStrokeWidthFocused="0sp">
+                app:boxStrokeWidthFocused="0sp"
+                app:hintTextColor="@color/black">
 
                 <com.example.volunteerapp.CustomViews.TagsInputEditText
                     android:id="@+id/tagsET"
@@ -99,12 +98,15 @@
         </androidx.cardview.widget.CardView>
 
         <Button
+            android:id="@+id/upload_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Upload"
-            android:id="@+id/upload_post"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#78A87A"
+            android:textColor="@color/white"
+            android:layout_marginBottom="20dp"
+            android:text="Upload" />
 
 
     </LinearLayout>

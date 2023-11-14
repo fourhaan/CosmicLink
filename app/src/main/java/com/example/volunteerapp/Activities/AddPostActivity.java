@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.volunteerapp.CustomViews.TagsInputEditText;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
@@ -26,6 +27,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -51,9 +53,10 @@ public class AddPostActivity extends AppCompatActivity {
     private ImageView imageIv;
     private Button uploadButton;
     private Uri imagePath;
-    private String name, email,uid, dp;
+    private String name, email,uid, dp, editedTags;
     private ProgressDialog pd;
-    private byte[] imageData;
+    private TextInputLayout tagsLayout;
+    private TagsInputEditText tagsEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,10 +95,16 @@ public class AddPostActivity extends AppCompatActivity {
         uploadButton = findViewById(R.id.upload_post);
         imageIv = findViewById(R.id.imageIv);
 
+        //initialising tags layout
+        tagsLayout = findViewById(R.id.tagsLayout);
+        tagsEditText = findViewById(R.id.tagsET);
+
         //onCLick for upload button
         uploadButton.setOnClickListener(v -> {
             String title = titleEt.getText().toString().trim();
             String description = descriptionEt.getText().toString().trim();
+            editedTags = tagsEditText.getText().toString();
+            String[] tagsArray = editedTags.split("\\s+"); // Split the string based on whitespace
 
             if(TextUtils.isEmpty(title)){
                 Toast.makeText(AddPostActivity.this,"Enter the title",Toast.LENGTH_SHORT).show();
@@ -104,6 +113,12 @@ public class AddPostActivity extends AppCompatActivity {
 
             else if(TextUtils.isEmpty(description)){
                 Toast.makeText(AddPostActivity.this,"Enter the description",Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Check if there are exactly 3 tags
+            else if (tagsArray.length != 3){
+                Toast.makeText(AddPostActivity.this,"Pls enter 3 tags only",Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -117,6 +132,7 @@ public class AddPostActivity extends AppCompatActivity {
         imageIv.setOnClickListener(v -> {
             ImagePicker.Companion.with(AddPostActivity.this).cropSquare().start();
         });
+
 
 
     }
@@ -148,7 +164,7 @@ public class AddPostActivity extends AppCompatActivity {
                     String downloadUrl = uriTask.getResult().toString();
                     if (uriTask.isSuccessful()){
                         //url is received then proceed with adding remaining fields
-                        modelPost postDetails = new modelPost(timeStamp, title, description, downloadUrl, timeStamp, uid, email, dp, name);
+                        modelPost postDetails = new modelPost(timeStamp, title, description, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
                         ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -159,6 +175,7 @@ public class AddPostActivity extends AppCompatActivity {
                                 //reset the views
                                 titleEt.setText("");
                                 descriptionEt.setText("");
+                                tagsEditText.setText("");
                                 imageIv.setImageResource(android.R.color.transparent);
                                 imagePath = null;
                             }
@@ -186,7 +203,7 @@ public class AddPostActivity extends AppCompatActivity {
         }
         else{
             String downloadUrl = "no_image";
-            modelPost postDetails = new modelPost(timeStamp, title, description, downloadUrl, timeStamp, uid, email, dp, name);
+            modelPost postDetails = new modelPost(timeStamp, title, description, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
             ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -197,6 +214,7 @@ public class AddPostActivity extends AppCompatActivity {
                             //reset the views
                             titleEt.setText("");
                             descriptionEt.setText("");
+                            tagsEditText.setText("");
                             imagePath = null;
                         }
                     })
@@ -237,7 +255,6 @@ public class AddPostActivity extends AppCompatActivity {
                 InputStream inputStream = getContentResolver().openInputStream(imagePath);
                 bitmap = BitmapFactory.decodeStream(inputStream, null, options);
 
-                // Now you can use the 'bitmap' in your ImageView or perform other operations.
                 imageIv.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
