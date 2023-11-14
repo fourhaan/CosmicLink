@@ -159,7 +159,7 @@ public class AddPostActivity extends AppCompatActivity {
                                 //reset the views
                                 titleEt.setText("");
                                 descriptionEt.setText("");
-                                imageIv.setImageURI(null);
+                                imageIv.setImageResource(android.R.color.transparent);
                                 imagePath = null;
                             }
                         })
@@ -197,7 +197,6 @@ public class AddPostActivity extends AppCompatActivity {
                             //reset the views
                             titleEt.setText("");
                             descriptionEt.setText("");
-                            imageIv.setImageURI(null);
                             imagePath = null;
                         }
                     })
