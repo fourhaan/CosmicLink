@@ -1,4 +1,4 @@
-package com.example.volunteerapp;
+package com.example.volunteerapp.Chat.Model;
 
 public class msgModelclass {
     String message;

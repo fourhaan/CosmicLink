@@ -1,12 +1,13 @@
-package com.example.volunteerapp;
+package com.example.volunteerapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.example.volunteerapp.R;
 
 public class ChoiceActivity extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public class ChoiceActivity extends AppCompatActivity {
         volunteerSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChoiceActivity.this,volunteerSignUpActivity.class);
+                Intent intent = new Intent(ChoiceActivity.this, VolunteerSignUpActivity.class);
                 startActivity(intent);
             }
         });
@@ -32,7 +33,7 @@ public class ChoiceActivity extends AppCompatActivity {
         organisationSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChoiceActivity.this,organisationSignUpActivity.class);
+                Intent intent = new Intent(ChoiceActivity.this, OrganisationSignUpActivity.class);
                 startActivity(intent);
             }
         });

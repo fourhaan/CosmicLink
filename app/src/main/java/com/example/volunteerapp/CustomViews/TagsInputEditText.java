@@ -1,16 +1,14 @@
-package com.example.volunteerapp;
+package com.example.volunteerapp.CustomViews;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -19,6 +17,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
+import com.example.volunteerapp.R;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputEditText;
 

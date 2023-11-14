@@ -1,4 +1,4 @@
-package com.example.volunteerapp;
+package com.example.volunteerapp.Chat.Model;
 
 public class Users {
     private String image_url, email, username, password, userId, lastMessage, status,fullname;

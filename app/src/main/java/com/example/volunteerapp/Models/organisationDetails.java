@@ -1,31 +1,37 @@
-package com.example.volunteerapp;
+package com.example.volunteerapp.Models;
 
-public class VolunteerDetails {
-    private String fullname, username,email, gender, dob, mobile, usertype, state, city, joining_date, bio, image_url,userId;
-
-    public VolunteerDetails(String TextuserName){
-        this.username = TextuserName;
-    }
+public class organisationDetails {
+    private String fullname,email,mobile,usertype,state,city,joining_date,org_type,bio,image_url,username,userId;
 
     // Constructor to initialize values
-    public VolunteerDetails(String TextfullName, String Textemail, String TextuserName, String Textgender, String Textdob, String TextmobileNo, String userType, String selectedState, String selectedCity,
-                            String joiningDate, String bio, String imgUrl, String userId) {
+    public organisationDetails(String TextfullName, String username , String Textemail, String TextmobileNo, String userType, String selectedState, String selectedCity, String joiningDate, String selectedOrgType, String bio, String imgUrl, String userId ) {
         this.fullname = TextfullName;
-        this.email = Textemail;
-        this.username = TextuserName;
-        this.gender = Textgender;
-        this.dob = Textdob;
         this.mobile = TextmobileNo;
+        this.email = Textemail;
+        this.username = username;
         this.usertype = userType;
         this.state = selectedState;
         this.city = selectedCity;
         this.joining_date = joiningDate;
+        this.org_type = selectedOrgType;
         this.bio = bio;
         this.image_url = imgUrl;
         this.userId = userId;
     }
 
-    // Getter and Setter methods for each field
+    // Getter and Setter methods for name_of_org
+    public String getEmail(){
+        return email;
+    }
+    public void setEmail(){
+        this.email = email;
+    }
+    public String getUsername(){
+        return username;
+    }
+    public void setUsername(String username){
+        this.username = username;
+    }
     public String getFullname() {
         return fullname;
     }
@@ -34,38 +40,7 @@ public class VolunteerDetails {
         this.fullname = fullname;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
+    // Getter and Setter methods for mobile
     public String getMobile() {
         return mobile;
     }
@@ -74,6 +49,7 @@ public class VolunteerDetails {
         this.mobile = mobile;
     }
 
+    // Getter and Setter methods for usertype
     public String getUsertype() {
         return usertype;
     }
@@ -82,6 +58,7 @@ public class VolunteerDetails {
         this.usertype = usertype;
     }
 
+    // Getter and Setter methods for state
     public String getState() {
         return state;
     }
@@ -90,6 +67,7 @@ public class VolunteerDetails {
         this.state = state;
     }
 
+    // Getter and Setter methods for city
     public String getCity() {
         return city;
     }
@@ -98,6 +76,7 @@ public class VolunteerDetails {
         this.city = city;
     }
 
+    // Getter and Setter methods for joining_date
     public String getJoining_date() {
         return joining_date;
     }
@@ -106,6 +85,16 @@ public class VolunteerDetails {
         this.joining_date = joining_date;
     }
 
+    // Getter and Setter methods for org_type
+    public String getOrg_type() {
+        return org_type;
+    }
+
+    public void setOrg_type(String org_type) {
+        this.org_type = org_type;
+    }
+
+    // Getter and Setter methods for bio
     public String getBio() {
         return bio;
     }
@@ -114,6 +103,7 @@ public class VolunteerDetails {
         this.bio = bio;
     }
 
+    // Getter and Setter methods for image_url
     public String getImage_url() {
         return image_url;
     }
@@ -128,5 +118,5 @@ public class VolunteerDetails {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-}
 
+}

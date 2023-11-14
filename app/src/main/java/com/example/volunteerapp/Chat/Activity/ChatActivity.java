@@ -1,4 +1,4 @@
-package com.example.volunteerapp;
+package com.example.volunteerapp.Chat.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,14 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 
+import com.example.volunteerapp.Activities.LoginActivity;
+import com.example.volunteerapp.R;
+import com.example.volunteerapp.Chat.Adapter.UserAdpter;
+import com.example.volunteerapp.Chat.Model.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +26,7 @@ public class ChatActivity extends AppCompatActivity{
 
     FirebaseAuth auth;
     RecyclerView mainUserRecyclerView;
-    UserAdpter  adapter;
+    UserAdpter adapter;
     FirebaseDatabase database;
     ArrayList<Users> usersArrayList;
 
@@ -69,7 +68,7 @@ public class ChatActivity extends AppCompatActivity{
         });
 
         if (auth.getCurrentUser() == null){
-            Intent intent = new Intent(ChatActivity.this,LoginActivity.class);
+            Intent intent = new Intent(ChatActivity.this, LoginActivity.class);
             startActivity(intent);
         }
 

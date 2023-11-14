@@ -1,4 +1,4 @@
-package com.example.volunteerapp;
+package com.example.volunteerapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -8,17 +8,15 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.example.volunteerapp.Fragment.VolBookmarkFragment;
-import com.example.volunteerapp.Fragment.VolHomeFragment;
-import com.example.volunteerapp.Fragment.VolMapFragment;
-import com.example.volunteerapp.Fragment.VolProfileFragment;
+import com.example.volunteerapp.Chat.Activity.ChatActivity;
+import com.example.volunteerapp.Fragments.VolBookmarkFragment;
+import com.example.volunteerapp.Fragments.VolHomeFragment;
+import com.example.volunteerapp.Fragments.VolMapFragment;
+import com.example.volunteerapp.Fragments.VolProfileFragment;
+import com.example.volunteerapp.R;
 import com.example.volunteerapp.databinding.ActivityVolunteerLandingPageBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class VolunteerLandingPageActivity extends AppCompatActivity {
 

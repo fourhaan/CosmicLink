@@ -1,4 +1,4 @@
-package com.example.volunteerapp;
+package com.example.volunteerapp.Chat.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.volunteerapp.Chat.Activity.ChatActivity;
+import com.example.volunteerapp.Chat.Activity.chatwindo;
+import com.example.volunteerapp.R;
+import com.example.volunteerapp.Chat.Model.Users;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

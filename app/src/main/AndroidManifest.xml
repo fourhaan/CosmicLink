@@ -13,40 +13,40 @@
         android:theme="@style/Theme.VolunteerApp"
         tools:targetApi="31">
         <activity
-            android:name=".messagesAdpter"
+            android:name=".Chat.Adapter.messagesAdpter"
             android:exported="false" />
         <activity
-            android:name=".chatwindo"
+            android:name=".Chat.Activity.chatwindo"
             android:exported="false" />
         <activity
-            android:name=".SearchChatActivity"
+            android:name=".Activities.SearchChatActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".Chat.Activity.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".OrganisationLandingPageActivity"
+            android:name=".Activities.OrganisationLandingPageActivity"
             android:exported="false" />
         <activity
-            android:name=".organisationSignUpActivity"
+            android:name=".Activities.OrganisationSignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".VolunteerLandingPageActivity"
+            android:name=".Activities.VolunteerLandingPageActivity"
             android:exported="false" />
         <activity
-            android:name=".volunteerSignUpActivity"
+            android:name=".Activities.VolunteerSignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ChoiceActivity"
+            android:name=".Activities.ChoiceActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".Activities.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

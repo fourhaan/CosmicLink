@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ECE5E5"
     android:orientation="vertical"
-    tools:context=".Fragment.OrgProfileFragment">
+    tools:context=".Fragments.OrgProfileFragment">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -562,7 +562,7 @@
                                     android:enabled="false"
                                     app:boxCornerRadiusBottomEnd="10sp">
 
-                                    <com.example.volunteerapp.TagsInputEditText
+                                    <com.example.volunteerapp.CustomViews.TagsInputEditText
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"
