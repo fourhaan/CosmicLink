@@ -3,6 +3,9 @@ package com.example.volunteerapp.Models;
 public class organisationDetails {
     private String fullname,email,mobile,usertype,state,city,joining_date,org_type,bio,image_url,username,userId;
 
+    organisationDetails(){
+
+    }
     // Constructor to initialize values
     public organisationDetails(String TextfullName, String username , String Textemail, String TextmobileNo, String userType, String selectedState, String selectedCity, String joiningDate, String selectedOrgType, String bio, String imgUrl, String userId ) {
         this.fullname = TextfullName;

@@ -1,4 +1,4 @@
-package com.example.volunteerapp.Activities;
+package com.example.volunteerapp.Chat.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,10 @@
         android:roundIcon="@drawable/logorocket"
         android:supportsRtl="true"
         android:theme="@style/Theme.VolunteerApp"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".Activities.AddPostActivity"
+            android:exported="false" />
         <activity
             android:name=".Chat.Adapter.messagesAdpter"
             android:exported="false" />
@@ -19,7 +22,7 @@
             android:name=".Chat.Activity.chatwindo"
             android:exported="false" />
         <activity
-            android:name=".Activities.SearchChatActivity"
+            android:name=".Chat.Activity.SearchChatActivity"
             android:exported="false" />
         <activity
             android:name=".Chat.Activity.ChatActivity"
@@ -47,7 +50,7 @@
             android:exported="false" />
         <activity
             android:name=".Activities.SplashScreen"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

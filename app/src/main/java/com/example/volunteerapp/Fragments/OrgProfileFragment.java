@@ -258,7 +258,6 @@ public class OrgProfileFragment extends Fragment {
                 InputStream inputStream = getContext().getContentResolver().openInputStream(imagePath);
                 bitmap = BitmapFactory.decodeStream(inputStream, null, options);
 
-                // Now you can use the 'bitmap' in your ImageView or perform other operations.
                 profileImageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -308,7 +307,7 @@ public class OrgProfileFragment extends Fragment {
     private Bitmap compressImage() {
         // Decode the image with options to scale down
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 2; // Adjust this value based on your compression needs
+        options.inSampleSize = 2;
 
         Bitmap compressedBitmap = null;
 
