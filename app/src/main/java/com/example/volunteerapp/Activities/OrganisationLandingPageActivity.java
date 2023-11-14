@@ -1,4 +1,4 @@
-package com.example.volunteerapp;
+package com.example.volunteerapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -8,15 +8,15 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.example.volunteerapp.Fragment.OrgBookmarkFragment;
-import com.example.volunteerapp.Fragment.OrgHomeFragment;
-import com.example.volunteerapp.Fragment.OrgMapFragment;
-import com.example.volunteerapp.Fragment.OrgProfileFragment;
+import com.example.volunteerapp.Chat.Activity.ChatActivity;
+import com.example.volunteerapp.Fragments.OrgBookmarkFragment;
+import com.example.volunteerapp.Fragments.OrgHomeFragment;
+import com.example.volunteerapp.Fragments.OrgMapFragment;
+import com.example.volunteerapp.Fragments.OrgProfileFragment;
 
+import com.example.volunteerapp.R;
 import com.example.volunteerapp.databinding.ActivityOrganisationLandingPageBinding;
 
 

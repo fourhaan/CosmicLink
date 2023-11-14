@@ -1,8 +1,8 @@
-package com.example.volunteerapp;
+package com.example.volunteerapp.Chat.Adapter;
 
 
-import static com.example.volunteerapp.chatwindo.reciverIImg;
-import static com.example.volunteerapp.chatwindo.senderImg;
+import static com.example.volunteerapp.Chat.Activity.chatwindo.reciverIImg;
+import static com.example.volunteerapp.Chat.Activity.chatwindo.senderImg;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.volunteerapp.R;
+import com.example.volunteerapp.Chat.Model.msgModelclass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 

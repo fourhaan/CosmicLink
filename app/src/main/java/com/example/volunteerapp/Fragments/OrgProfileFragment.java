@@ -1,4 +1,4 @@
-package com.example.volunteerapp.Fragment;
+package com.example.volunteerapp.Fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -22,9 +22,9 @@ import androidx.annotation.Nullable;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.volunteerapp.MainActivity;
+import com.example.volunteerapp.Activities.MainActivity;
 import com.example.volunteerapp.R;
-import com.example.volunteerapp.TagsInputEditText;
+import com.example.volunteerapp.CustomViews.TagsInputEditText;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,10 +43,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-public class VolProfileFragment extends Fragment {
+public class OrgProfileFragment extends Fragment {
     private Button logoutButton;
-    private TextView fullnameTextView, usernameTextView, joiningdateTextView, mobileTextView, locationTextView, emailTextView, editSkills, editBio;
-    private EditText bioEditText;
+    private TextView fullnameTextView, joiningdateTextView, mobileTextView, locationTextView, emailTextView, editSkills, editBio, editContact, editOrgType;
+    private EditText bioEditText, mobile2EditText, email2EditText, orgTypeEditText;
     private ImageView profileImageView;
     private ProgressBar profileProgressBar;
     private TextInputLayout tagsLayout;
@@ -55,20 +55,21 @@ public class VolProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_vol_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_org_profile, container, false);
 
         // Initialize all the XML elements
-        logoutButton = view.findViewById(R.id.vol_profile_log_out);
-        fullnameTextView = view.findViewById(R.id.vol_profile_name);
-        usernameTextView = view.findViewById(R.id.vol_profile_username);
-        emailTextView = view.findViewById(R.id.vol_profile_email);
-        joiningdateTextView = view.findViewById(R.id.vol_profile_joining_date);
-        bioEditText = view.findViewById(R.id.vol_profile_bio);
-        mobileTextView = view.findViewById(R.id.vol_profile_mobile);
-        profileImageView = view.findViewById(R.id.vol_profile_image);
-        locationTextView = view.findViewById(R.id.vol_profile_location);
-        profileProgressBar = view.findViewById(R.id.vol_profile_ProgressBar);
-        editBio = view.findViewById(R.id.edit_vol_bio);
+        logoutButton = view.findViewById(R.id.org_profile_log_out);
+        fullnameTextView = view.findViewById(R.id.org_profile_name);
+        emailTextView = view.findViewById(R.id.org_profile_email);
+        joiningdateTextView = view.findViewById(R.id.org_profile_joining_date);
+        bioEditText = view.findViewById(R.id.org_profile_bio);
+        mobileTextView = view.findViewById(R.id.org_profile_mobile);
+        profileImageView = view.findViewById(R.id.org_profile_image);
+        locationTextView = view.findViewById(R.id.org_profile_location);
+        orgTypeEditText = view.findViewById(R.id.org_profile_type);
+        profileProgressBar = view.findViewById(R.id.org_profile_ProgressBar);
+        editBio = view.findViewById(R.id.edit_org_bio);
+        editContact = view.findViewById(R.id.edit_org_contact);
 
         // Hide the progressbar and content initially
         profileProgressBar.setVisibility(View.GONE);
@@ -77,7 +78,7 @@ public class VolProfileFragment extends Fragment {
         //initialising tags layout
         tagsLayout = view.findViewById(R.id.tagsLayout);
         tagsEditText = view.findViewById(R.id.tagsET);
-        editSkills = view.findViewById(R.id.edit_vol_skills);
+        editSkills = view.findViewById(R.id.edit_org_skills);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,25 +110,25 @@ public class VolProfileFragment extends Fragment {
                 public void onDataChange(DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         String fullName = snapshot.child("fullname").getValue(String.class);
-                        String userName = snapshot.child("username").getValue(String.class);
                         String profileImageUrl = snapshot.child("image_url").getValue(String.class);
                         String bio = snapshot.child("bio").getValue(String.class);
                         String joiningDate = snapshot.child("joining_date").getValue(String.class);
                         String mobileNo = snapshot.child("mobile").getValue(String.class);
                         String email = snapshot.child("email").getValue(String.class);
                         String city = snapshot.child("city").getValue(String.class);
+                        String orgType = snapshot.child("org_type").getValue(String.class);
                         String state = snapshot.child("state").getValue(String.class);
                         String location = city + ", " + state;
                         String tags = snapshot.child("tags").getValue(String.class);
 
                         // Set the retrieved data to the TextViews
                         fullnameTextView.setText(fullName);
-                        usernameTextView.setText("@"+userName);
                         bioEditText.setText(bio);
                         joiningdateTextView.setText(joiningDate);
                         mobileTextView.setText("+91-"+mobileNo);
                         emailTextView.setText(email);
                         locationTextView.setText(location);
+                        orgTypeEditText.setText(orgType);
 
                         //set tags to tagsEditText
                         tagsEditText.setText(tags);
@@ -160,7 +161,7 @@ public class VolProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Use ImagePicker library to pick an image
-                ImagePicker.Companion.with(VolProfileFragment.this).cropSquare().start();
+                ImagePicker.Companion.with(OrgProfileFragment.this).cropSquare().start();
             }
         });
 
