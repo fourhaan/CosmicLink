@@ -18,12 +18,14 @@ import com.example.volunteerapp.Fragment.VolMapFragment;
 import com.example.volunteerapp.Fragment.VolProfileFragment;
 import com.example.volunteerapp.databinding.ActivityVolunteerLandingPageBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class VolunteerLandingPageActivity extends AppCompatActivity {
 
     ActivityVolunteerLandingPageBinding binding;
     private ImageView chatClick;
+    private FloatingActionButton searchClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +40,25 @@ public class VolunteerLandingPageActivity extends AppCompatActivity {
 
         chatClick = binding.chatVol;
 
+
         chatClick.setOnClickListener(v -> {
             Intent intent = new Intent(VolunteerLandingPageActivity.this, ChatActivity.class);
             startActivity(intent);
         });
+
+        // Inside your onCreate method
+        searchClick = findViewById(R.id.floating_action_button_vol);
+        searchClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create an Intent to open the new activity
+                Intent intent = new Intent(VolunteerLandingPageActivity.this, SearchActivity.class);
+
+                // Start the new activity
+                startActivity(intent);
+            }
+        });
+
 
         // Starting at Home fragment that is the feed
         replaceFragment(new VolHomeFragment());

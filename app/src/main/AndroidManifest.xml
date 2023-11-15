@@ -13,6 +13,9 @@
         android:theme="@style/Theme.VolunteerApp"
         tools:targetApi="31">
         <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".messagesAdpter"
             android:exported="false" />
         <activity
