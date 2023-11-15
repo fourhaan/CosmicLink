@@ -18,12 +18,14 @@ import com.example.volunteerapp.Fragments.OrgProfileFragment;
 
 import com.example.volunteerapp.R;
 import com.example.volunteerapp.databinding.ActivityOrganisationLandingPageBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class OrganisationLandingPageActivity extends AppCompatActivity {
 
     ActivityOrganisationLandingPageBinding binding;
     private ImageView chatClick;
+    private FloatingActionButton addPost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +37,18 @@ public class OrganisationLandingPageActivity extends AppCompatActivity {
         //to hide the bottom system nav bar.
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
+        //chat button on top of framelayout
         chatClick = binding.chatOrg;
 
         chatClick.setOnClickListener(v -> {
             Intent intent = new Intent(OrganisationLandingPageActivity.this, ChatActivity.class);
+            startActivity(intent);
+        });
+
+        addPost = binding.floatingActionButtonOrg;
+
+        addPost.setOnClickListener(v -> {
+            Intent intent = new Intent(OrganisationLandingPageActivity.this, AddPostActivity.class);
             startActivity(intent);
         });
 

@@ -3,6 +3,9 @@ package com.example.volunteerapp.Models;
 public class volunteerDetails {
     private String fullname, username,email, gender, dob, mobile, usertype, state, city, joining_date, bio, image_url,userId;
 
+    volunteerDetails(){
+
+    }
     public volunteerDetails(String TextuserName){
         this.username = TextuserName;
     }
