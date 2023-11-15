@@ -1,7 +1,6 @@
-package com.example.volunteerapp;
+package com.example.volunteerapp.Adapter;
 
 import android.content.Context;
-import android.graphics.ColorSpace;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.volunteerapp.Models.modelPost;
+import com.example.volunteerapp.R;
 import com.squareup.picasso.Picasso;
 
 
@@ -66,7 +66,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
         //Set postImage
         //If there is no image
-        if(pImage.equals("noImage")){
+        if(pImage.equals("no_image")){
             //To hide imageview
             holder.postImg.setVisibility(View.GONE);
         }
@@ -89,12 +89,6 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Interested", Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.shareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -124,8 +118,6 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             interested = itemView.findViewById(R.id.interested);
             moreBtn = itemView.findViewById(R.id.moreBtn);
             interestedBtn = itemView.findViewById(R.id.interestedBtn);
-            commentBtn = itemView.findViewById(R.id.commentBtn);
-            shareBtn = itemView.findViewById(R.id.shareBtn);
         }
     }
 }
