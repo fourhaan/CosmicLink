@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "598316097840",
+    "firebase_url": "https://volunteerapp-f6acb-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "volunteerapp-f6acb",
+    "storage_bucket": "volunteerapp-f6acb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598316097840:android:fa21569d190ff2d7d628f5",
+        "android_client_info": {
+          "package_name": "com.example.volunteerapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn6KSbE9qYs_01mqJijDAaluYt6FTXbzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

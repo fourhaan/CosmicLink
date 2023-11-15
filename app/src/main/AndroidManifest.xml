@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/logorocket"
+        android:label="CosmicLink"
+        android:roundIcon="@drawable/logorocket"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.VolunteerApp"
+        tools:targetApi="31" >
+        <activity
+            android:name=".Activities.AddPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Chat.Adapter.messagesAdpter"
+            android:exported="false" />
+        <activity
+            android:name=".Chat.Activity.chatwindo"
+            android:exported="false" />
+        <activity
+            android:name=".Chat.Activity.SearchChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Chat.Activity.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.OrganisationLandingPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.OrganisationSignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.VolunteerLandingPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.VolunteerSignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ChoiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.SplashScreen"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>
