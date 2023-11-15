@@ -68,11 +68,12 @@
             android:text="The description of the Work"
             android:textSize="16dp"/>
 
-        <TextView
+        <ImageView
             android:id="@+id/postImg"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:textSize="16dp"/>
+            android:textSize="16dp" />
+
         <TextView
             android:id="@+id/interested"
             android:layout_width="match_parent"
@@ -98,21 +99,7 @@
                 android:padding="5dp"
                 android:drawableLeft="@drawable/ic_thumbsup"
                 android:text="I am Interested"/>
-            <Button
-                android:id="@+id/commentBtn"
-                android:layout_width="wrap_content"
-                android:padding="5dp"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_comment"
-                android:layout_weight="1"
-                android:text="Comment"/>
-            <Button
-                android:id="@+id/shareBtn"
-                android:drawableLeft="@drawable/ic_shareimg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Share"/>
+
 
         </LinearLayout>
     </LinearLayout>
