@@ -11,6 +11,11 @@
         android:text="Home"
         android:textSize="100sp"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/postsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
 
 </FrameLayout>

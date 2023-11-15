@@ -23,7 +23,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/picture"
                 android:scaleType="centerCrop"
-                android:src="@drawable/pfp_person"
+                android:src="@drawable/ic_profile"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
             <LinearLayout
