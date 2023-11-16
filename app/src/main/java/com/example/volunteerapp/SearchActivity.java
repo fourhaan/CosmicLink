@@ -63,6 +63,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle errors
+
             }
         });
 
