@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:text="Add A Post!"
             android:textStyle="bold"
+            android:textColor="@color/black2.0"
             android:textSize="25sp"
             android:gravity="center"
             android:minHeight="50dp" />

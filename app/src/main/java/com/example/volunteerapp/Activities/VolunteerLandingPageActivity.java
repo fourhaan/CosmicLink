@@ -32,7 +32,7 @@ public class VolunteerLandingPageActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         //to hide the bottom system nav bar.
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         chatClick = binding.chatVol;
 

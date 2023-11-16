@@ -13,7 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="240dp"
-            android:background="@drawable/sky00" />
+            android:background="@drawable/sky3" />
 
         <!--Top Header Layout-->
         <LinearLayout
@@ -81,7 +81,7 @@
                             android:id="@+id/org_profile_image"
                             android:layout_height="150dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/sky" />
+                            android:src="@color/white" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -409,6 +409,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20dp"
                                     android:text="mobile no. 2"
+                                    android:enabled="false"
                                     android:inputType="phone"
                                     android:background="@null"
                                     android:id="@+id/org_profile_mobile2"
@@ -465,6 +466,7 @@
                                     android:layout_marginLeft="20dp"
                                     android:textColor="@color/goodgrey"
                                     android:text="email no. 2"
+                                    android:enabled="false"
                                     android:id="@+id/ord_profile_email2"
                                     android:inputType="textEmailAddress"
                                     android:background="@null"

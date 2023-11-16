@@ -1,7 +1,6 @@
-package com.example.volunteerapp;
+package com.example.volunteerapp.Adapters;
 
 import android.content.Context;
-import android.graphics.ColorSpace;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.volunteerapp.CustomViews.TagsInputEditText;
 import com.example.volunteerapp.Models.modelPost;
+import com.example.volunteerapp.R;
+import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
 
 
@@ -26,6 +28,7 @@ import java.util.Locale;
 public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     Context context;
     List<modelPost> postList;
+
 
     public AdapterPosts(Context context, List<modelPost> postList) {
         this.context = context;
@@ -52,6 +55,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String pDescription = postList.get(position).getpDescr();
         String pImage = postList.get(position).getpImage();
         String pTimeStamp = postList.get(position).getpTime();
+        String pTags = postList.get(position).getpTags();
 
         //Convert timestamp to dd/mm/yyyy hh:mm am/pm
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
@@ -64,15 +68,23 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.title.setText(pTitle);
         holder.description.setText(pDescription);
 
+        //adding the three tags to 3 buttons
+        String[] tagsArray = pTags.split(" ");
+        holder.tag1.setText(tagsArray[0]);
+        holder.tag2.setText(tagsArray[1]);
+        holder.tag3.setText(tagsArray[2]);
+
         //Set postImage
         //If there is no image
-        if(pImage.equals("noImage")){
+        if(pImage.equals("no_image")){
             //To hide imageview
             holder.postImg.setVisibility(View.GONE);
+            Picasso.get().load(uDp).into(holder.picture);
         }
         else {
             try {
                 Picasso.get().load(pImage).into(holder.postImg);
+                Picasso.get().load(uDp).into(holder.picture);
             } catch (Exception e) {
 
             }
@@ -91,12 +103,12 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 Toast.makeText(context, "Interested", Toast.LENGTH_SHORT).show();
             }
         });
-        holder.shareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        holder.shareBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override
@@ -111,7 +123,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         ImageView picture,postImg;
         TextView displayName,postTime,title,description,interested;
         ImageButton moreBtn;
-        Button interestedBtn,commentBtn,shareBtn;
+        Button interestedBtn,commentBtn,shareBtn,tag1,tag2,tag3;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -124,8 +136,11 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             interested = itemView.findViewById(R.id.interested);
             moreBtn = itemView.findViewById(R.id.moreBtn);
             interestedBtn = itemView.findViewById(R.id.interestedBtn);
-            commentBtn = itemView.findViewById(R.id.commentBtn);
-            shareBtn = itemView.findViewById(R.id.shareBtn);
+//            commentBtn = itemView.findViewById(R.id.commentBtn);
+//            shareBtn = itemView.findViewById(R.id.shareBtn);
+            tag1 = itemView.findViewById(R.id.tag1);
+            tag2 = itemView.findViewById(R.id.tag2);
+            tag3 = itemView.findViewById(R.id.tag3);
         }
     }
 }

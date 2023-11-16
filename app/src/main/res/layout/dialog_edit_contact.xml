@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <EditText
+            android:id="@+id/mobile2EditTextDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="2nd Mobile Number"
+            android:inputType="phone"/>
+
+        <EditText
+            android:id="@+id/email2EditTextDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="2nd Email Address"
+            android:inputType="textEmailAddress"/>
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save" />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

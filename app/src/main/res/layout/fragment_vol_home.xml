@@ -5,11 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.VolHomeFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Home"
-        android:textSize="100sp"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/postsRecyclerView"

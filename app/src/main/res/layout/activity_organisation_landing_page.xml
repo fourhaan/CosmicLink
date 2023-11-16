@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@drawable/sky3"
     tools:context=".Activities.OrganisationLandingPageActivity">
 
     <LinearLayout
@@ -20,6 +20,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
             android:text="CosmicLink"
             android:textColor="@color/white"
             android:padding="5dp"
@@ -35,8 +37,8 @@
             android:padding="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
+            android:scaleX="1.25"
+            android:scaleY="1.25"
             />
     </LinearLayout>
 
@@ -71,9 +73,9 @@
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavigationViewOrg"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="72dp"
                 android:layout_marginEnd="20dp"
-                app:labelVisibilityMode="selected"
+                app:labelVisibilityMode="labeled"
                 android:background="@android:color/transparent"
                 app:menu="@menu/bottom_navigation_menu_vol" />
         </com.google.android.material.bottomappbar.BottomAppBar>
@@ -82,11 +84,10 @@
             android:id="@+id/floating_action_button_org"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/darkGrey"
-            android:src="@drawable/baseline_add_to_photos_24"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/baseline_add_box_24"
             app:layout_anchor="@id/bottomAppBarOrg"
             app:maxImageSize="40dp"
-            app:tint="@color/lightGrey"
             android:layout_marginBottom="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
