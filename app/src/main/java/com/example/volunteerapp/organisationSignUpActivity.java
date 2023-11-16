@@ -397,6 +397,9 @@ public class organisationSignUpActivity extends AppCompatActivity {
     //registering a user to firebase database
     private void registerUser(String TextfullName,String Textemail,String TextmobileNo,String Textpwd){
         FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference userNamereference = db.getReference();
         String bio = "";
         String username = TextfullName;
         String imgUrl = "https://firebasestorage.googleapis.com/v0/b/volunteerapp-f6acb.appspot.com/o/placeholder.png?alt=media&token=6cac78e0-6d59-44cd-a844-d4bb8ca1727d";
@@ -419,6 +422,9 @@ public class organisationSignUpActivity extends AppCompatActivity {
                             //to confirm the user is registered use a confirmation email
                             //send confirm email
                             if (task.isSuccessful()) {
+
+                                userNamereference.child(TextfullName).setValue(regUser.getEmail());
+
                                 regUser.sendEmailVerification();
                                 Toast.makeText(organisationSignUpActivity.this, "Registration was successful. Please verify your email address.", Toast.LENGTH_LONG).show();
 
