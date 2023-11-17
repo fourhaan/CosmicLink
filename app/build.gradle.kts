@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -48,6 +49,12 @@ dependencies {
     implementation("com.google.firebase:firebase-database:20.3.0")
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.google.firebase:firebase-messaging:23.3.1")
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.karumi:dexter:6.2.2")
+    //Zxing library for qrcode and qrcode scanner
+    implementation("com.google.zxing:core:3.4.1")
+    implementation("com.journeyapps:zxing-android-embedded:4.2.0")
+    implementation ("com.github.yuriy-budiyev:code-scanner:2.3.2")
     //chatapp implementations
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.intuit.ssp:ssp-android:1.0.5")

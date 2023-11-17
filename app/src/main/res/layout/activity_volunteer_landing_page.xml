@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@drawable/sky3"
     tools:context=".Activities.VolunteerLandingPageActivity">
 
     <LinearLayout
@@ -20,12 +20,26 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginTop="8dp"
             android:text="CosmicLink"
             android:textColor="@color/white"
             android:padding="5dp"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/megrim"
+            android:textStyle="bold"
             android:textSize="25sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_add_location_24_white"
+            android:padding="10dp"
+            android:id="@+id/location_vol"
+            android:clickable="true"
+            android:layout_marginTop="5dp"
+            android:scaleX="1.25"
+            android:scaleY="1.25"
+            />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -36,8 +50,8 @@
             android:layout_marginRight="10dp"
             android:clickable="true"
             android:layout_marginTop="5dp"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
+            android:scaleX="1.25"
+            android:scaleY="1.25"
             />
     </LinearLayout>
 
@@ -60,22 +74,20 @@
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBarVol"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="72dp"
             android:layout_gravity="bottom"
             android:background="@color/white"
-            app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="10dp"
-            app:fabCradleVerticalOffset="10dp"
             app:fabAlignmentMode="center"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavigationViewVol"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:itemIconTint="@color/white"
+                app:itemTextColor="@color/white"
                 android:layout_marginEnd="20dp"
-                app:labelVisibilityMode="selected"
-                android:background="@android:color/transparent"
+                app:labelVisibilityMode="labeled"
                 app:menu="@menu/bottom_navigation_menu_vol" />
         </com.google.android.material.bottomappbar.BottomAppBar>
 
@@ -83,14 +95,12 @@
             android:id="@+id/floating_action_button_vol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/darkGrey"
             android:src="@drawable/baseline_search_24"
-            app:layout_anchor="@id/bottomAppBarVol"
+            android:backgroundTint="@android:color/transparent"
             app:maxImageSize="40dp"
-            app:tint="@color/lightGrey"
-            android:layout_marginBottom="15dp"
+            app:layout_anchor="@id/bottomAppBarVol"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/bottomAppBarVol"  />
+            app:layout_constraintBottom_toBottomOf="@id/bottomAppBarVol" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

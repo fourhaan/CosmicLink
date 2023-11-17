@@ -7,13 +7,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.example.volunteerapp.Chat.Activity.ChatActivity;
 import com.example.volunteerapp.Fragments.OrgBookmarkFragment;
 import com.example.volunteerapp.Fragments.OrgHomeFragment;
-import com.example.volunteerapp.Fragments.OrgMapFragment;
+import com.example.volunteerapp.Fragments.OrgQrFragment;
 import com.example.volunteerapp.Fragments.OrgProfileFragment;
 
 import com.example.volunteerapp.R;
@@ -35,7 +34,7 @@ public class OrganisationLandingPageActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         //to hide the bottom system nav bar.
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         //chat button on top of framelayout
         chatClick = binding.chatOrg;
@@ -62,8 +61,8 @@ public class OrganisationLandingPageActivity extends AppCompatActivity {
                 replaceFragment(new OrgHomeFragment());
             } else if (itemId == R.id.bookmark) {
                 replaceFragment(new OrgBookmarkFragment());
-            } else if (itemId == R.id.map) {
-                replaceFragment(new OrgMapFragment());
+            } else if (itemId == R.id.QR) {
+                replaceFragment(new OrgQrFragment());
             } else if (itemId == R.id.profile) {
                 replaceFragment(new OrgProfileFragment());
             }

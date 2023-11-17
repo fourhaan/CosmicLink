@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ECE5E5"
     android:orientation="vertical"
-    tools:context=".Fragments.VolProfileFragment">
+    tools:context=".Activities.ProfileViews.OrgProfileView">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:background="@drawable/sky3" />
-
         <!--Top Header Layout-->
         <LinearLayout
             android:id="@+id/topbar"
@@ -52,6 +51,7 @@
             android:scrollbars="none"
             android:layout_below="@+id/topbar">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -77,7 +77,7 @@
 
                         <ImageView
                             android:layout_width="150dp"
-                            android:id="@+id/vol_profile_image"
+                            android:id="@+id/org_profile_image"
                             android:layout_height="150dp"
                             android:scaleType="centerCrop"
                             android:src="@color/white" />
@@ -89,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <TextView
-                            android:id="@+id/vol_profile_name"
+                            android:id="@+id/org_profile_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -98,14 +98,6 @@
                             android:textColor="#424242"
                             android:textSize="21sp"
                             android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/vol_profile_username"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/proximanovaregular"
-                            android:text="username"
-                            android:textSize="14sp" />
 
 
                     </LinearLayout>
@@ -142,7 +134,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:id="@+id/vol_profile_joining_date"
+                                    android:id="@+id/org_profile_joining_date"
                                     android:text="date"
                                     android:textColor="@color/black2.0"
                                     android:layout_gravity="center"
@@ -151,6 +143,55 @@
                         </LinearLayout>
 
                     </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/circularbordersolid"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="We come under"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/edit_org_type"
+                            android:text="Edit"
+                            android:padding="5dp"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/org_profile_type"
+                        android:text="org type here"
+                        android:inputType="textMultiLine"
+                        android:textColor="@color/black2.0"
+                        android:background="@null"
+                        android:enabled="false"/>
+
                 </LinearLayout>
 
                 <!--&lt;!&ndash;Option Bar&ndash;&gt;
@@ -245,7 +286,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="About Me"
+                                    android:text="About Us"
                                     android:fontFamily="@font/proximanovaregular"
                                     android:textSize="17sp"
                                     android:textStyle="bold" />
@@ -255,28 +296,22 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Edit"
-                                    android:padding="5dp"
-                                    android:id="@+id/edit_vol_bio"
-                                    android:fontFamily="@font/proximanovaregular"
-                                    android:textColor="#FFCF66"
-                                    android:layout_marginEnd="10dp"
-                                    android:textSize="14sp" />
+
                             </LinearLayout>
 
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="10dp"
-                                android:id="@+id/vol_profile_bio"
+                                android:id="@+id/org_profile_bio"
                                 android:text="Bio here"
+                                android:enabled="false"
                                 android:inputType="textMultiLine"
                                 android:textColor="@color/black2.0"
                                 android:background="@null"/>
                         </LinearLayout>
+
+
 
                     </LinearLayout>
 
@@ -306,14 +341,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Edit"
-                                android:id="@+id/edit_vol_contact"
-                                android:textColor="#FAFAFA"
-                                android:layout_marginEnd="10dp"
-                                android:textSize="14sp" />
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -326,7 +354,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:paddingRight="8dp">
+                                android:paddingRight="8dp"
+                                android:visibility="gone">
 
                                 <ImageView
                                     android:layout_width="40dp"
@@ -340,10 +369,40 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20dp"
                                     android:text="mobile no"
-                                    android:id="@+id/vol_profile_mobile"
+                                    android:id="@+id/org_profile_mobile"
                                     android:textSize="15sp"
                                     android:textColor="@color/goodgrey"
                                     android:fontFamily="@font/proximanovaregular" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:layout_marginTop="10dp"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/circular_grey_bordersolid"
+                                    android:padding="10dp"
+                                    android:src="@drawable/baseline_call_24" />
+
+                                <EditText
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="mobile no. 2"
+                                    android:enabled="false"
+                                    android:inputType="phone"
+                                    android:background="@null"
+                                    android:id="@+id/org_profile_mobile2"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/goodgrey"
+                                    android:fontFamily="@font/proximanovaregular" />
+
                             </LinearLayout>
 
                             <LinearLayout
@@ -367,7 +426,37 @@
                                     android:layout_marginLeft="20dp"
                                     android:textColor="@color/goodgrey"
                                     android:text="email"
-                                    android:id="@+id/vol_profile_email"
+                                    android:id="@+id/org_profile_email"
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/proximanovaregular" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:visibility="gone"
+                                android:paddingRight="8dp">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/circular_grey_bordersolid"
+                                    android:padding="10dp"
+                                    android:scaleX="0.9"
+                                    android:src="@drawable/ic_email" />
+
+                                <EditText
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:textColor="@color/goodgrey"
+                                    android:text="email no. 2"
+                                    android:enabled="false"
+                                    android:id="@+id/ord_profile_email2"
+                                    android:inputType="textEmailAddress"
+                                    android:background="@null"
                                     android:textSize="15sp"
                                     android:fontFamily="@font/proximanovaregular" />
                             </LinearLayout>
@@ -391,13 +480,15 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20dp"
                                     android:text="city, state"
-                                    android:id="@+id/vol_profile_location"
+                                    android:id="@+id/org_profile_location"
                                     android:textSize="15sp"
                                     android:textColor="@color/goodgrey"
                                     android:fontFamily="@font/proximanovaregular" />
                             </LinearLayout>
 
                         </LinearLayout>
+
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -415,7 +506,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Skills"
+                                android:text="We are involved in"
                                 android:textSize="17sp"
                                 android:textStyle="bold" />
 
@@ -425,14 +516,6 @@
                                 android:layout_weight="1" />
 
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/edit_vol_skills"
-                                android:text="Edit"
-                                android:padding="5dp"
-                                android:textColor="#FFCF66"
-                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -473,23 +556,12 @@
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/vol_profile_log_out"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="70dp"
-                    android:text="Log Out"
-                    android:textColor="@color/black2.0"
-                    android:backgroundTint="@color/white"
-                    />
-
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
     </RelativeLayout>
     <ProgressBar
-        android:id="@+id/vol_profile_ProgressBar"
+        android:id="@+id/org_profile_ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black2.0"

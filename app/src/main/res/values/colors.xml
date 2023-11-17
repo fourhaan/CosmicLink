@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Background colors -->
+    <color name="colorPrimary">#000000</color> <!-- Black -->
+    <color name="colorPrimaryDark">#111111</color> <!-- Dark Gray -->
+    <color name="colorAccent">#3F51B5</color> <!-- Indigo -->
+
+    <!-- Text colors -->
+    <color name="textPrimary">#FFFFFF</color> <!-- White -->
+    <color name="textSecondary">#B3B3B3</color> <!-- Light Gray -->
+
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lavender">#8692f7</color>

@@ -216,6 +216,7 @@ public class AddPostActivity extends AppCompatActivity {
                             descriptionEt.setText("");
                             tagsEditText.setText("");
                             imagePath = null;
+                            imageIv.setImageDrawable(getDrawable(R.drawable.image_holder));
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

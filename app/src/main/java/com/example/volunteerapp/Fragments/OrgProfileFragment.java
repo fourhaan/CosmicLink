@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +22,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.volunteerapp.Activities.MainActivity;
+import com.example.volunteerapp.Activities.VolunteerSignUpActivity;
 import com.example.volunteerapp.R;
 import com.example.volunteerapp.CustomViews.TagsInputEditText;
 import com.github.dhaval2404.imagepicker.ImagePicker;
@@ -70,6 +74,8 @@ public class OrgProfileFragment extends Fragment {
         profileProgressBar = view.findViewById(R.id.org_profile_ProgressBar);
         editBio = view.findViewById(R.id.edit_org_bio);
         editContact = view.findViewById(R.id.edit_org_contact);
+        mobile2EditText = view.findViewById(R.id.org_profile_mobile2);
+        email2EditText = view.findViewById(R.id.ord_profile_email2);
 
         // Hide the progressbar and content initially
         profileProgressBar.setVisibility(View.GONE);
@@ -120,6 +126,8 @@ public class OrgProfileFragment extends Fragment {
                         String state = snapshot.child("state").getValue(String.class);
                         String location = city + ", " + state;
                         String tags = snapshot.child("tags").getValue(String.class);
+                        String mobileNo2 = snapshot.child("mobile_2").getValue(String.class);
+                        String email2 = snapshot.child("email_2").getValue(String.class);
 
                         // Set the retrieved data to the TextViews
                         fullnameTextView.setText(fullName);
@@ -129,6 +137,14 @@ public class OrgProfileFragment extends Fragment {
                         emailTextView.setText(email);
                         locationTextView.setText(location);
                         orgTypeEditText.setText(orgType);
+                        if(mobileNo2==null){
+                            mobile2EditText.setText("");
+                        }
+                        else{
+                            mobile2EditText.setText("+91-"+mobileNo2);
+                        }
+                        email2EditText.setText(email2);
+
 
                         //set tags to tagsEditText
                         tagsEditText.setText(tags);
@@ -184,10 +200,60 @@ public class OrgProfileFragment extends Fragment {
                 }
                 else {
                     tagsLayout.setHelperText("Enter each tag space-separated");
-                    tagsLayout.setHint("Edit your skills");
+                    tagsLayout.setHint("Edit your expertise");
                 }
             }
         });
+
+        editContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                LayoutInflater inflater = requireActivity().getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.dialog_edit_contact, null);
+                builder.setView(dialogView);
+
+                // Initialize views in the dialog
+                EditText mobile2EditTextDialog = dialogView.findViewById(R.id.mobile2EditTextDialog);
+                EditText email2EditTextDialog = dialogView.findViewById(R.id.email2EditTextDialog);
+                Button saveButton = dialogView.findViewById(R.id.saveButton);
+
+                // Set initial values
+                mobile2EditTextDialog.setText(mobile2EditText.getText().toString());
+                email2EditTextDialog.setText(email2EditText.getText().toString());
+
+                // Create and show the dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                // Handle the save button click
+                saveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Get the edited values from the dialog
+                        String editedMobile2 = mobile2EditTextDialog.getText().toString().trim();
+                        String editedEmail2 = email2EditTextDialog.getText().toString().trim();
+
+                        // Validate the edited values
+                        if (TextUtils.isEmpty(editedMobile2) || editedMobile2.length() != 10) {
+                            Toast.makeText(requireContext(), "Enter a valid phone number", Toast.LENGTH_SHORT).show();
+                        } else if (TextUtils.isEmpty(editedEmail2) || !Patterns.EMAIL_ADDRESS.matcher(editedEmail2).matches()) {
+                            Toast.makeText(requireContext(), "Enter a valid email address", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Update the UI and Firebase with the edited values
+                            mobile2EditText.setText(editedMobile2);
+                            email2EditText.setText(editedEmail2);
+                            updateContactinFirebase(editedMobile2, editedEmail2);
+
+                            // Dismiss the dialog
+                            dialog.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+
 
         editBio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +277,19 @@ public class OrgProfileFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void updateContactinFirebase(String mobile2,String email2){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser != null) {
+            String Uid = currentUser.getUid();
+            // Reference to the user's data in Firebase Realtime Database
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Registered Users").child(Uid);
+            // Update the contacts field in Firebase
+            userRef.child("mobile_2").setValue(mobile2);
+            userRef.child("email_2").setValue(email2);
+        }
     }
 
     private void updateTagsInFirebase(String editedTags) {
