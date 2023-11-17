@@ -8,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userimg"
@@ -39,6 +40,7 @@
                 android:layout_marginTop="@dimen/_7ssp"
                 android:layout_height="wrap_content"
                 android:text="full name"
+                android:textColor="@color/black2.0"
                 android:id="@+id/fullname"/>
 
 

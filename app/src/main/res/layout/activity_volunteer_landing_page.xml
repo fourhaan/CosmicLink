@@ -32,6 +32,18 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/baseline_add_location_24_white"
+            android:padding="10dp"
+            android:id="@+id/location_vol"
+            android:clickable="true"
+            android:layout_marginTop="5dp"
+            android:scaleX="1.25"
+            android:scaleY="1.25"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/baseline_chat_24_white"
             android:padding="10dp"
             android:id="@+id/chat_vol"
