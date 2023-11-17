@@ -77,7 +77,7 @@
                 android:layout_marginEnd="20dp"
                 app:labelVisibilityMode="labeled"
                 android:background="@android:color/transparent"
-                app:menu="@menu/bottom_navigation_menu_vol" />
+                app:menu="@menu/bottom_navigation_menu_org" />
         </com.google.android.material.bottomappbar.BottomAppBar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

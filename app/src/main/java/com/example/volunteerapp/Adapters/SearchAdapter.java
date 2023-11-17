@@ -1,6 +1,7 @@
-package com.example.volunteerapp.Chat.Adapter;
+package com.example.volunteerapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.volunteerapp.Activities.ProfileViews.OrgProfileView;
 import com.example.volunteerapp.Chat.Model.Users;
+import com.example.volunteerapp.Fragments.OrgProfileFragment;
 import com.example.volunteerapp.R;
 import com.example.volunteerapp.Activities.SearchActivity;
 import com.squareup.picasso.Picasso;
@@ -42,18 +45,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.viewholder
         holder.fullname.setText(users.getFullname());
         Picasso.get().load(users.getImage_url()).into(holder.userimg);
 
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent intent = new Intent(searchActivity, chatwindo.class);
-//                    intent.putExtra("fullname",users.getFullname());
-//                    intent.putExtra("reciverImg",users.getImage_url());
-//                    intent.putExtra("uid",users.getUserId());
-//                    searchActivity.startActivity(intent);
-//
-//                }
-//            }
-//            );
+        // Set OnClickListener to open the profile page
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the click event, open the profile page
+                Intent intent = new Intent(searchActivity, OrgProfileView.class);
+                intent.putExtra("userId", users.getUserId());
+                searchActivity.startActivity(intent);
+            }
+        });
 
     }
 

@@ -2,6 +2,7 @@ package com.example.volunteerapp.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.volunteerapp.Chat.Model.Users;
-import com.example.volunteerapp.Chat.Adapter.SearchAdapter;
+import com.example.volunteerapp.Adapters.SearchAdapter;
 import com.example.volunteerapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +27,7 @@ public class SearchActivity extends AppCompatActivity {
     SearchAdapter adapter;
     FirebaseDatabase database;
     ArrayList<Users> usersArrayList;
+    ImageButton qrCodeScan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,13 @@ public class SearchActivity extends AppCompatActivity {
                 performSearch(newText);
                 return true;
             }
+        });
+
+        qrCodeScan = findViewById(R.id.qr_code_scan_button);
+        qrCodeScan.setOnClickListener(v -> {
+            Intent intent = new Intent(SearchActivity.this, qrCodeScanner.class);
+            //            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         });
 
         reference.addValueEventListener(new ValueEventListener() {
