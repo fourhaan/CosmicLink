@@ -3,6 +3,7 @@ package com.example.volunteerapp.Activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.volunteerapp.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -55,7 +57,7 @@ public class VolLocationActivity extends AppCompatActivity implements OnMapReady
     private MapView mapView;
     private FloatingActionButton fab;
     private FusedLocationProviderClient mLocationClient;
-    private int GPS_REQUEST_CODE = 9001;
+    private final int GPS_REQUEST_CODE = 9001;
     private EditText locSearch;
     private ImageView searchIcon;
 
@@ -72,7 +74,9 @@ public class VolLocationActivity extends AppCompatActivity implements OnMapReady
         mLocationClient = new FusedLocationProviderClient(this);
 
         fab.setOnClickListener(v -> {
-            getCurrLoc();
+            if (isPermissionGranted) {
+                getCurrLoc();
+            }
         });
 
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -283,12 +287,6 @@ public class VolLocationActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
     }
 
     @Override
