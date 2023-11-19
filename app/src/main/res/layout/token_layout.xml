@@ -3,4 +3,4 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/chip"
-    style="@style/Widget.Material3.Chip.Input.Elevated"/>
+    style="@style/Widget.MaterialComponents.Chip.Action" />

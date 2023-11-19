@@ -6,6 +6,13 @@ public class organisationDetails {
     organisationDetails(){
 
     }
+    public organisationDetails(String TextfullName, String username , String imgUrl, String userId , String email){
+        this.fullname = TextfullName;
+        this.username = username;
+        this.image_url = imgUrl;
+        this.userId = userId;
+        this.email = email;
+    }
     // Constructor to initialize values
     public organisationDetails(String TextfullName, String username , String Textemail, String TextmobileNo, String userType, String selectedState, String selectedCity, String joiningDate, String selectedOrgType, String bio, String imgUrl, String userId ) {
         this.fullname = TextfullName;

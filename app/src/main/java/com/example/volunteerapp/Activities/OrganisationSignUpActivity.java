@@ -397,74 +397,73 @@ public class OrganisationSignUpActivity extends AppCompatActivity {
     }
 
     //registering a user to firebase database
-    private void registerUser(String TextfullName,String Textemail,String TextmobileNo,String Textpwd){
+    private void registerUser(String TextfullName, String Textemail, String TextmobileNo, String Textpwd) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String bio = "";
         String username = TextfullName;
         String imgUrl = "https://firebasestorage.googleapis.com/v0/b/volunteerapp-f6acb.appspot.com/o/placeholder.png?alt=media&token=6cac78e0-6d59-44cd-a844-d4bb8ca1727d";
-        auth.createUserWithEmailAndPassword(Textemail,Textpwd).addOnCompleteListener(OrganisationSignUpActivity.this, new OnCompleteListener<AuthResult>() {
+
+        auth.createUserWithEmailAndPassword(Textemail, Textpwd).addOnCompleteListener(OrganisationSignUpActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
-            //first onComplete method is to create data and get uid
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     FirebaseUser regUser = auth.getCurrentUser();
                     String userId = regUser.getUid();
-                    String userType = "organisation"; //set userType to organisation
+                    String userType = "organisation"; // set userType to organisation
 
-                    //next 2 lines are used to get data and get uid
-                    organisationDetails writeUserDetails = new organisationDetails(TextfullName,username,Textemail,TextmobileNo,userType,selectedState,selectedCity,joiningDate,selectedOrgType,bio,imgUrl,userId);
-                    //it creates a data node called registered volunteers under which the user data is stored.
+                    // Create an instance of the organisationDetails class
+                    organisationDetails writeUserDetails = new organisationDetails(TextfullName, username, Textemail, TextmobileNo, userType, selectedState, selectedCity, joiningDate, selectedOrgType, bio, imgUrl, userId);
+
+                    // Store user details under "Registered Users" node
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Registered Users");
                     reference.child(regUser.getUid()).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            //to confirm the user is registered use a confirmation email
-                            //send confirm email
                             if (task.isSuccessful()) {
+                                // Send email verification
                                 regUser.sendEmailVerification();
                                 Toast.makeText(OrganisationSignUpActivity.this, "Registration was successful. Please verify your email address.", Toast.LENGTH_LONG).show();
 
-                                //Open profile page after successful registration
+                                // Open profile page after successful registration
                                 Intent intent = new Intent(OrganisationSignUpActivity.this, OrganisationLandingPageActivity.class);
-                                //this make sures that if we registered then we cant go back to previous activities using back button
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
-                                finish(); //closes the registration activity
+                                finish(); // Close the registration activity
                             } else {
-                                Toast.makeText(OrganisationSignUpActivity.this, "Registration was unsuccessful. PLease try again.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(OrganisationSignUpActivity.this, "Registration was unsuccessful. Please try again.", Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.GONE);
                             }
                         }
                     });
-                }
-                else {
-                    //try is to used to make a code-block for testing errors
+
+                    // Store organisation details under "Organisations" node
+                    DatabaseReference organisationsReference = FirebaseDatabase.getInstance().getReference("Organisations");
+                    organisationDetails writeDetailsShort = new organisationDetails(TextfullName,username,imgUrl,userId,Textemail);
+                    organisationsReference.child(TextfullName).setValue(writeDetailsShort);
+
+                } else {
+                    // Handle registration errors
                     try {
-                        //throw is to used to create custom error depending exception type
-                        //throw here would get exception from any exception in task which is task not successful
                         throw task.getException();
-                        //example of exception : FirebaseAuthWeakPasswordException checks for weak password
-                        //catch literally catches the error for us and we can define toasts acc. to it
-                    } catch(FirebaseAuthWeakPasswordException e){
+                    } catch (FirebaseAuthWeakPasswordException e) {
                         editTextregPwd.setError("Weak Password. Please use a mix of alphabets and numbers");
                         editTextregPwd.requestFocus();
-                    } catch (FirebaseAuthInvalidCredentialsException e){
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
                         editTextemail.setError("Your email is invalid or already in use. Please re-enter the email");
                         editTextemail.requestFocus();
-                    } catch (FirebaseAuthUserCollisionException e){
+                    } catch (FirebaseAuthUserCollisionException e) {
                         editTextemail.setError("Your email is already registered. Please use another email or login");
                         editTextemail.requestFocus();
-                    } //this will handle all the renaming exception and help us debug later on while loggin the exception
-                    catch(Exception e){
+                    } catch (Exception e) {
                         Log.e(TAG, e.getMessage());
-                        Toast.makeText(OrganisationSignUpActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
-
+                        Toast.makeText(OrganisationSignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                     progressBar.setVisibility(View.GONE);
                 }
             }
         });
     }
+
 
 
 

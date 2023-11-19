@@ -13,7 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="240dp"
-            android:background="@drawable/sky00" />
+            android:background="@drawable/sky3" />
 
         <!--Top Header Layout-->
         <LinearLayout
@@ -80,7 +80,7 @@
                             android:id="@+id/vol_profile_image"
                             android:layout_height="150dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/sky" />
+                            android:src="@color/white" />
 
                     </androidx.cardview.widget.CardView>
 

@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.volunteerapp.Adapter.AdapterPosts;
+import com.example.volunteerapp.Adapters.AdapterPosts;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.google.firebase.auth.FirebaseAuth;

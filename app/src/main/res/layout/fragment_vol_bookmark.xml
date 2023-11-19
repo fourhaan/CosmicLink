@@ -1,34 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="@style/CardView.Light"
-    android:layout_marginTop="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.VolBookmarkFragment">
 
-    <ImageView
-        android:id="@+id/bookmarkedPic"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_image"
-        android:scaleType="centerCrop"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bookmarkRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/bookmarkedText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Post"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_gravity="center|start"
-        android:layout_marginStart="120dp"/>
-
-    <Button
-        android:id="@+id/bookmarkedBtn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/ic_bookmark"
-        android:layout_gravity="center|end"
-        android:layout_marginEnd="8dp"/>
-
-</androidx.cardview.widget.CardView>
+</FrameLayout>

@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECE5E5"
+    android:orientation="vertical"
+    tools:context=".Activities.ProfileViews.OrgProfileView">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:background="@drawable/sky3" />
+        <!--Top Header Layout-->
+        <LinearLayout
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:id="@+id/vol_profile_content"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:layout_below="@+id/topbar">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp">
+
+                <!--Top Profile Section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circularbordersolid"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="0dp">
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:id="@+id/org_profile_image"
+                            android:layout_height="150dp"
+                            android:scaleType="centerCrop"
+                            android:src="@color/white" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/org_profile_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/proximanovaregular"
+                            android:text="Full name"
+                            android:textColor="#424242"
+                            android:textSize="21sp"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="center"
+                            android:padding="8dp">
+
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Been an Interstellar Pioneer Since 🚀 :"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:id="@+id/org_profile_joining_date"
+                                    android:text="date"
+                                    android:textColor="@color/black2.0"
+                                    android:layout_gravity="center"
+                                    android:textSize="22sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/circularbordersolid"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="We come under"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/edit_org_type"
+                            android:text="Edit"
+                            android:padding="5dp"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/org_profile_type"
+                        android:text="org type here"
+                        android:inputType="textMultiLine"
+                        android:textColor="@color/black2.0"
+                        android:background="@null"
+                        android:enabled="false"/>
+
+                </LinearLayout>
+
+                <!--&lt;!&ndash;Option Bar&ndash;&gt;
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/circularbordersolid"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/personalinfobtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:gravity="center"
+                        android:padding="13dp"
+                        android:text="User Info"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black2.0"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/lightgrey" />
+
+                    <TextView
+                        android:id="@+id/skillsbtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:gravity="center"
+                        android:padding="13dp"
+                        android:text="SKILLS"
+                        android:textAllCaps="true"
+                        android:textColor="@color/lightgrey"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/lightgrey" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:gravity="center"
+                        android:padding="13dp"
+                        android:text="think"
+                        android:textAllCaps="true"
+                        android:textColor="@color/lightgrey"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>-->
+
+                <!--Bootom Cards with sections-->
+                <LinearLayout
+                    android:id="@+id/personalinfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp">
+
+                    <!--About Me Card-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/circularbordersolid"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="About Us"
+                                    android:fontFamily="@font/proximanovaregular"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold" />
+
+                                <Space
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1" />
+
+
+                            </LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/org_profile_bio"
+                                android:text="Bio here"
+                                android:enabled="false"
+                                android:inputType="textMultiLine"
+                                android:textColor="@color/black2.0"
+                                android:background="@null"/>
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                    <!--Contact Details-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/circularbordersolid"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Contact"
+                                android:textSize="17sp"
+                                android:fontFamily="@font/proximanovaregular"
+                                android:textStyle="bold" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingRight="8dp"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/circular_grey_bordersolid"
+                                    android:padding="10dp"
+                                    android:src="@drawable/baseline_call_24" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="mobile no"
+                                    android:id="@+id/org_profile_mobile"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/goodgrey"
+                                    android:fontFamily="@font/proximanovaregular" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:layout_marginTop="10dp"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/circular_grey_bordersolid"
+                                    android:padding="10dp"
+                                    android:src="@drawable/baseline_call_24" />
+
+                                <EditText
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="mobile no. 2"
+                                    android:enabled="false"
+                                    android:inputType="phone"
+                                    android:background="@null"
+                                    android:id="@+id/org_profile_mobile2"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/goodgrey"
+                                    android:fontFamily="@font/proximanovaregular" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:paddingRight="8dp">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/circular_grey_bordersolid"
+                                    android:padding="10dp"
+                                    android:scaleX="0.9"
+                                    android:src="@drawable/ic_email" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:textColor="@color/goodgrey"
+                                    android:text="email"
+                                    android:id="@+id/org_profile_email"
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/proximanovaregular" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:visibility="gone"
+                                android:paddingRight="8dp">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/circular_grey_bordersolid"
+                                    android:padding="10dp"
+                                    android:scaleX="0.9"
+                                    android:src="@drawable/ic_email" />
+
+                                <EditText
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:textColor="@color/goodgrey"
+                                    android:text="email no. 2"
+                                    android:enabled="false"
+                                    android:id="@+id/ord_profile_email2"
+                                    android:inputType="textEmailAddress"
+                                    android:background="@null"
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/proximanovaregular" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:paddingRight="8dp">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/circular_grey_bordersolid"
+                                    android:padding="10dp"
+                                    android:src="@drawable/baseline_add_location_24" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="city, state"
+                                    android:id="@+id/org_profile_location"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/goodgrey"
+                                    android:fontFamily="@font/proximanovaregular" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/circularbordersolid"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="We are involved in"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingRight="8dp">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:id="@+id/tagsLayout"
+                                    app:boxStrokeWidthFocused="0sp"
+                                    app:boxStrokeWidth="0sp"
+                                    app:boxCornerRadiusTopStart="10sp"
+                                    app:boxCornerRadiusTopEnd="10sp"
+                                    app:boxCornerRadiusBottomStart="10sp"
+                                    android:enabled="false"
+                                    app:boxCornerRadiusBottomEnd="10sp">
+
+                                    <com.example.volunteerapp.CustomViews.TagsInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"
+                                        android:id="@+id/tagsET"
+                                        android:enabled="false"
+                                        android:background="@android:color/transparent"/>
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/org_profile_ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black2.0"
+        android:layout_gravity="center"
+        android:visibility="visible" />
+
+</FrameLayout>

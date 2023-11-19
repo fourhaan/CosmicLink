@@ -138,6 +138,7 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
     private void uploadData(String title, String description,Uri image_Path ) {
+        String interested="0";
         pd.setMessage("Publishing post...");
         pd.show();
 
@@ -164,7 +165,7 @@ public class AddPostActivity extends AppCompatActivity {
                     String downloadUrl = uriTask.getResult().toString();
                     if (uriTask.isSuccessful()){
                         //url is received then proceed with adding remaining fields
-                        modelPost postDetails = new modelPost(timeStamp, title, description, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
+                        modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
                         ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -203,7 +204,7 @@ public class AddPostActivity extends AppCompatActivity {
         }
         else{
             String downloadUrl = "no_image";
-            modelPost postDetails = new modelPost(timeStamp, title, description, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
+            modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
             ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -216,6 +217,7 @@ public class AddPostActivity extends AppCompatActivity {
                             descriptionEt.setText("");
                             tagsEditText.setText("");
                             imagePath = null;
+                            imageIv.setImageDrawable(getDrawable(R.drawable.image_holder));
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
