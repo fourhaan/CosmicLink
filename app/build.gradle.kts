@@ -25,6 +25,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "GMP_KEY", "\"${findProperty("GMP_KEY")}\"")
         }
     }
     compileOptions {
@@ -33,6 +34,7 @@ android {
     }
     buildFeatures{
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -50,6 +52,7 @@ dependencies {
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.google.firebase:firebase-messaging:23.3.1")
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation ("com.google.android.gms:play-services-location:17.0.0")
     implementation("com.karumi:dexter:6.2.2")
     //Zxing library for qrcode and qrcode scanner
     implementation("com.google.zxing:core:3.4.1")
