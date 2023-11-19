@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E3DED6"
+    android:background="#1C1C1C"
     tools:context=".Activities.AddPostActivity">
 
     <LinearLayout
@@ -13,21 +12,21 @@
         android:layout_margin="10dp"
         android:orientation="vertical">
 
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add A Post!"
-            android:textStyle="bold"
-            android:textColor="@color/black2.0"
-            android:textSize="25sp"
             android:gravity="center"
-            android:minHeight="50dp" />
+            android:minHeight="50dp"
+            android:text="Add A Post!"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="#333333">
 
             <EditText
                 android:id="@+id/titleEt"
@@ -37,25 +36,29 @@
                 android:layout_marginEnd="10dp"
                 android:background="@null"
                 android:hint="Enter the title of the mission"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="#FFFFFF" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_height="200dp"
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="#333333">
 
             <ImageView
                 android:id="@+id/imageIv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
                 android:src="@drawable/image_holder" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="#333333">
 
             <EditText
                 android:id="@+id/descriptionEt"
@@ -66,13 +69,15 @@
                 android:hint="Add description about the mission"
                 android:inputType="textCapSentences|textMultiLine"
                 android:minHeight="120dp"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:textColor="#FFFFFF" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="#333333">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tagsLayout"
@@ -86,15 +91,15 @@
                 app:boxCornerRadiusTopStart="10sp"
                 app:boxStrokeWidth="0sp"
                 app:boxStrokeWidthFocused="0sp"
-                app:hintTextColor="@color/black">
+                app:hintTextColor="#FFFFFF">
 
                 <com.example.volunteerapp.CustomViews.TagsInputEditText
                     android:id="@+id/tagsET"
                     style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent" />
-
+                    android:background="@android:color/transparent"
+                    android:textColor="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.cardview.widget.CardView>
 
@@ -104,11 +109,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#78A87A"
-            android:textColor="@color/white"
             android:layout_marginBottom="20dp"
-            android:text="Upload" />
-
-
+            android:backgroundTint="#78A87A"
+            android:text="Upload"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 </ScrollView>
