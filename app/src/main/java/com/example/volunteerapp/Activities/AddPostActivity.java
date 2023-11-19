@@ -79,7 +79,7 @@ public class AddPostActivity extends AppCompatActivity {
                 for (DataSnapshot ds: snapshot.getChildren()){
                     name = "" + ds.child("fullname").getValue();
                     email = "" + ds.child("email").getValue();
-                     dp = "" + ds.child("image_url").getValue();
+                    dp = "" + ds.child("image_url").getValue();
                 }
             }
 
@@ -138,6 +138,7 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
     private void uploadData(String title, String description,Uri image_Path ) {
+        String interested="0";
         pd.setMessage("Publishing post...");
         pd.show();
 
@@ -156,42 +157,42 @@ public class AddPostActivity extends AppCompatActivity {
             //post with image
             StorageReference ref = FirebaseStorage.getInstance().getReference().child("Posts/"+"post_"+timeStamp);
             ref.putBytes(imageData).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    //image is uploaded
-                    Task<Uri> uriTask = task.getResult().getStorage().getDownloadUrl();
-                    while(!uriTask.isSuccessful());
-                    String downloadUrl = uriTask.getResult().toString();
-                    if (uriTask.isSuccessful()){
-                        //url is received then proceed with adding remaining fields
-                        modelPost postDetails = new modelPost(timeStamp, title, description, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
-                        ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                //added it in database
-                                pd.dismiss();
-                                Toast.makeText(AddPostActivity.this,"Post published",Toast.LENGTH_SHORT).show();
-                                //reset the views
-                                titleEt.setText("");
-                                descriptionEt.setText("");
-                                tagsEditText.setText("");
-                                imageIv.setImageResource(android.R.color.transparent);
-                                imagePath = null;
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            //image is uploaded
+                            Task<Uri> uriTask = task.getResult().getStorage().getDownloadUrl();
+                            while(!uriTask.isSuccessful());
+                            String downloadUrl = uriTask.getResult().toString();
+                            if (uriTask.isSuccessful()){
+                                //url is received then proceed with adding remaining fields
+                                modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
+                                ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                //added it in database
+                                                pd.dismiss();
+                                                Toast.makeText(AddPostActivity.this,"Post published",Toast.LENGTH_SHORT).show();
+                                                //reset the views
+                                                titleEt.setText("");
+                                                descriptionEt.setText("");
+                                                tagsEditText.setText("");
+                                                imageIv.setImageResource(android.R.color.transparent);
+                                                imagePath = null;
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                //failed adding it to database
+                                                pd.dismiss();
+                                                Toast.makeText(AddPostActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                             }
-                        })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        //failed adding it to database
-                                        pd.dismiss();
-                                        Toast.makeText(AddPostActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }
 
-                    }
-            })
+                        }
+                    })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -203,7 +204,7 @@ public class AddPostActivity extends AppCompatActivity {
         }
         else{
             String downloadUrl = "no_image";
-            modelPost postDetails = new modelPost(timeStamp, title, description, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
+            modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
             ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -282,5 +283,3 @@ public class AddPostActivity extends AppCompatActivity {
         return compressedBitmap;
     }
 }
-
-

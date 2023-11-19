@@ -49,7 +49,7 @@ public class VolunteerLandingPageActivity extends AppCompatActivity {
 
         locationClick = binding.locationVol;
         locationClick.setOnClickListener(v -> {
-            Intent intent = new Intent(VolunteerLandingPageActivity.this, LocationActivity.class);
+            Intent intent = new Intent(VolunteerLandingPageActivity.this, VolLocationActivity.class);
             startActivity(intent);
         });
 

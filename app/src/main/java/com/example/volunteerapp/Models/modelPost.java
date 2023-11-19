@@ -1,16 +1,23 @@
 package com.example.volunteerapp.Models;
 
 public class modelPost {
-    private String pId, pTitle, pDescr, pImage, pTime, uid, uEmail, uDp, uName, pTags;
+    private String pId, pTitle, pDescr, pInterested, pImage, pTime, uid, uEmail, uDp, uName, pTags;
 
     public modelPost() {
         // Default constructor required for Firebase
     }
 
-    public modelPost(String pId, String pTitle, String pDescr, String pImage, String pTime, String uid, String uEmail, String uDp, String uName,String pTags) {
+    public modelPost(String pId, String pTitle,String pImage){
+        this.pId = pId;
+        this.pTitle = pTitle;
+        this.pImage = pImage;
+    }
+
+    public modelPost(String pId, String pTitle, String pDescr, String pInterested, String pImage, String pTime, String uid, String uEmail, String uDp, String uName, String pTags) {
         this.pId = pId;
         this.pTitle = pTitle;
         this.pDescr = pDescr;
+        this.pInterested = pInterested;
         this.pImage = pImage;
         this.pTime = pTime;
         this.uid = uid;
@@ -42,6 +49,14 @@ public class modelPost {
 
     public void setpDescr(String pDescr) {
         this.pDescr = pDescr;
+    }
+
+    public String getpInterested() {
+        return pInterested;
+    }
+
+    public void setpInterested(String pInterested) {
+        this.pInterested = pInterested;
     }
 
     public String getpImage() {

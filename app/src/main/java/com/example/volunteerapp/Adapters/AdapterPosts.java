@@ -18,6 +18,12 @@ import com.example.volunteerapp.CustomViews.TagsInputEditText;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 
@@ -29,10 +35,21 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     Context context;
     List<modelPost> postList;
 
+    String myUid;
+
+    private DatabaseReference interestedRef; //for interested database node
+    private DatabaseReference postsRef;//reference for post
+    private DatabaseReference bookmarkRef;
+    boolean mProcessInterested = false;
 
     public AdapterPosts(Context context, List<modelPost> postList) {
         this.context = context;
         this.postList = postList;
+        myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        interestedRef = FirebaseDatabase.getInstance().getReference().child("Interested");
+        bookmarkRef = FirebaseDatabase.getInstance().getReference().child("Bookmark");
+        postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+
     }
 
     @NonNull
@@ -56,6 +73,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String pImage = postList.get(position).getpImage();
         String pTimeStamp = postList.get(position).getpTime();
         String pTags = postList.get(position).getpTags();
+        String pInterested = postList.get(position).getpTags();//Contains total number of Interested Volunteers.
 
         //Convert timestamp to dd/mm/yyyy hh:mm am/pm
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
@@ -67,6 +85,10 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.postTime.setText(pTime);
         holder.title.setText(pTitle);
         holder.description.setText(pDescription);
+        holder.interested.setText(pInterested + " Are Interested");
+
+        //Set interested for each post
+        setInterested(holder,pId);
 
         //adding the three tags to 3 buttons
         String[] tagsArray = pTags.split(" ");
@@ -100,15 +122,72 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.interestedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Interested", Toast.LENGTH_SHORT).show();
+
+
+                //Toast.makeText(context, "Interested", Toast.LENGTH_SHORT).show();
+                int pInterested = Integer.parseInt(postList.get(position).getpInterested());
+                mProcessInterested = true;
+                String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                //getting id of post clicked
+                String postide = postList.get(position).getpId();
+                interestedRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(mProcessInterested){
+                            if(snapshot.child(postide).hasChild(myUid)){
+                                //Already liked so remove like
+                                postsRef.child(postide).child("pInterested").setValue(""+(pInterested-1));
+                                interestedRef.child(postide).child(myUid).removeValue();
+                                bookmarkRef.child(userUid).child(pId).removeValue();
+                                mProcessInterested = false;
+                            }
+                            else {
+                                //Like it if not liked already
+                                postsRef.child(postide).child("pInterested").setValue(""+(pInterested+1));
+                                interestedRef.child(postide).child(myUid).setValue("Showed Interest");
+                                bookmarkRef.child(userUid).child(pId).setValue("true");
+                                mProcessInterested = false;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
-//        holder.shareBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
+        holder.notinterestedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(context, "Not Interested", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setInterested(MyHolder holder, String postKey) {
+        interestedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child(postKey).hasChild(myUid)){
+                    //User has liked the post
+                    holder.interestedBtn.setText("Showed Interest");
+                }
+                else {
+                    //User has not liked the post
+                    holder.interestedBtn.setText("I am Interested");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
@@ -123,7 +202,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         ImageView picture,postImg;
         TextView displayName,postTime,title,description,interested;
         ImageButton moreBtn;
-        Button interestedBtn,commentBtn,shareBtn,tag1,tag2,tag3;
+        Button interestedBtn,notinterestedBtn,shareBtn,tag1,tag2,tag3;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -136,6 +215,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             interested = itemView.findViewById(R.id.interested);
             moreBtn = itemView.findViewById(R.id.moreBtn);
             interestedBtn = itemView.findViewById(R.id.interestedBtn);
+            notinterestedBtn = itemView.findViewById(R.id.notinterestedBtn);
 //            commentBtn = itemView.findViewById(R.id.commentBtn);
 //            shareBtn = itemView.findViewById(R.id.shareBtn);
             tag1 = itemView.findViewById(R.id.tag1);
