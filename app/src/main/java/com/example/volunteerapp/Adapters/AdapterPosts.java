@@ -122,16 +122,12 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.interestedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                //Toast.makeText(context, "Interested", Toast.LENGTH_SHORT).show();
-                int pInterested = Integer.parseInt(postList.get(position).getpInterested());
+                int pInterested = Integer.parseInt(postList.get(holder.getAdapterPosition()).getpInterested());
                 mProcessInterested = true;
                 String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String postide = postList.get(holder.getAdapterPosition()).getpId();
 
-                //getting id of post clicked
-                String postide = postList.get(position).getpId();
-                interestedRef.addValueEventListener(new ValueEventListener() {
+                interestedRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(mProcessInterested){
@@ -159,6 +155,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 });
             }
         });
+
+
 
         holder.notinterestedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,4 +221,5 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             tag3 = itemView.findViewById(R.id.tag3);
         }
     }
+
 }
