@@ -89,14 +89,24 @@
             android:layout_height="wrap_content"
             android:text="100+ Interests"
             android:textColor="@color/black2.0"
-
-            android:textSize="16dp"/>
+            android:textSize="16dp"
+            />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
             android:background="#F5F0F0" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue"
+            android:id="@+id/address_show"/>
 
         <LinearLayout
             android:layout_width="match_parent"

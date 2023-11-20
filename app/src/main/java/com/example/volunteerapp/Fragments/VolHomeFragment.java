@@ -1,5 +1,6 @@
 package com.example.volunteerapp.Fragments;
 
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class VolHomeFragment extends Fragment {
@@ -34,7 +36,8 @@ public class VolHomeFragment extends Fragment {
     List<modelPost> postList;
     AdapterPosts adapterPosts;
     private TextView addressTv;
-    private String volFullAddress,latitude,longitude;
+    private String volFullAddress;
+    private double latitude,longitude;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,11 +98,14 @@ public class VolHomeFragment extends Fragment {
                 postList.clear();
                 for(DataSnapshot ds: snapshot.getChildren()){
                     modelPost modelPost = ds.getValue(com.example.volunteerapp.Models.modelPost.class);
+                    latitude = ds.child("latitude").getValue(double.class);
+                    longitude = ds.child("longitude").getValue(double.class);
                     postList.add(modelPost);
-
+                    sortPostsByDistance();
                     adapterPosts = new AdapterPosts(getActivity(),postList);
                     //Set adapter to recycler view
                     recyclerView.setAdapter(adapterPosts);
+                    adapterPosts.notifyDataSetChanged();
                 }
             }
 
@@ -108,6 +114,41 @@ public class VolHomeFragment extends Fragment {
                 //If there is an error
                 Toast.makeText(getActivity(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
+        });
+    }
+
+    private void sortPostsByDistance() {
+        // Get the volunteer's location (latitude and longitude)
+        double volLatitude = latitude;
+        double volLongitude = longitude;
+
+        // Create a Location object for the volunteer
+        Location volunteerLocation = new Location("Volunteer");
+        volunteerLocation.setLatitude(volLatitude);
+        volunteerLocation.setLongitude(volLongitude);
+
+        // Sort the postList based on distance to the volunteer
+        Collections.sort(postList, (post1, post2) -> {
+            double post1Latitude = post1.getLatitude();
+            double post1Longitude = post1.getLongitude();
+
+            double post2Latitude = post2.getLatitude();
+            double post2Longitude = post2.getLongitude();
+
+            // Create Location objects for each post
+            Location post1Location = new Location("Post1");
+            post1Location.setLatitude(post1Latitude);
+            post1Location.setLongitude(post1Longitude);
+
+            Location post2Location = new Location("Post2");
+            post2Location.setLatitude(post2Latitude);
+            post2Location.setLongitude(post2Longitude);
+
+            // Compare distances to the volunteer
+            float distanceToPost1 = volunteerLocation.distanceTo(post1Location);
+            float distanceToPost2 = volunteerLocation.distanceTo(post2Location);
+
+            return Float.compare(distanceToPost1, distanceToPost2);
         });
     }
 

@@ -2,15 +2,21 @@ package com.example.volunteerapp.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -62,6 +68,8 @@ public class AddPostActivity extends AppCompatActivity {
     private double latitude;
     private String fullAddress;
     private double longitude;
+    private static final int GPS_REQUEST_CODE = 9001;
+    private static final int LOCATION_REQUEST_CODE = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +110,11 @@ public class AddPostActivity extends AppCompatActivity {
         address = findViewById(R.id.address_Et);
 
         address.setOnClickListener(v -> {
-            Intent intent = new Intent(AddPostActivity.this, LocationActivityForPost.class);
-            startActivity(intent);
+            if (checkLocationAndGPSPermission()) {
+                Intent intent = new Intent(AddPostActivity.this, LocationActivityForPost.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+                startActivity(intent);
+            }
         });
 
         //initialising tags layout
@@ -310,5 +321,43 @@ public class AddPostActivity extends AppCompatActivity {
         }
 
         return compressedBitmap;
+    }
+
+    private boolean checkLocationAndGPSPermission() {
+        boolean isLocationPermissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        if (!isLocationPermissionGranted) {
+            // Location permission not granted, request it
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+            return false;
+        }
+
+        // Check if GPS is enabled
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if (!isGPSEnabled) {
+            // GPS is not enabled, show settings to enable it
+            showGPSEnabledDialog();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void showGPSEnabledDialog() {
+        // Your existing code to show GPS enable dialog
+        // ...
+
+        // For example:
+        new AlertDialog.Builder(this)
+                .setTitle("GPS Permission")
+                .setMessage("GPS is required for this app to work. Please enable GPS.")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(intent, GPS_REQUEST_CODE);
+                })
+                .setCancelable(false)
+                .show();
     }
 }

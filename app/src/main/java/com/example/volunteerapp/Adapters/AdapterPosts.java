@@ -73,6 +73,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String pImage = postList.get(position).getpImage();
         String pTimeStamp = postList.get(position).getpTime();
         String pTags = postList.get(position).getpTags();
+        String Address = postList.get(position).getAddress();
         String pInterested = postList.get(position).getpTags();//Contains total number of Interested Volunteers.
 
         //Convert timestamp to dd/mm/yyyy hh:mm am/pm
@@ -86,6 +87,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.title.setText(pTitle);
         holder.description.setText(pDescription);
         holder.interested.setText(pInterested + " Are Interested");
+        holder.addressBtn.setText("Location : "+Address);
 
         //Set interested for each post
         setInterested(holder,pId);
@@ -200,7 +202,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         ImageView picture,postImg;
         TextView displayName,postTime,title,description,interested;
         ImageButton moreBtn;
-        Button interestedBtn,notinterestedBtn,shareBtn,tag1,tag2,tag3;
+        Button interestedBtn,notinterestedBtn,shareBtn,tag1,tag2,tag3,addressBtn;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -214,6 +216,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             moreBtn = itemView.findViewById(R.id.moreBtn);
             interestedBtn = itemView.findViewById(R.id.interestedBtn);
             notinterestedBtn = itemView.findViewById(R.id.notinterestedBtn);
+            addressBtn = itemView.findViewById(R.id.address_show);
 //            commentBtn = itemView.findViewById(R.id.commentBtn);
 //            shareBtn = itemView.findViewById(R.id.shareBtn);
             tag1 = itemView.findViewById(R.id.tag1);
