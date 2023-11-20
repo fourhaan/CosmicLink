@@ -112,8 +112,7 @@ public class AddPostActivity extends AppCompatActivity {
         address.setOnClickListener(v -> {
             if (checkLocationAndGPSPermission()) {
                 Intent intent = new Intent(AddPostActivity.this, LocationActivityForPost.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
-                startActivity(intent);
+                startActivityForResult(intent, LOCATION_REQUEST_CODE);
             }
         });
 
@@ -121,12 +120,6 @@ public class AddPostActivity extends AppCompatActivity {
         tagsLayout = findViewById(R.id.tagsLayout);
         tagsEditText = findViewById(R.id.tagsET);
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            fullAddress = intent.getStringExtra("fullAddress");
-            latitude = intent.getDoubleExtra("latitude", 0.0);
-            longitude = intent.getDoubleExtra("longitude", 0.0);
-        }
 
         //onCLick for upload button
         uploadButton.setOnClickListener(v -> {
@@ -166,11 +159,6 @@ public class AddPostActivity extends AppCompatActivity {
         imageIv.setOnClickListener(v -> {
             ImagePicker.Companion.with(AddPostActivity.this).cropSquare().start();
         });
-        if(fullAddress==null){
-            address.setText("Click to add the Address");
-        } else {
-            address.setText("Address: " + fullAddress);
-        }
 
 
     }
@@ -281,6 +269,19 @@ public class AddPostActivity extends AppCompatActivity {
             imagePath = data.getData();
             // Handle the selected image (e.g., display in ImageView and upload)
             getImageInImageView();
+        }
+
+        if (requestCode == LOCATION_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Handle the result data here
+            if (data != null) {
+                fullAddress = data.getStringExtra("fullAddress");
+                latitude = data.getDoubleExtra("latitude", 0.0);
+                longitude = data.getDoubleExtra("longitude", 0.0);
+
+                if (fullAddress != null) {
+                    address.setText("Address: " + fullAddress);
+                }
+            }
         }
     }
 

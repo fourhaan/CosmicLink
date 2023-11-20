@@ -172,12 +172,15 @@ public class LocationActivityForPost extends AppCompatActivity implements OnMapR
         builder.setMessage("Is this your correct address?\n\n" + fullAddress);
         builder.setPositiveButton("Yes", (dialog, which) -> {
 
-            // Proceed with the intent
-            Intent intent = new Intent(LocationActivityForPost.this, AddPostActivity.class);
-            intent.putExtra("fullAddress", fullAddress);
-            intent.putExtra("latitude", latitude);
-            intent.putExtra("longitude", longitude);
-            startActivity(intent);
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("fullAddress", fullAddress);
+            resultIntent.putExtra("latitude", latitude);
+            resultIntent.putExtra("longitude", longitude);
+
+            // Set the result and finish the activity
+            setResult(RESULT_OK, resultIntent);
+            finish();
+
 
             Toast.makeText(this, "Address confirmed", Toast.LENGTH_SHORT).show();
         });
