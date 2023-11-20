@@ -58,7 +58,7 @@ public class VolunteerLandingPageActivity extends AppCompatActivity {
         locationClick = binding.locationVol;
         locationClick.setOnClickListener(v -> {
             if (checkLocationAndGPSPermission()) {
-                Intent intent = new Intent(VolunteerLandingPageActivity.this, VolLocationActivity.class);
+                Intent intent = new Intent(VolunteerLandingPageActivity.this, LocationActivityForVol.class);
                 startActivity(intent);
             }
         });

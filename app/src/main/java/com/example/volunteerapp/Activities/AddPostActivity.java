@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.volunteerapp.CustomViews.TagsInputEditText;
@@ -57,6 +58,10 @@ public class AddPostActivity extends AppCompatActivity {
     private ProgressDialog pd;
     private TextInputLayout tagsLayout;
     private TagsInputEditText tagsEditText;
+    private TextView address;;
+    private double latitude;
+    private String fullAddress;
+    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,10 +99,23 @@ public class AddPostActivity extends AppCompatActivity {
         descriptionEt = findViewById(R.id.descriptionEt);
         uploadButton = findViewById(R.id.upload_post);
         imageIv = findViewById(R.id.imageIv);
+        address = findViewById(R.id.address_Et);
+
+        address.setOnClickListener(v -> {
+            Intent intent = new Intent(AddPostActivity.this, LocationActivityForPost.class);
+            startActivity(intent);
+        });
 
         //initialising tags layout
         tagsLayout = findViewById(R.id.tagsLayout);
         tagsEditText = findViewById(R.id.tagsET);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            fullAddress = intent.getStringExtra("fullAddress");
+            latitude = intent.getDoubleExtra("latitude", 0.0);
+            longitude = intent.getDoubleExtra("longitude", 0.0);
+        }
 
         //onCLick for upload button
         uploadButton.setOnClickListener(v -> {
@@ -113,6 +131,11 @@ public class AddPostActivity extends AppCompatActivity {
 
             else if(TextUtils.isEmpty(description)){
                 Toast.makeText(AddPostActivity.this,"Enter the description",Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            else if(TextUtils.isEmpty(fullAddress)){
+                Toast.makeText(AddPostActivity.this,"Add an Address",Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -132,7 +155,11 @@ public class AddPostActivity extends AppCompatActivity {
         imageIv.setOnClickListener(v -> {
             ImagePicker.Companion.with(AddPostActivity.this).cropSquare().start();
         });
-
+        if(fullAddress==null){
+            address.setText("Click to add the Address");
+        } else {
+            address.setText("Address: " + fullAddress);
+        }
 
 
     }
@@ -165,7 +192,7 @@ public class AddPostActivity extends AppCompatActivity {
                             String downloadUrl = uriTask.getResult().toString();
                             if (uriTask.isSuccessful()){
                                 //url is received then proceed with adding remaining fields
-                                modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
+                                modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags,fullAddress,latitude,longitude);
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
                                 ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -177,6 +204,7 @@ public class AddPostActivity extends AppCompatActivity {
                                                 titleEt.setText("");
                                                 descriptionEt.setText("");
                                                 tagsEditText.setText("");
+                                                address.setText("");
                                                 imageIv.setImageResource(android.R.color.transparent);
                                                 imagePath = null;
                                             }
@@ -204,7 +232,7 @@ public class AddPostActivity extends AppCompatActivity {
         }
         else{
             String downloadUrl = "no_image";
-            modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
+            modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags,fullAddress,latitude,longitude);
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
             ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -216,6 +244,7 @@ public class AddPostActivity extends AppCompatActivity {
                             titleEt.setText("");
                             descriptionEt.setText("");
                             tagsEditText.setText("");
+                            address.setText("");
                             imagePath = null;
                             imageIv.setImageDrawable(getDrawable(R.drawable.image_holder));
                         }

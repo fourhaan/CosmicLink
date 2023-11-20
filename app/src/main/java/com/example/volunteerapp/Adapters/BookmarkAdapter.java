@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,8 +55,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
         //Set postImage
         //If there is no image
         if(pImage.equals("no_image")){
-            //To hide imageview
-            holder.postImg.setVisibility(View.GONE);
+            holder.postImg.setImageResource(R.drawable.image_holder);
         }
         else {
             try {
@@ -75,7 +75,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
     public class MyHolder extends RecyclerView.ViewHolder{
         ImageView postImg;
         TextView title;
-        Button bookmarkedButton;
+        ImageButton bookmarkedButton;
 
 
         public MyHolder(@NonNull View itemView) {

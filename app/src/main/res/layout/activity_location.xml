@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
-    tools:context=".Activities.VolLocationActivity">
+    android:background="@color/white">
 
     <EditText
         android:layout_width="0dp"

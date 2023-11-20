@@ -1,7 +1,8 @@
 package com.example.volunteerapp.Models;
 
 public class modelPost {
-    private String pId, pTitle, pDescr, pInterested, pImage, pTime, uid, uEmail, uDp, uName, pTags;
+    private String pId, pTitle, pDescr, pInterested, pImage, pTime, uid, uEmail, uDp, uName, pTags,address;
+    private double latitude,longitude;
 
     public modelPost() {
         // Default constructor required for Firebase
@@ -13,7 +14,7 @@ public class modelPost {
         this.pImage = pImage;
     }
 
-    public modelPost(String pId, String pTitle, String pDescr, String pInterested, String pImage, String pTime, String uid, String uEmail, String uDp, String uName, String pTags) {
+    public modelPost(String pId, String pTitle, String pDescr, String pInterested, String pImage, String pTime, String uid, String uEmail, String uDp, String uName, String pTags,String fulladdress, double latitude,double longitude) {
         this.pId = pId;
         this.pTitle = pTitle;
         this.pDescr = pDescr;
@@ -25,6 +26,9 @@ public class modelPost {
         this.uDp = uDp;
         this.uName = uName;
         this.pTags = pTags;
+        this.address= fulladdress;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getpId() {
@@ -113,5 +117,29 @@ public class modelPost {
 
     public void setpTags(String pTags) {
         this.pTags = pTags;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

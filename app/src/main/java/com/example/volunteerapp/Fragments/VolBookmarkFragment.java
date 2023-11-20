@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,10 @@ import android.view.ViewGroup;
 
 import com.example.volunteerapp.Adapters.AdapterPosts;
 import com.example.volunteerapp.Adapters.BookmarkAdapter;
+import com.example.volunteerapp.Adapters.MyViewPagerAdapter;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,82 +30,50 @@ import java.util.List;
 
 
 public class VolBookmarkFragment extends Fragment {
-    FirebaseAuth firebaseAuth;
-    RecyclerView recyclerView;
-    List<modelPost> bookmarkedLists;
-    BookmarkAdapter bookmarkAdapter;
 
-    public VolBookmarkFragment() {
-        //Empty constructor
-    }
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager2;
+    private MyViewPagerAdapter myViewPagerAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_vol_bookmark, container, false);
-        firebaseAuth = FirebaseAuth.getInstance();
 
-        recyclerView = view.findViewById(R.id.bookmarkRecyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        // Initialize your views
+        tabLayout = view.findViewById(R.id.tab_layout);
+        viewPager2 = view.findViewById(R.id.view_pager);
+        myViewPagerAdapter = new MyViewPagerAdapter(requireActivity()); // Note: Use requireActivity() instead of this
 
-        //Show newest post first.
-        layoutManager.setStackFromEnd(true);
-        layoutManager.setReverseLayout(true);
+        // Set up ViewPager2 adapter
+        viewPager2.setAdapter(myViewPagerAdapter);
 
-        //Set the layout to recyclerview
-        recyclerView.setLayoutManager(layoutManager);
-
-        bookmarkedLists = new ArrayList<>();
-        loadBookmark();
-        return view;
-    }
-
-    private void loadBookmark() {
-        DatabaseReference bookmarkRef = FirebaseDatabase.getInstance().getReference("Bookmark").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-        bookmarkRef.addValueEventListener(new ValueEventListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                bookmarkedLists.clear();
-
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    String postId = ds.getKey(); // Get the post ID from the Bookmark/uid reference
-
-                    if (postId != null) {
-                        DatabaseReference postRef = FirebaseDatabase.getInstance().getReference("Posts").child(postId);
-
-                        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()) {
-                                    modelPost bookmarkedList = dataSnapshot.getValue(modelPost.class);
-                                    bookmarkedLists.add(bookmarkedList);
-
-                                    // Move this line outside of the loop to prevent multiple adapter instances
-                                    if (bookmarkAdapter == null) {
-                                        bookmarkAdapter = new BookmarkAdapter(getActivity(), bookmarkedLists);
-                                        recyclerView.setAdapter(bookmarkAdapter);
-                                    } else {
-                                        bookmarkAdapter.notifyDataSetChanged();
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                // Handle error
-                            }
-                        });
-                    }
-                }
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                tabLayout.getTabAt(position).select();
+            }
+        });
+
+        return view;
     }
 
 

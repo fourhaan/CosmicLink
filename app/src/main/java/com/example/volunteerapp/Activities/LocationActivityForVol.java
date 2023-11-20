@@ -3,7 +3,6 @@ package com.example.volunteerapp.Activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -20,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.example.volunteerapp.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -50,7 +48,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class VolLocationActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class LocationActivityForVol extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private boolean isPermissionGranted = false;
     private GoogleMap mGoogleMap;
@@ -139,7 +137,7 @@ public class VolLocationActivity extends AppCompatActivity implements OnMapReady
                 double longitude = location.getLongitude();
 
                 // Use Geocoder to get the address from latitude and longitude
-                Geocoder geocoder = new Geocoder(VolLocationActivity.this, Locale.getDefault());
+                Geocoder geocoder = new Geocoder(LocationActivityForVol.this, Locale.getDefault());
                 try {
                     List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
                     if (addresses.size() > 0) {
@@ -188,7 +186,7 @@ public class VolLocationActivity extends AppCompatActivity implements OnMapReady
                 userRef.child("Longitude").setValue(longitude);
             }
             // Proceed with the intent
-            Intent intent = new Intent(VolLocationActivity.this, VolunteerLandingPageActivity.class);
+            Intent intent = new Intent(LocationActivityForVol.this, VolunteerLandingPageActivity.class);
             startActivity(intent);
 
             Toast.makeText(this, "Address confirmed", Toast.LENGTH_SHORT).show();
@@ -212,7 +210,7 @@ public class VolLocationActivity extends AppCompatActivity implements OnMapReady
         Dexter.withContext(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                Toast.makeText(VolLocationActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LocationActivityForVol.this, "Permission Granted", Toast.LENGTH_SHORT).show();
                 isPermissionGranted = true;
             }
 
@@ -257,7 +255,7 @@ public class VolLocationActivity extends AppCompatActivity implements OnMapReady
                 double longitude = position.longitude;
 
                 // Use Geocoder to get the address from latitude and longitude
-                Geocoder geocoder = new Geocoder(VolLocationActivity.this, Locale.getDefault());
+                Geocoder geocoder = new Geocoder(LocationActivityForVol.this, Locale.getDefault());
                 try {
                     List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
                     if (addresses.size() > 0) {

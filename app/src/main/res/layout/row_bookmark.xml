@@ -20,10 +20,12 @@
         android:layout_height="wrap_content"
         android:text="Post"
         style="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:fontFamily="@font/roboto"
         android:layout_gravity="center|start"
         android:layout_marginStart="120dp"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/bookmarkedBtn"
         android:layout_width="30dp"
         android:layout_height="30dp"
