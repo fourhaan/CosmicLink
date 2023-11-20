@@ -78,12 +78,75 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             app:cardBackgroundColor="#333333">
+            <RelativeLayout
+                android:id="@+id/RL_dob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/RL_spinner"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/imageViewDoB"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_calendar" />
+
+                <TextView
+                    android:id="@+id/textView_register_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imageViewDoB"
+                    android:padding="6dp"
+                    android:hint="Date of Mission Start (dd/mm/yyyy)"
+                    android:textColor="@color/white" />
+
+                <View
+                    android:id="@+id/divider_dob"
+                    android:layout_width="250dp"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/textView_register_dob"
+                    android:layout_centerHorizontal="true"
+                    android:layout_toRightOf="@+id/imageViewDoB"
+                    android:background="@android:color/darker_gray" />
+
+                <EditText
+                    android:id="@+id/editText_date"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView_register_dob"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toEndOf="@id/imageViewDoB"
+                    android:background="@android:color/transparent"
+                    android:hint="select your date"
+                    android:focusable="false"
+                    android:inputType="date"
+                    android:padding="6dp"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="#333333">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:hint="Event Address : Click to Add Address"
+                android:hint="  Event Address : Click to Add Address"
                 android:padding="10dp"
+                android:drawableStart="@drawable/baseline_add_location_24_white"
                 android:textColor="#FFFFFF"
                 android:id="@+id/address_Et"
                 />

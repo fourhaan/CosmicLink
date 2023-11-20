@@ -105,7 +105,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/white"
-            android:backgroundTint="@color/blue"
+            android:backgroundTint="#80AC4841"
             android:id="@+id/address_show"/>
 
         <LinearLayout
@@ -160,6 +160,7 @@
                 android:backgroundTint="#C0DD9D"
                 android:textColor="@color/blue"
                 android:padding="5dp"
+                android:gravity="center"
                 android:drawableLeft="@drawable/baseline_thumb_up_24"
                 android:text="I am Interested"/>
             <Button
@@ -172,7 +173,8 @@
                 android:textColor="@color/blue"
                 android:padding="5dp"
                 android:drawableLeft="@drawable/baseline_thumb_down_24"
-                android:text="Not Interested"/>
+                android:text="Report"
+                android:gravity="center"/>
 <!--            <Button-->
 <!--                android:id="@+id/commentBtn"-->
 <!--                android:layout_width="wrap_content"-->

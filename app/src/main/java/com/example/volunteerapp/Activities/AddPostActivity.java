@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +21,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -51,6 +53,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 
 public class AddPostActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -60,11 +63,12 @@ public class AddPostActivity extends AppCompatActivity {
     private ImageView imageIv;
     private Button uploadButton;
     private Uri imagePath;
-    private String name, email,uid, dp, editedTags;
+    private String name, email,uid, dp, editedTags,date;
     private ProgressDialog pd;
     private TextInputLayout tagsLayout;
     private TagsInputEditText tagsEditText;
     private TextView address;;
+    private EditText editTextdate;
     private double latitude;
     private String fullAddress;
     private double longitude;
@@ -108,6 +112,7 @@ public class AddPostActivity extends AppCompatActivity {
         uploadButton = findViewById(R.id.upload_post);
         imageIv = findViewById(R.id.imageIv);
         address = findViewById(R.id.address_Et);
+        editTextdate = findViewById(R.id.editText_date);
 
         address.setOnClickListener(v -> {
             if (checkLocationAndGPSPermission()) {
@@ -160,13 +165,35 @@ public class AddPostActivity extends AppCompatActivity {
             ImagePicker.Companion.with(AddPostActivity.this).cropSquare().start();
         });
 
+        editTextdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+
+                //date-picker dialog it creates a new dialog like view where we can pick date
+                DatePickerDialog date_picker = new DatePickerDialog(AddPostActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        //for compatibility months are 0-11 so +1 for our use
+                        editTextdate.setText(dayOfMonth + "/" + (month + 1) + "/" + (year));
+                    }
+                }, year, month, day);
+                date_picker.show();
+            }
+        });
 
     }
+
+
 
     private void uploadData(String title, String description,Uri image_Path ) {
         String interested="0";
         pd.setMessage("Publishing post...");
         pd.show();
+        date = editTextdate.getText().toString().trim();
 
         //for post-image , post-id , post-publish-time
         String timeStamp = String.valueOf(System.currentTimeMillis());
@@ -191,7 +218,7 @@ public class AddPostActivity extends AppCompatActivity {
                             String downloadUrl = uriTask.getResult().toString();
                             if (uriTask.isSuccessful()){
                                 //url is received then proceed with adding remaining fields
-                                modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags,fullAddress,latitude,longitude);
+                                modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags,date,fullAddress,latitude,longitude);
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
                                 ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -203,6 +230,7 @@ public class AddPostActivity extends AppCompatActivity {
                                                 titleEt.setText("");
                                                 descriptionEt.setText("");
                                                 tagsEditText.setText("");
+                                                editTextdate.setText("");
                                                 address.setText("");
                                                 imageIv.setImageResource(android.R.color.transparent);
                                                 imagePath = null;
@@ -231,7 +259,7 @@ public class AddPostActivity extends AppCompatActivity {
         }
         else{
             String downloadUrl = "no_image";
-            modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags,fullAddress,latitude,longitude);
+            modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags,date,fullAddress,latitude,longitude);
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
             ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -244,6 +272,7 @@ public class AddPostActivity extends AppCompatActivity {
                             descriptionEt.setText("");
                             tagsEditText.setText("");
                             address.setText("");
+                            editTextdate.setText("");
                             imagePath = null;
                             imageIv.setImageDrawable(getDrawable(R.drawable.image_holder));
                         }
