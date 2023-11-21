@@ -7,12 +7,14 @@
     android:layout_marginTop="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
-    android:background="@color/white">
+    android:background="@drawable/bordermain">
 
     <ImageView
         android:id="@+id/bookmarkedPic"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:scaleY="0.75"
+        android:scaleX="0.75"
         android:src="@drawable/image_holder"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"

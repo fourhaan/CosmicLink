@@ -62,7 +62,6 @@ public class BookmarkPostDetails extends AppCompatActivity {
         tag2 = findViewById(R.id.tag2);
         tag3 = findViewById(R.id.tag3);
         addressBtn = findViewById(R.id.address_show);
-        postImg.setVisibility(View.GONE);
 
         postRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -99,18 +98,16 @@ public class BookmarkPostDetails extends AppCompatActivity {
                     Picasso.get().load(uDp).into(profileImageView);
 
 
-                    if (pimg != null) {
                         if(pimg=="no_image") {
+                            postImg.setImageResource(R.drawable.image_holder);
                         }
                         else {
-                            postImg.setVisibility(View.VISIBLE);
                             Picasso.get()
                                     .load(pimg)
                                     .resize(200, 200)  // Set the desired image size
                                     .centerCrop()      // Crop the image to fit the ImageView
                                     .into(postImg);
                         }
-                    }
 
                 }
             }
