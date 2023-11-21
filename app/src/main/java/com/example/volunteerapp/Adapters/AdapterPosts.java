@@ -14,10 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.volunteerapp.CustomViews.TagsInputEditText;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -175,12 +173,12 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.child(postKey).hasChild(myUid)){
                     //User has liked the post
-                    holder.interestedBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_thumb_up_24,0,0,0);
+                    holder.interestedBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_thumb_up_blue,0,0,0);
                     holder.interestedBtn.setText("Showed Interest");
                 }
                 else {
                     //User has not liked the post
-                    holder.interestedBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_thumb_up_blue,0,0,0);
+                    holder.interestedBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_thumb_up_24,0,0,0);
                     holder.interestedBtn.setText("I am Interested");
                 }
             }
