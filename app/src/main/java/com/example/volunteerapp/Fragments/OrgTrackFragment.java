@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.volunteerapp.R;
 
-public class OrgBookmarkFragment extends Fragment {
+public class OrgTrackFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.volunteerapp.CustomViews.TagsInputEditText;
@@ -132,7 +133,83 @@ public class AdapterOrgPosts extends RecyclerView.Adapter<AdapterOrgPosts.MyHold
         });
     }
 
-    private void showDeleteConfirmationDialog(modelPost modelPost) {
+    private void showDeleteConfirmationDialog(modelPost post) {
+        // Create a confirmation dialog
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_confirmation);
+
+        // Initialize views from the dialog layout
+        Button confirmButton = dialog.findViewById(R.id.confirmButton);
+        Button cancelButton = dialog.findViewById(R.id.cancelButton);
+
+        // Handle confirm button click
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Call method to delete the post
+                deletePost(post);
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+
+        // Handle cancel button click
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+
+        // Show the confirmation dialog
+        dialog.show();
+    }
+
+    private void deletePost(modelPost post) {
+        postsRef.child(post.getpId()).removeValue();
+        // Reference to the "Interested" node
+        DatabaseReference interestedNodeRef = interestedRef.child(post.getpId());
+
+        // Remove the post from the "Interested" node
+        interestedNodeRef.removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError error, DatabaseReference ref) {
+                if (error != null) {
+                    Toast.makeText(context, "Failed to remove from Interested", Toast.LENGTH_SHORT).show();
+                } else {
+                }
+            }
+        });
+
+        // Remove the post from the "Bookmark" node
+        bookmarkRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String volunteerUid = dataSnapshot.getKey();
+                    bookmarkRef.child(volunteerUid).child(post.getpId()).removeValue(new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                            if (error != null) {
+                                Toast.makeText(context, "Failed to remove from Bookmark", Toast.LENGTH_SHORT).show();
+                            } else {
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle the error if necessary
+                Toast.makeText(context, "Failed to remove from Bookmark", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        notifyDataSetChanged();
+
+        Toast.makeText(context, "Post deleted successfully", Toast.LENGTH_SHORT).show();
     }
 
     private void showEditDialog(modelPost post) {
