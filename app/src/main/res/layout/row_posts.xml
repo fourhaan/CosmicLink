@@ -87,7 +87,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="100+ Interests"
+            android:text="0 Interests"
             android:textColor="@color/black2.0"
             android:textSize="16dp"
             />
