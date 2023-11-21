@@ -51,6 +51,7 @@
         <ImageButton
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:id="@+id/accept"
             android:layout_gravity="center_vertical"
             android:src="@drawable/baseline_check_24"
             android:background="@android:color/transparent"
@@ -59,6 +60,7 @@
         <ImageButton
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:id="@+id/reject"
             android:src="@drawable/baseline_clear_24"
             android:background="@android:color/transparent"
             android:layout_gravity="center_vertical"

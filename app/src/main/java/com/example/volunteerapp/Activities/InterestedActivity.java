@@ -40,7 +40,7 @@ public class InterestedActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view_interested);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new AdapterInterestedVolunteers(this, interestedVolunteers);
+        adapter = new AdapterInterestedVolunteers(this, interestedVolunteers,pId);
         recyclerView.setAdapter(adapter);
 
         getInterestedVolunteers();
