@@ -57,6 +57,12 @@ public class AdapterInterestedVolunteers extends RecyclerView.Adapter<AdapterInt
             participatingRef.setValue("Working");
             // Remove the user from the interestedVolunteers list
             interestedVolunteers.remove(position);
+
+            // Remove the volunteer from the "Interested" reference
+            DatabaseReference interestedRef = FirebaseDatabase.getInstance().getReference()
+                    .child("Interested").child(pId).child(volunteer.getUserId());
+            interestedRef.removeValue();
+
             // Notify the adapter that the data set has changed
             notifyDataSetChanged();
         });

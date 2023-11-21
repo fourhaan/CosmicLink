@@ -93,7 +93,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
 
     public class MyHolder extends RecyclerView.ViewHolder{
         ImageView postImg;
-        TextView title;
+        TextView title,status;
         ImageButton bookmarkedButton;
 
 
@@ -103,7 +103,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
             postImg = itemView.findViewById(R.id.bookmarkedPic);
             title = itemView.findViewById(R.id.bookmarkedText);
             bookmarkedButton = itemView.findViewById(R.id.bookmarkedBtn);
-
+//            status = itemView.findViewById(R.id.belowBookmarkedText);
         }
     }
 
