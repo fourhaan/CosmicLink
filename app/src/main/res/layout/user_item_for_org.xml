@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="13.00dp"
+    android:background="@drawable/bordermain">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userimg"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:src="@drawable/ic_photo_camera_black_48dp"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textSize="23.40dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_7ssp"
+                android:layout_height="wrap_content"
+                android:text="full name"
+                android:textColor="@color/black2.0"
+                android:id="@+id/fullname"/>
+
+
+
+        </LinearLayout>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/accept"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/baseline_check_24"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/reject"
+            android:src="@drawable/baseline_clear_24"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

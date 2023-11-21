@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.volunteerapp.Adapters.AdapterOrgPosts;
-import com.example.volunteerapp.Adapters.AdapterPosts;
+import com.example.volunteerapp.Adapters.AdapterMyPosts;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,7 +28,7 @@ public class OrgHomeFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private RecyclerView recyclerView;
     private List<modelPost> postList;
-    private AdapterOrgPosts adapterOrgPosts;
+    private AdapterMyPosts adapterMyPosts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,7 +39,6 @@ public class OrgHomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.orgPostsRecyclerView);
         postList = new ArrayList<>();
 
-        // Assuming you store the organization's UID in the Firebase User's UID
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String orgId = user.getUid();
@@ -78,8 +75,8 @@ public class OrgHomeFragment extends Fragment {
     private void setupRecyclerView() {
         // Assuming you have a RecyclerView with id orgPostsRecyclerView in your layout
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapterOrgPosts = new AdapterOrgPosts(getActivity(), postList);
-        recyclerView.setAdapter(adapterOrgPosts);
-        adapterOrgPosts.notifyDataSetChanged();
+        adapterMyPosts = new AdapterMyPosts(getActivity(), postList);
+        recyclerView.setAdapter(adapterMyPosts);
+        adapterMyPosts.notifyDataSetChanged();
     }
 }
