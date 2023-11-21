@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.example.volunteerapp.Chat.Activity.ChatActivity;
-import com.example.volunteerapp.Fragments.OrgBookmarkFragment;
+import com.example.volunteerapp.Fragments.OrgTrackFragment;
 import com.example.volunteerapp.Fragments.OrgHomeFragment;
 import com.example.volunteerapp.Fragments.OrgQrFragment;
 import com.example.volunteerapp.Fragments.OrgProfileFragment;
@@ -60,7 +60,7 @@ public class OrganisationLandingPageActivity extends AppCompatActivity {
             if (itemId == R.id.home) {
                 replaceFragment(new OrgHomeFragment());
             } else if (itemId == R.id.bookmark) {
-                replaceFragment(new OrgBookmarkFragment());
+                replaceFragment(new OrgTrackFragment());
             } else if (itemId == R.id.QR) {
                 replaceFragment(new OrgQrFragment());
             } else if (itemId == R.id.profile) {
