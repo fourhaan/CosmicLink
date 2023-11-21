@@ -37,7 +37,7 @@ public class VolHomeFragment extends Fragment {
     AdapterPosts adapterPosts;
     private TextView addressTv;
     private String volFullAddress;
-    private double latitude,longitude;
+    private double latitude,longitude,postlatitude,postlongitude;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +78,9 @@ public class VolHomeFragment extends Fragment {
                         volFullAddress = snapshot.child("address").getValue(String.class);
                         // Update the TextView with the address
                         addressTv.setText("Current Address : "+ volFullAddress);
+                    } else if(!snapshot.child("address").exists()){
+                        longitude = 0.0;
+                        latitude = 0.0;
                     }
                 }
 
@@ -96,17 +99,15 @@ public class VolHomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 postList.clear();
-                for(DataSnapshot ds: snapshot.getChildren()){
+                for(DataSnapshot ds: snapshot.getChildren()) {
                     modelPost modelPost = ds.getValue(com.example.volunteerapp.Models.modelPost.class);
-                    latitude = ds.child("latitude").getValue(double.class);
-                    longitude = ds.child("longitude").getValue(double.class);
                     postList.add(modelPost);
+                }
                     sortPostsByDistance();
                     adapterPosts = new AdapterPosts(getActivity(),postList);
                     //Set adapter to recycler view
                     recyclerView.setAdapter(adapterPosts);
                     adapterPosts.notifyDataSetChanged();
-                }
             }
 
             @Override
@@ -148,7 +149,7 @@ public class VolHomeFragment extends Fragment {
             float distanceToPost1 = volunteerLocation.distanceTo(post1Location);
             float distanceToPost2 = volunteerLocation.distanceTo(post2Location);
 
-            return Float.compare(distanceToPost1, distanceToPost2);
+            return Float.compare(distanceToPost2, distanceToPost1);
         });
     }
 

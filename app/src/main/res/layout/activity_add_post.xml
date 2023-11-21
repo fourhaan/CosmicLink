@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:minHeight="50dp"
-            android:text="Add A Post!"
+            android:text="Add A Mission !"
             android:textColor="#FFFFFF"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -78,6 +78,32 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             app:cardBackgroundColor="#333333">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:id="@+id/workhours"
+                android:inputType="number"
+                android:minHeight="70dp"
+                android:background="@android:color/transparent"
+                android:hint="Add no. of work hours required for Mission" />
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="#333333">
+
             <RelativeLayout
                 android:id="@+id/RL_dob"
                 android:layout_width="match_parent"
@@ -99,8 +125,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/imageViewDoB"
-                    android:padding="6dp"
                     android:hint="Date of Mission Start (dd/mm/yyyy)"
+                    android:padding="6dp"
                     android:textColor="@color/white" />
 
                 <View
@@ -121,8 +147,8 @@
                     android:layout_marginBottom="10dp"
                     android:layout_toEndOf="@id/imageViewDoB"
                     android:background="@android:color/transparent"
-                    android:hint="select your date"
                     android:focusable="false"
+                    android:hint="select your date"
                     android:inputType="date"
                     android:padding="6dp"
                     android:textColor="@color/white"
@@ -134,22 +160,21 @@
         </androidx.cardview.widget.CardView>
 
 
-
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             app:cardBackgroundColor="#333333">
+
             <TextView
+                android:id="@+id/address_Et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
+                android:drawableStart="@drawable/baseline_add_location_24_white"
                 android:hint="  Event Address : Click to Add Address"
                 android:padding="10dp"
-                android:drawableStart="@drawable/baseline_add_location_24_white"
-                android:textColor="#FFFFFF"
-                android:id="@+id/address_Et"
-                />
+                android:textColor="#FFFFFF" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -163,6 +188,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
                 android:hint="Add any 3 Tags"
                 app:boxCornerRadiusBottomEnd="10sp"
                 app:boxCornerRadiusBottomStart="10sp"
