@@ -43,7 +43,9 @@ public class VolBookmarkFragment extends Fragment {
         // Initialize your views
         tabLayout = view.findViewById(R.id.tab_layout);
         viewPager2 = view.findViewById(R.id.view_pager);
-        myViewPagerAdapter = new MyViewPagerAdapter(requireActivity()); // Note: Use requireActivity() instead of this
+        myViewPagerAdapter = new MyViewPagerAdapter(requireActivity());
+        // Note: Use requireActivity() instead of this
+
 
         // Set up ViewPager2 adapter
         viewPager2.setAdapter(myViewPagerAdapter);

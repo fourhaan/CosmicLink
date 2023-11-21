@@ -7,12 +7,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.volunteerapp.Adapters.AdapterPosts;
 import com.example.volunteerapp.Adapters.BookmarkAdapter;
+import com.example.volunteerapp.Chat.Model.Users;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +33,7 @@ public class BintFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     RecyclerView recyclerView;
     List<modelPost> bookmarkedLists;
+    FirebaseDatabase database;
     BookmarkAdapter bookmarkAdapter;
 
 
@@ -52,6 +56,24 @@ public class BintFragment extends Fragment {
 
         bookmarkedLists = new ArrayList<>();
         loadBookmark();
+
+        SearchView searchView = view.findViewById(R.id.searchBookmark);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Perform search when the user submits the query (e.g., press search button)
+                performSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Perform search as the user types (real-time search)
+                performSearch(newText);
+                return true;
+            }
+        });
+
         return view;
     }
 
@@ -101,6 +123,41 @@ public class BintFragment extends Fragment {
             }
         });
     }
+    private void performSearch(String query) {
+        DatabaseReference reference = database.getReference().child("Posts");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                bookmarkedLists.clear();
+
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    String postId = postSnapshot.getKey();
+                    String pTitle = postSnapshot.child("pTitle").getValue(String.class);
+
+                    // Check if the post title contains the search query
+                    if (pTitle != null && pTitle.toLowerCase().contains(query.toLowerCase())) {
+                        Log.d("Search", "Post ID: " + postId);
+                        modelPost searchList = postSnapshot.child(postId).getValue(modelPost.class);
+                        bookmarkedLists.add(searchList);
+                        if (bookmarkAdapter == null) {
+                            bookmarkAdapter = new BookmarkAdapter(getActivity(), bookmarkedLists);
+                            recyclerView.setAdapter(bookmarkAdapter);
+                        } else {
+                            bookmarkAdapter.notifyDataSetChanged();
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle errors
+            }
+        });
+    }
+
 
 
 }
