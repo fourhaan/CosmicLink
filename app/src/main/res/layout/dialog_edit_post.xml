@@ -1,0 +1,39 @@
+<!-- dialog_edit_post.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <EditText
+        android:id="@+id/editTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Edit Title"
+        android:backgroundTint="@color/black2.0"
+        android:textColorHint="@color/black2.0"
+        android:textColor="@color/black"
+        android:layout_marginBottom="15dp"/>
+
+    <EditText
+        android:id="@+id/editDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Edit Description"
+        android:backgroundTint="@color/black2.0"
+        android:inputType="textMultiLine"
+        android:textColorHint="@color/black2.0"
+        android:textColor="@color/black"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="170dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/black2.0"/>
+</LinearLayout>
