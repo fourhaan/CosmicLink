@@ -2,21 +2,30 @@ package com.example.volunteerapp.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.volunteerapp.CustomViews.TagsInputEditText;
@@ -44,6 +53,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 
 public class AddPostActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -53,10 +63,17 @@ public class AddPostActivity extends AppCompatActivity {
     private ImageView imageIv;
     private Button uploadButton;
     private Uri imagePath;
-    private String name, email,uid, dp, editedTags;
+    private String name, email,uid, dp, editedTags,date;
     private ProgressDialog pd;
     private TextInputLayout tagsLayout;
     private TagsInputEditText tagsEditText;
+    private TextView address;;
+    private EditText editTextdate;
+    private double latitude;
+    private String fullAddress;
+    private double longitude;
+    private static final int GPS_REQUEST_CODE = 9001;
+    private static final int LOCATION_REQUEST_CODE = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +96,7 @@ public class AddPostActivity extends AppCompatActivity {
                 for (DataSnapshot ds: snapshot.getChildren()){
                     name = "" + ds.child("fullname").getValue();
                     email = "" + ds.child("email").getValue();
-                     dp = "" + ds.child("image_url").getValue();
+                    dp = "" + ds.child("image_url").getValue();
                 }
             }
 
@@ -94,10 +111,20 @@ public class AddPostActivity extends AppCompatActivity {
         descriptionEt = findViewById(R.id.descriptionEt);
         uploadButton = findViewById(R.id.upload_post);
         imageIv = findViewById(R.id.imageIv);
+        address = findViewById(R.id.address_Et);
+        editTextdate = findViewById(R.id.editText_date);
+
+        address.setOnClickListener(v -> {
+            if (checkLocationAndGPSPermission()) {
+                Intent intent = new Intent(AddPostActivity.this, LocationActivityForPost.class);
+                startActivityForResult(intent, LOCATION_REQUEST_CODE);
+            }
+        });
 
         //initialising tags layout
         tagsLayout = findViewById(R.id.tagsLayout);
         tagsEditText = findViewById(R.id.tagsET);
+
 
         //onCLick for upload button
         uploadButton.setOnClickListener(v -> {
@@ -113,6 +140,11 @@ public class AddPostActivity extends AppCompatActivity {
 
             else if(TextUtils.isEmpty(description)){
                 Toast.makeText(AddPostActivity.this,"Enter the description",Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            else if(TextUtils.isEmpty(fullAddress)){
+                Toast.makeText(AddPostActivity.this,"Add an Address",Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -133,14 +165,35 @@ public class AddPostActivity extends AppCompatActivity {
             ImagePicker.Companion.with(AddPostActivity.this).cropSquare().start();
         });
 
+        editTextdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
 
+                //date-picker dialog it creates a new dialog like view where we can pick date
+                DatePickerDialog date_picker = new DatePickerDialog(AddPostActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        //for compatibility months are 0-11 so +1 for our use
+                        editTextdate.setText(dayOfMonth + "/" + (month + 1) + "/" + (year));
+                    }
+                }, year, month, day);
+                date_picker.show();
+            }
+        });
 
     }
+
+
 
     private void uploadData(String title, String description,Uri image_Path ) {
         String interested="0";
         pd.setMessage("Publishing post...");
         pd.show();
+        date = editTextdate.getText().toString().trim();
 
         //for post-image , post-id , post-publish-time
         String timeStamp = String.valueOf(System.currentTimeMillis());
@@ -157,42 +210,44 @@ public class AddPostActivity extends AppCompatActivity {
             //post with image
             StorageReference ref = FirebaseStorage.getInstance().getReference().child("Posts/"+"post_"+timeStamp);
             ref.putBytes(imageData).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    //image is uploaded
-                    Task<Uri> uriTask = task.getResult().getStorage().getDownloadUrl();
-                    while(!uriTask.isSuccessful());
-                    String downloadUrl = uriTask.getResult().toString();
-                    if (uriTask.isSuccessful()){
-                        //url is received then proceed with adding remaining fields
-                        modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
-                        ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                //added it in database
-                                pd.dismiss();
-                                Toast.makeText(AddPostActivity.this,"Post published",Toast.LENGTH_SHORT).show();
-                                //reset the views
-                                titleEt.setText("");
-                                descriptionEt.setText("");
-                                tagsEditText.setText("");
-                                imageIv.setImageResource(android.R.color.transparent);
-                                imagePath = null;
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            //image is uploaded
+                            Task<Uri> uriTask = task.getResult().getStorage().getDownloadUrl();
+                            while(!uriTask.isSuccessful());
+                            String downloadUrl = uriTask.getResult().toString();
+                            if (uriTask.isSuccessful()){
+                                //url is received then proceed with adding remaining fields
+                                modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags,date,fullAddress,latitude,longitude);
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
+                                ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                //added it in database
+                                                pd.dismiss();
+                                                Toast.makeText(AddPostActivity.this,"Post published",Toast.LENGTH_SHORT).show();
+                                                //reset the views
+                                                titleEt.setText("");
+                                                descriptionEt.setText("");
+                                                tagsEditText.setText("");
+                                                editTextdate.setText("");
+                                                address.setText("");
+                                                imageIv.setImageResource(android.R.color.transparent);
+                                                imagePath = null;
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                //failed adding it to database
+                                                pd.dismiss();
+                                                Toast.makeText(AddPostActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                             }
-                        })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        //failed adding it to database
-                                        pd.dismiss();
-                                        Toast.makeText(AddPostActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }
 
-                    }
-            })
+                        }
+                    })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -204,7 +259,7 @@ public class AddPostActivity extends AppCompatActivity {
         }
         else{
             String downloadUrl = "no_image";
-            modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags);
+            modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags,date,fullAddress,latitude,longitude);
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
             ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -216,6 +271,8 @@ public class AddPostActivity extends AppCompatActivity {
                             titleEt.setText("");
                             descriptionEt.setText("");
                             tagsEditText.setText("");
+                            address.setText("");
+                            editTextdate.setText("");
                             imagePath = null;
                             imageIv.setImageDrawable(getDrawable(R.drawable.image_holder));
                         }
@@ -241,6 +298,19 @@ public class AddPostActivity extends AppCompatActivity {
             imagePath = data.getData();
             // Handle the selected image (e.g., display in ImageView and upload)
             getImageInImageView();
+        }
+
+        if (requestCode == LOCATION_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Handle the result data here
+            if (data != null) {
+                fullAddress = data.getStringExtra("fullAddress");
+                latitude = data.getDoubleExtra("latitude", 0.0);
+                longitude = data.getDoubleExtra("longitude", 0.0);
+
+                if (fullAddress != null) {
+                    address.setText("Address: " + fullAddress);
+                }
+            }
         }
     }
 
@@ -282,6 +352,42 @@ public class AddPostActivity extends AppCompatActivity {
 
         return compressedBitmap;
     }
+
+    private boolean checkLocationAndGPSPermission() {
+        boolean isLocationPermissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        if (!isLocationPermissionGranted) {
+            // Location permission not granted, request it
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+            return false;
+        }
+
+        // Check if GPS is enabled
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if (!isGPSEnabled) {
+            // GPS is not enabled, show settings to enable it
+            showGPSEnabledDialog();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void showGPSEnabledDialog() {
+        // Your existing code to show GPS enable dialog
+        // ...
+
+        // For example:
+        new AlertDialog.Builder(this)
+                .setTitle("GPS Permission")
+                .setMessage("GPS is required for this app to work. Please enable GPS.")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(intent, GPS_REQUEST_CODE);
+                })
+                .setCancelable(false)
+                .show();
+    }
 }
-
-

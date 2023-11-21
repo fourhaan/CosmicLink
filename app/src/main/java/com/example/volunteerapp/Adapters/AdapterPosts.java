@@ -73,7 +73,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String pImage = postList.get(position).getpImage();
         String pTimeStamp = postList.get(position).getpTime();
         String pTags = postList.get(position).getpTags();
-        String pInterested = postList.get(position).getpTags();//Contains total number of Interested Volunteers.
+        String Address = postList.get(position).getAddress();
+        String pInterested = postList.get(position).getpInterested();//Contains total number of Interested Volunteers.
 
         //Convert timestamp to dd/mm/yyyy hh:mm am/pm
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
@@ -85,7 +86,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.postTime.setText(pTime);
         holder.title.setText(pTitle);
         holder.description.setText(pDescription);
-        holder.interested.setText(pInterested + " Are Interested");
+        holder.interested.setText(pInterested+"+" + " Interests");
+        holder.addressBtn.setText("Location : "+Address);
 
         //Set interested for each post
         setInterested(holder,pId);
@@ -122,17 +124,12 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.interestedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                //Toast.makeText(context, "Interested", Toast.LENGTH_SHORT).show();
-                int pInterested = Integer.parseInt(postList.get(position).getpInterested());
+                int pInterested = Integer.parseInt(postList.get(holder.getAdapterPosition()).getpInterested());
                 mProcessInterested = true;
                 String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String postide = postList.get(holder.getAdapterPosition()).getpId();
 
-                //getting id of post clicked
-                String postide = postList.get(position).getpId();
-                bookmarkRef.child(userUid).child(postide).setValue(true);
-                interestedRef.addValueEventListener(new ValueEventListener() {
+                interestedRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(mProcessInterested){
@@ -140,12 +137,14 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                                 //Already liked so remove like
                                 postsRef.child(postide).child("pInterested").setValue(""+(pInterested-1));
                                 interestedRef.child(postide).child(myUid).removeValue();
+                                bookmarkRef.child(userUid).child(pId).removeValue();
                                 mProcessInterested = false;
                             }
                             else {
                                 //Like it if not liked already
                                 postsRef.child(postide).child("pInterested").setValue(""+(pInterested+1));
                                 interestedRef.child(postide).child(myUid).setValue("Showed Interest");
+                                bookmarkRef.child(userUid).child(pId).setValue("true");
                                 mProcessInterested = false;
                             }
                         }
@@ -158,6 +157,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 });
             }
         });
+
+
 
         holder.notinterestedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,7 +202,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         ImageView picture,postImg;
         TextView displayName,postTime,title,description,interested;
         ImageButton moreBtn;
-        Button interestedBtn,notinterestedBtn,shareBtn,tag1,tag2,tag3;
+        Button interestedBtn,notinterestedBtn,shareBtn,tag1,tag2,tag3,addressBtn;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -215,6 +216,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             moreBtn = itemView.findViewById(R.id.moreBtn);
             interestedBtn = itemView.findViewById(R.id.interestedBtn);
             notinterestedBtn = itemView.findViewById(R.id.notinterestedBtn);
+            addressBtn = itemView.findViewById(R.id.address_show);
 //            commentBtn = itemView.findViewById(R.id.commentBtn);
 //            shareBtn = itemView.findViewById(R.id.shareBtn);
             tag1 = itemView.findViewById(R.id.tag1);
@@ -222,4 +224,5 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             tag3 = itemView.findViewById(R.id.tag3);
         }
     }
+
 }

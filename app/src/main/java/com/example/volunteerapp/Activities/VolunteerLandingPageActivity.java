@@ -1,12 +1,18 @@
 package com.example.volunteerapp.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.widget.ImageView;
 
 import com.example.volunteerapp.Chat.Activity.ChatActivity;
@@ -20,6 +26,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class VolunteerLandingPageActivity extends AppCompatActivity {
 
+    private static final int GPS_REQUEST_CODE = 9001;
+    private static final int LOCATION_REQUEST_CODE = 1001;
     ActivityVolunteerLandingPageBinding binding;
     private ImageView chatClick,locationClick;
     private FloatingActionButton searchClick;
@@ -49,8 +57,10 @@ public class VolunteerLandingPageActivity extends AppCompatActivity {
 
         locationClick = binding.locationVol;
         locationClick.setOnClickListener(v -> {
-            Intent intent = new Intent(VolunteerLandingPageActivity.this, LocationActivity.class);
-            startActivity(intent);
+            if (checkLocationAndGPSPermission()) {
+                Intent intent = new Intent(VolunteerLandingPageActivity.this, LocationActivityForVol.class);
+                startActivity(intent);
+            }
         });
 
         // Starting at Home fragment that is the feed
@@ -70,6 +80,44 @@ public class VolunteerLandingPageActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    private boolean checkLocationAndGPSPermission() {
+        boolean isLocationPermissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        if (!isLocationPermissionGranted) {
+            // Location permission not granted, request it
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+            return false;
+        }
+
+        // Check if GPS is enabled
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if (!isGPSEnabled) {
+            // GPS is not enabled, show settings to enable it
+            showGPSEnabledDialog();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void showGPSEnabledDialog() {
+        // Your existing code to show GPS enable dialog
+        // ...
+
+        // For example:
+        new AlertDialog.Builder(this)
+                .setTitle("GPS Permission")
+                .setMessage("GPS is required for this app to work. Please enable GPS.")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(intent, GPS_REQUEST_CODE);
+                })
+                .setCancelable(false)
+                .show();
     }
 
     private void replaceFragment(Fragment fragment) {

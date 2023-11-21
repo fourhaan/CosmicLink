@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -25,14 +28,16 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
     public BookmarkAdapter(Context context, List<modelPost> bookmarkedList) {
         this.context = context;
         this.bookmarkedList = bookmarkedList;
-        bookmarkRef = FirebaseDatabase.getInstance().getReference().child("Bookmark");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        bookmarkRef = FirebaseDatabase.getInstance().getReference().child("Bookmark").child(userId);
     }
 
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //Inflate layout row_bookmark.xml
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_vol_bookmark,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.row_bookmark,parent,false);
         return new MyHolder(view);
     }
 
@@ -50,8 +55,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
         //Set postImage
         //If there is no image
         if(pImage.equals("no_image")){
-            //To hide imageview
-            holder.postImg.setVisibility(View.GONE);
+            holder.postImg.setImageResource(R.drawable.image_holder);
         }
         else {
             try {
@@ -71,7 +75,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
     public class MyHolder extends RecyclerView.ViewHolder{
         ImageView postImg;
         TextView title;
-        Button bookmarkedButton;
+        ImageButton bookmarkedButton;
 
 
         public MyHolder(@NonNull View itemView) {
