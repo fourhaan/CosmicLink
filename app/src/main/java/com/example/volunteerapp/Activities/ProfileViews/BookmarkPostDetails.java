@@ -2,6 +2,7 @@ package com.example.volunteerapp.Activities.ProfileViews;
 
 import android.icu.text.CaseMap;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -25,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class BookmarkPostDetails extends AppCompatActivity {
     String postUid;
@@ -73,18 +76,27 @@ public class BookmarkPostDetails extends AppCompatActivity {
                     String pinterested = snapshot.child("pInterested").getValue(String.class);
                     String pTime = snapshot.child("pTime").getValue(String.class);
                     String pid = snapshot.child("pId").getValue(String.class);
+                    String uDp = snapshot.child("uDp").getValue(String.class);
                     String address = snapshot.child("address").getValue(String.class);
                     String[] tagsArray = pTags.split(" ");
                     tag1.setText(tagsArray[0]);
                     tag2.setText(tagsArray[1]);
                     tag3.setText(tagsArray[2]);
 
+                    //Convert timestamp to dd/mm/yyyy hh:mm am/pm
+                    Calendar calendar = Calendar.getInstance(Locale.getDefault());
+                    calendar.setTimeInMillis(Long.parseLong(pTime));
+                    String Time = DateFormat.format("dd/MM/yyyy hh:mm aa",calendar).toString();
+
                     // Set the retrieved data to the TextViews
                     displayName.setText(uName);
                     title.setText(ptitle);
                     description.setText(pdescription);
                     addressBtn.setText(address);
-                    interested.setText(pinterested);
+                    interested.setText(pinterested+"+"+" Interests");
+                    postTime.setText(Time);
+
+                    Picasso.get().load(uDp).into(profileImageView);
 
 
                     if (pimg != null) {
