@@ -4,19 +4,17 @@ public class modelPost {
     private String pId, pTitle, pDescr, pInterested, pImage, pTime, uid, uEmail, uDp, uName, pTags,address,date;
     private double latitude,longitude;
 
+    private int workhours;
+
     public modelPost() {
         // Default constructor required for Firebase
     }
 
-    public modelPost(String pId, String pTitle,String pImage){
-        this.pId = pId;
-        this.pTitle = pTitle;
-        this.pImage = pImage;
-    }
 
-    public modelPost(String pId, String pTitle, String pDescr, String pInterested, String pImage, String pTime, String uid, String uEmail, String uDp, String uName, String pTags,String date,String fulladdress, double latitude,double longitude) {
+    public modelPost(String pId, String pTitle,int workhours, String pDescr, String pInterested, String pImage, String pTime, String uid, String uEmail, String uDp, String uName, String pTags,String date,String fulladdress, double latitude,double longitude) {
         this.pId = pId;
         this.pTitle = pTitle;
+        this.workhours = workhours;
         this.pDescr = pDescr;
         this.pInterested = pInterested;
         this.pImage = pImage;
@@ -32,8 +30,6 @@ public class modelPost {
         this.date = date;
     }
 
-    public  String getDate(){return date;}
-    public void setDate(String date){this.date = date;}
     public String getpId() {
         return pId;
     }
@@ -130,6 +126,14 @@ public class modelPost {
         this.address = address;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public double getLatitude() {
         return latitude;
     }
@@ -144,5 +148,13 @@ public class modelPost {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public int getWorkhours() {
+        return workhours;
+    }
+
+    public void setWorkhours(int workhours) {
+        this.workhours = workhours;
     }
 }

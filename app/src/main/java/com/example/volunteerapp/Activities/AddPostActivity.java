@@ -59,7 +59,7 @@ public class AddPostActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference userDb;
-    private EditText titleEt , descriptionEt;
+    private EditText titleEt , descriptionEt , workhoursEt;
     private ImageView imageIv;
     private Button uploadButton;
     private Uri imagePath;
@@ -72,6 +72,7 @@ public class AddPostActivity extends AppCompatActivity {
     private double latitude;
     private String fullAddress;
     private double longitude;
+    private int workhours = 0;
     private static final int GPS_REQUEST_CODE = 9001;
     private static final int LOCATION_REQUEST_CODE = 1001;
 
@@ -109,6 +110,7 @@ public class AddPostActivity extends AppCompatActivity {
         //initialise the views
         titleEt = findViewById(R.id.titleEt);
         descriptionEt = findViewById(R.id.descriptionEt);
+        workhoursEt = findViewById(R.id.workhours);
         uploadButton = findViewById(R.id.upload_post);
         imageIv = findViewById(R.id.imageIv);
         address = findViewById(R.id.address_Et);
@@ -130,6 +132,7 @@ public class AddPostActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(v -> {
             String title = titleEt.getText().toString().trim();
             String description = descriptionEt.getText().toString().trim();
+            workhours = Integer.parseInt(workhoursEt.getText().toString());
             editedTags = tagsEditText.getText().toString();
             String[] tagsArray = editedTags.split("\\s+"); // Split the string based on whitespace
 
@@ -140,6 +143,11 @@ public class AddPostActivity extends AppCompatActivity {
 
             else if(TextUtils.isEmpty(description)){
                 Toast.makeText(AddPostActivity.this,"Enter the description",Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            else if(workhours == 0){
+                Toast.makeText(AddPostActivity.this,"Work Hour cannot be empty",Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -218,7 +226,7 @@ public class AddPostActivity extends AppCompatActivity {
                             String downloadUrl = uriTask.getResult().toString();
                             if (uriTask.isSuccessful()){
                                 //url is received then proceed with adding remaining fields
-                                modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags,date,fullAddress,latitude,longitude);
+                                modelPost postDetails = new modelPost(timeStamp, title,workhours, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags,date,fullAddress,latitude,longitude);
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
                                 ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -259,7 +267,7 @@ public class AddPostActivity extends AppCompatActivity {
         }
         else{
             String downloadUrl = "no_image";
-            modelPost postDetails = new modelPost(timeStamp, title, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags,date,fullAddress,latitude,longitude);
+            modelPost postDetails = new modelPost(timeStamp, title,workhours, description,interested, downloadUrl, timeStamp, uid, email, dp, name, editedTags,date,fullAddress,latitude,longitude);
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
             ref.child(timeStamp).setValue(postDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -269,6 +277,7 @@ public class AddPostActivity extends AppCompatActivity {
                             Toast.makeText(AddPostActivity.this,"Post published",Toast.LENGTH_SHORT).show();
                             //reset the views
                             titleEt.setText("");
+                            workhoursEt.setText("");
                             descriptionEt.setText("");
                             tagsEditText.setText("");
                             address.setText("");
