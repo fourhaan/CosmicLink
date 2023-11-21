@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.volunteerapp.Adapters.AdapterPosts;
 import com.example.volunteerapp.Adapters.SearchAdapter;
 import com.example.volunteerapp.Chat.Model.Users;
 import com.example.volunteerapp.R;
@@ -83,6 +84,7 @@ public class BookmarkPostDetails extends AppCompatActivity {
                     title.setText(ptitle);
                     description.setText(pdescription);
                     addressBtn.setText(address);
+                    interested.setText(pinterested);
 
 
                     if (pimg != null) {
@@ -106,5 +108,7 @@ public class BookmarkPostDetails extends AppCompatActivity {
 
             }
         });
+
+
     }
 }
