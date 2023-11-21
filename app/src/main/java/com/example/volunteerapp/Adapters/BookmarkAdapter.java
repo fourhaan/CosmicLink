@@ -1,6 +1,7 @@
 package com.example.volunteerapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.volunteerapp.Activities.ProfileViews.BookmarkPostDetails;
+import com.example.volunteerapp.Activities.ProfileViews.OrgProfileView;
+import com.example.volunteerapp.Fragments.BintFragment;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,13 +29,13 @@ import java.util.List;
 public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHolder>{
     Context context;
     List<modelPost> bookmarkedList;
-    private DatabaseReference bookmarkRef;
+    //private DatabaseReference bookmarkRef;
     public BookmarkAdapter(Context context, List<modelPost> bookmarkedList) {
         this.context = context;
         this.bookmarkedList = bookmarkedList;
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
-        bookmarkRef = FirebaseDatabase.getInstance().getReference().child("Bookmark").child(userId);
+        //bookmarkRef = FirebaseDatabase.getInstance().getReference().child("Bookmark").child(userId);
     }
 
     @NonNull
@@ -43,6 +48,8 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
 
     @Override
     public void onBindViewHolder(@NonNull BookmarkAdapter.MyHolder holder, int position) {
+        modelPost post = bookmarkedList.get(position);
+
         String pId = bookmarkedList.get(position).getpId();
         String pTitle = bookmarkedList.get(position).getpTitle();
         String pImage = bookmarkedList.get(position).getpImage();
@@ -64,6 +71,18 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
 
             }
         }
+
+        // Set OnClickListener to open the profile page
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the click event, open the profile page
+                Context context = view.getContext();
+                Intent intent = new Intent(context, BookmarkPostDetails.class);
+                intent.putExtra("pId", post.getpId());
+                context.startActivity(intent);
+            }
+        });
 
     }
 

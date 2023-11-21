@@ -48,13 +48,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
-            <ImageButton
-                android:id="@+id/editBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/baseline_edit_24"
-                />
         </LinearLayout>
 
         <TextView
@@ -75,6 +68,7 @@
             android:textColor="@color/black2.0"
             android:text="The description of the Work"
             android:textSize="16dp"/>
+
         <TextView
             android:id="@+id/hours"
             android:layout_width="match_parent"
@@ -160,26 +154,7 @@
             android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:layout_gravity="center">
-            <Button
-                android:id="@+id/interestedBtn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#C0DD9D"
-                android:textColor="@color/blue"
-                android:padding="5dp"
-                android:gravity="center"
-                android:drawableLeft="@drawable/baseline_thumb_up_24"
-                android:text="I am Interested"
-                android:visibility="gone"/>
-            <Button
-                android:id="@+id/notinterestedBtn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#EA7168"
-                android:textColor="@color/blue"
-                android:text="Delete Post" />
+
             <!--            <Button-->
             <!--                android:id="@+id/commentBtn"-->
             <!--                android:layout_width="wrap_content"-->

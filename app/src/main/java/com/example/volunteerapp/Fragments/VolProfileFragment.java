@@ -45,7 +45,7 @@ import java.io.InputStream;
 
 public class VolProfileFragment extends Fragment {
     private Button logoutButton;
-    private TextView fullnameTextView, usernameTextView, joiningdateTextView, mobileTextView, locationTextView, emailTextView, editSkills, editBio;
+    private TextView fullnameTextView, usernameTextView, joiningdateTextView, mobileTextView, locationTextView, emailTextView, editSkills, editBio,volWorkHours;
     private EditText bioEditText;
     private ImageView profileImageView;
     private ProgressBar profileProgressBar;
@@ -59,6 +59,7 @@ public class VolProfileFragment extends Fragment {
 
         // Initialize all the XML elements
         logoutButton = view.findViewById(R.id.vol_profile_log_out);
+        volWorkHours = view.findViewById(R.id.vol_profile_hours);
         fullnameTextView = view.findViewById(R.id.vol_profile_name);
         usernameTextView = view.findViewById(R.id.vol_profile_username);
         emailTextView = view.findViewById(R.id.vol_profile_email);

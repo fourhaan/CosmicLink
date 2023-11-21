@@ -76,6 +76,15 @@
             android:text="The description of the Work"
             android:textSize="16dp"/>
 
+        <TextView
+            android:id="@+id/hours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/black2.0"
+            android:text="Total Working Hours to be credited for work"
+            android:textSize="16dp"/>
+
         <ImageView
             android:id="@+id/postImg"
             android:layout_width="match_parent"
