@@ -59,6 +59,10 @@
             android:name=".Activities.OrganisationSignUpActivity"
             android:exported="false" />
         <activity
+            android:name=".Activities.ProfileViews.BookmarkPostDetails"
+            android:exported="false" />
+
+        <activity
             android:name=".Activities.VolunteerLandingPageActivity"
             android:exported="false" />
         <activity

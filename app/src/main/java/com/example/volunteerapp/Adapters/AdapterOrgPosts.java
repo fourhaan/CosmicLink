@@ -37,7 +37,6 @@ import java.util.Locale;
 public class AdapterOrgPosts extends RecyclerView.Adapter<AdapterOrgPosts.MyHolder> {
     Context context;
     List<modelPost> postList;
-
     String myUid;
 
     private DatabaseReference interestedRef; //for interested database node
