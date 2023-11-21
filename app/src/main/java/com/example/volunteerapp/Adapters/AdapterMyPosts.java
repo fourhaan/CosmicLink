@@ -17,10 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.volunteerapp.CustomViews.TagsInputEditText;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,7 +32,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AdapterOrgPosts extends RecyclerView.Adapter<AdapterOrgPosts.MyHolder> {
+public class AdapterMyPosts extends RecyclerView.Adapter<AdapterMyPosts.MyHolder> {
     Context context;
     List<modelPost> postList;
 
@@ -45,7 +43,7 @@ public class AdapterOrgPosts extends RecyclerView.Adapter<AdapterOrgPosts.MyHold
     private DatabaseReference bookmarkRef;
     boolean mProcessInterested = false;
 
-    public AdapterOrgPosts(Context context, List<modelPost> postList) {
+    public AdapterMyPosts(Context context, List<modelPost> postList) {
         this.context = context;
         this.postList = postList;
         myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -279,6 +277,8 @@ public class AdapterOrgPosts extends RecyclerView.Adapter<AdapterOrgPosts.MyHold
             tag1 = itemView.findViewById(R.id.tag1);
             tag2 = itemView.findViewById(R.id.tag2);
             tag3 = itemView.findViewById(R.id.tag3);
+
+
         }
     }
 

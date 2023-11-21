@@ -1,0 +1,79 @@
+<!-- row_org_posts.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="10dp"
+    android:background="@drawable/bordermain">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/orgPostImg"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="3.2"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp"
+            >
+
+            <TextView
+                android:id="@+id/orgPostTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/black2.0"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/orgPostDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/orgPostInterests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black2.0"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/add_vol"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/baseline_person_add_alt_24"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/check_activity"
+            android:src="@drawable/baseline_auto_graph_24"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
