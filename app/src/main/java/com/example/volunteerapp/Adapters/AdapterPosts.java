@@ -175,12 +175,12 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.child(postKey).hasChild(myUid)){
                     //User has liked the post
-                    holder.interestedBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_thumb_up_24,0,0,0);
+                    holder.interestedBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_thumb_up_blue,0,0,0);
                     holder.interestedBtn.setText("Showed Interest");
                 }
                 else {
                     //User has not liked the post
-                    holder.interestedBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_thumb_up_blue,0,0,0);
+                    holder.interestedBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_thumb_up_24,0,0,0);
                     holder.interestedBtn.setText("I am Interested");
                 }
             }
