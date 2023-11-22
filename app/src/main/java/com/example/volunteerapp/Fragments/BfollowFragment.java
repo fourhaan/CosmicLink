@@ -45,8 +45,7 @@ public class BfollowFragment extends Fragment {
 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
-
-        DatabaseReference reference = database.getReference().child("Organisations");
+        DatabaseReference organizationsRef = database.getReference().child("Organisations");
 
         usersArrayList = new ArrayList<>();
 
@@ -59,31 +58,51 @@ public class BfollowFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Perform search when the user submits the query (e.g., press search button)
                 performSearch(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Perform search as the user types (real-time search)
                 performSearch(newText);
                 return true;
             }
         });
 
-        reference.addValueEventListener(new ValueEventListener() {
+        organizationsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                usersArrayList.clear(); // Clear the list before adding updated data
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Users users = dataSnapshot.getValue(Users.class);
-                    if (users != null) {
-                        usersArrayList.add(users);
-                        users.setFullname("Click to view Profile");
-                    }
+                usersArrayList.clear();
+                for (DataSnapshot organizationSnapshot : snapshot.getChildren()) {
+                    String organizationName = organizationSnapshot.getKey();
+                    DatabaseReference followersRef = database.getReference().child("Organisations")
+                            .child(organizationName)
+                            .child("followers");
+
+                    followersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot followerSnapshot) {
+                            for (DataSnapshot userSnapshot : followerSnapshot.getChildren()) {
+                                String userID = userSnapshot.getKey();
+                                if (userID != null && userID.equals(auth.getCurrentUser().getUid())) {
+                                    // If the user is a follower, add the organization details to the list
+                                    Users users = organizationSnapshot.getValue(Users.class);
+                                    if (users != null) {
+                                        usersArrayList.add(users);
+                                        users.setFullname("Click to view Profile");
+                                    }
+                                    break; // No need to check further, as the user is already found in followers
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // Handle errors
+                        }
+                    });
                 }
-                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -95,45 +114,51 @@ public class BfollowFragment extends Fragment {
         if (auth.getCurrentUser() == null) {
             Intent intent = new Intent(requireActivity(), LoginActivity.class);
             startActivity(intent);
-            requireActivity().finish(); // Finish this activity to prevent returning here after logging in
+            requireActivity().finish();
         }
 
         return view;
     }
 
     private void performSearch(String query) {
-        DatabaseReference reference = database.getReference().child("Organisations");
+        DatabaseReference organizationsRef = database.getReference().child("Organisations");
 
-        reference.addValueEventListener(new ValueEventListener() {
+        organizationsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 usersArrayList.clear();
                 for (DataSnapshot organizationSnapshot : snapshot.getChildren()) {
                     String organizationName = organizationSnapshot.getKey();
+                    DatabaseReference followersRef = database.getReference().child("Organisations")
+                            .child(organizationName)
+                            .child("followers");
 
-                    // Check if the organization name contains the search query
-                    if (organizationName != null && organizationName.toLowerCase().contains(query.toLowerCase())) {
-                        Log.d("Search", "Organization Name: " + organizationName);
+                    followersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot followerSnapshot) {
+                            for (DataSnapshot userSnapshot : followerSnapshot.getChildren()) {
+                                String userID = userSnapshot.getKey();
+                                if (userID != null && userID.equals(auth.getCurrentUser().getUid())) {
+                                    // If the user is a follower, check if the organization name contains the search query
+                                    if (organizationName != null && organizationName.toLowerCase().contains(query.toLowerCase())) {
+                                        Users users = organizationSnapshot.getValue(Users.class);
+                                        if (users != null) {
+                                            usersArrayList.add(users);
+                                            users.setFullname("Click to view Profile");
+                                        }
+                                    }
+                                    break; // No need to check further, as the user is already found in followers
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
 
-                        // Extract organization details
-                        String email = organizationSnapshot.child("email").getValue(String.class);
-                        String fullname = "Click to view Profile";
-                        String image_url = organizationSnapshot.child("image_url").getValue(String.class);
-                        String userId = organizationSnapshot.child("userId").getValue(String.class);
-                        String username = organizationSnapshot.child("username").getValue(String.class);
-
-                        // Create a Users object with the organization details
-                        Users users = new Users();
-                        users.setFullname(fullname);
-                        users.setEmail(email);
-                        users.setImage_url(image_url);
-                        users.setUserId(userId);
-                        users.setUsername(username);
-
-                        usersArrayList.add(users);
-                    }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // Handle errors
+                        }
+                    });
                 }
-                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -142,4 +167,5 @@ public class BfollowFragment extends Fragment {
             }
         });
     }
+
 }

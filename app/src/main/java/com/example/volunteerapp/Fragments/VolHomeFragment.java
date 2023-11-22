@@ -103,7 +103,7 @@ public class VolHomeFragment extends Fragment {
                     modelPost modelPost = ds.getValue(com.example.volunteerapp.Models.modelPost.class);
 
                     // Check if the current post's pId is present in the Participating reference
-                    if (!isParticipating(modelPost.getpId())) {
+                    if (isParticipating(modelPost.getpId())) {
                         postList.add(modelPost);
                     }
                 }

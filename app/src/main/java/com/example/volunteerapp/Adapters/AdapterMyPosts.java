@@ -197,10 +197,37 @@ public class AdapterMyPosts extends RecyclerView.Adapter<AdapterMyPosts.MyHolder
                 }
             }
 
+
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle the error if necessary
                 Toast.makeText(context, "Failed to remove from Bookmark", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Remove the post from the "Participating" node
+        DatabaseReference partref = FirebaseDatabase.getInstance().getReference("Participating/");
+        partref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    partref.child(post.getpId()).removeValue(new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                            if (error != null) {
+                                Toast.makeText(context, "Failed to remove from Participating", Toast.LENGTH_SHORT).show();
+                            } else {
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle the error if necessary
+                Toast.makeText(context, "Failed to remove from Participating", Toast.LENGTH_SHORT).show();
             }
         });
 

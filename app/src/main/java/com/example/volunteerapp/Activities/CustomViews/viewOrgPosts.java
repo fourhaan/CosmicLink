@@ -52,31 +52,40 @@ public class viewOrgPosts extends AppCompatActivity {
     }
 
     private void loadPosts() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
-        // We will get all data from this reference
-        ref.addValueEventListener(new ValueEventListener() {
+        DatabaseReference orgPostsRef = FirebaseDatabase.getInstance().getReference("Posts");
+
+        orgPostsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 postList.clear();
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    modelPost modelPost = ds.getValue(com.example.volunteerapp.Models.modelPost.class);
-                    postList.add(modelPost);
+
+                for (DataSnapshot pidSnapshot : snapshot.getChildren()) {
+                    // Check if orgUid data exists within the post
+                    if (pidSnapshot.child("uid").getValue(String.class).equals(orgUid)) {
+                        modelPost modelPost = pidSnapshot.getValue(com.example.volunteerapp.Models.modelPost.class);
+                        postList.add(modelPost);
+                    }
                 }
-                adapterPosts = new AdapterPosts(viewOrgPosts.this, postList);
+
+                // Reverse the list to show the latest posts first
+                Collections.reverse(postList);
+
                 // Set adapter to recycler view
+                adapterPosts = new AdapterPosts(viewOrgPosts.this, postList);
                 recyclerView.setAdapter(adapterPosts);
                 adapterPosts.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // If there is an error
+                // Handle errors
                 Toast.makeText(viewOrgPosts.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
+
+
+
 
 }
 
