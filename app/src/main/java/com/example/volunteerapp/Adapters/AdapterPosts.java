@@ -126,33 +126,38 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 mProcessInterested = true;
                 String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 String postide = postList.get(holder.getAdapterPosition()).getpId();
-
-                interestedRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(mProcessInterested){
-                            if(snapshot.child(postide).hasChild(myUid)){
-                                //Already liked so remove like
-                                postsRef.child(postide).child("pInterested").setValue(""+(pInterested-1));
-                                interestedRef.child(postide).child(myUid).removeValue();
-                                bookmarkRef.child(userUid).child(pId).removeValue();
-                                mProcessInterested = false;
-                            }
-                            else {
-                                //Like it if not liked already
-                                postsRef.child(postide).child("pInterested").setValue(""+(pInterested+1));
-                                interestedRef.child(postide).child(myUid).setValue("Showed Interest");
-                                bookmarkRef.child(userUid).child(pId).setValue("true");
-                                mProcessInterested = false;
+                if(!isParticipating(postide)){
+                    interestedRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(mProcessInterested){
+                                if(snapshot.child(postide).hasChild(myUid)){
+                                    //Already liked so remove like
+                                    postsRef.child(postide).child("pInterested").setValue(""+(pInterested-1));
+                                    interestedRef.child(postide).child(myUid).removeValue();
+                                    bookmarkRef.child(userUid).child(pId).removeValue();
+                                    mProcessInterested = false;
+                                }
+                                else {
+                                    //Like it if not liked already
+                                    postsRef.child(postide).child("pInterested").setValue(""+(pInterested+1));
+                                    interestedRef.child(postide).child(myUid).setValue("Showed Interest");
+                                    bookmarkRef.child(userUid).child(pId).setValue("true");
+                                    mProcessInterested = false;
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+                } else {
+                    Toast.makeText(context.getApplicationContext(), "Already Participating",Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 
@@ -223,6 +228,11 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             tag2 = itemView.findViewById(R.id.tag2);
             tag3 = itemView.findViewById(R.id.tag3);
         }
+    }
+
+    private boolean isParticipating(String postId) {
+        DatabaseReference participatingRef = FirebaseDatabase.getInstance().getReference("Participating").child(postId).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        return participatingRef != null;
     }
 
 }

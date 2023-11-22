@@ -12,8 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.volunteerapp.Activities.InterestedActivity;
-import com.example.volunteerapp.Activities.ProfileViews.OrgProfileView;
-import com.example.volunteerapp.Fragments.OrgTrackFragment;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.squareup.picasso.Picasso;
@@ -52,7 +50,7 @@ public class AdapterOrgTrackPosts extends RecyclerView.Adapter<AdapterOrgTrackPo
         }
         else {
             try {
-                Picasso.get().load(pImage).into(holder.postImg);
+                Picasso.get().load(pImage).centerCrop().resize(100,100).into(holder.postImg);
             } catch (Exception e) {
 
             }

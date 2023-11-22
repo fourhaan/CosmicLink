@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,15 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.volunteerapp.Activities.ProfileViews.BookmarkPostDetails;
-import com.example.volunteerapp.Activities.ProfileViews.OrgProfileView;
-import com.example.volunteerapp.Fragments.BintFragment;
+import com.example.volunteerapp.Activities.CustomViews.BookmarkPostDetails;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -66,7 +61,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
         }
         else {
             try {
-                Picasso.get().load(pImage).into(holder.postImg);
+                Picasso.get().load(pImage).centerCrop().resize(100,100).into(holder.postImg);
             } catch (Exception e) {
 
             }

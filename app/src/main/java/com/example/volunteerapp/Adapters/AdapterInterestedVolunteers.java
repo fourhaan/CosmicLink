@@ -48,7 +48,7 @@ public class AdapterInterestedVolunteers extends RecyclerView.Adapter<AdapterInt
         holder.Name.setText(volunteer.getFullname());
         holder.userName.setText("@"+volunteer.getUsername());
         String img_url = interestedVolunteers.get(position).getImage_url();
-        Picasso.get().load(img_url).into(holder.profile);
+        Picasso.get().load(img_url).centerCrop().resize(100,100).into(holder.profile);
 
         holder.accept.setOnClickListener(v -> {
             DatabaseReference participatingRef = FirebaseDatabase.getInstance().getReference()
@@ -62,6 +62,11 @@ public class AdapterInterestedVolunteers extends RecyclerView.Adapter<AdapterInt
             DatabaseReference interestedRef = FirebaseDatabase.getInstance().getReference()
                     .child("Interested").child(pId).child(volunteer.getUserId());
             interestedRef.removeValue();
+
+            //Remove the bookmark from volunteer
+            DatabaseReference BookmarkRef = FirebaseDatabase.getInstance().getReference()
+                    .child("Bookmark").child(volunteer.getUserId()).child(pId);
+            BookmarkRef.removeValue();
 
             // Notify the adapter that the data set has changed
             notifyDataSetChanged();

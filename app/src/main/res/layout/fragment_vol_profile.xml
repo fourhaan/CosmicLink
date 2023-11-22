@@ -522,7 +522,7 @@
                                     android:enabled="false"
                                     app:boxCornerRadiusBottomEnd="10sp">
 
-                                    <com.example.volunteerapp.CustomViews.TagsInputEditText
+                                    <com.example.volunteerapp.CustomTools.TagsInputEditText
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"

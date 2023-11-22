@@ -1,28 +1,23 @@
-package com.example.volunteerapp.Activities.ProfileViews;
+package com.example.volunteerapp.Activities.CustomViews;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.volunteerapp.Activities.SearchActivity;
-import com.example.volunteerapp.CustomViews.TagsInputEditText;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.volunteerapp.CustomTools.TagsInputEditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-
-import com.example.volunteerapp.databinding.ActivityOrgProfileViewBinding;
 
 import com.example.volunteerapp.R;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,14 +27,15 @@ import com.squareup.picasso.Picasso;
 
 public class OrgProfileView extends AppCompatActivity {
 
-    String orgUid;
-    DatabaseReference orgRef;
+    private String orgUid,orgName;
+    private DatabaseReference orgRef;
     private TextView fullnameTextView, joiningdateTextView, mobileTextView, locationTextView, emailTextView;
     private EditText bioEditText, mobile2EditText, email2EditText, orgTypeEditText;
     private ImageView profileImageView;
     private ProgressBar profileProgressBar;
     private TextInputLayout tagsLayout;
     private TagsInputEditText tagsEditText;
+    private Button followBtn, viewPostBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +69,9 @@ public class OrgProfileView extends AppCompatActivity {
 
         // Show the progress bar while loading
         profileProgressBar.setVisibility(View.VISIBLE);
+
+        followBtn = findViewById(R.id.follow_btn);
+        viewPostBtn = findViewById(R.id.view_post_btn);
 
         orgRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -127,6 +126,7 @@ public class OrgProfileView extends AppCompatActivity {
 
                     // Show the content view
                     findViewById(R.id.vol_profile_content).setVisibility(View.VISIBLE);
+                    orgName = fullName;
                 }
             }
 
@@ -134,6 +134,42 @@ public class OrgProfileView extends AppCompatActivity {
             public void onCancelled(DatabaseError error) {
                 //error
             }
+        });
+
+        followBtn.setOnClickListener(v -> {
+            // Get the current user's UID
+            String currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            // Reference to the organization's followers node
+            DatabaseReference followersRef = FirebaseDatabase.getInstance().getReference().child("Organisations").child(orgName).child("followers");
+
+            // Check if the current user is already a follower
+            followersRef.child(currentUserUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        // User is already a follower, so remove the follow
+                        followersRef.child(currentUserUid).removeValue();
+                        followBtn.setText("Follow");
+                    } else {
+                        // User is not a follower, so add the follow
+                        followersRef.child(currentUserUid).setValue(true);
+                        followBtn.setText("Unfollow");
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Handle error
+                }
+            });
+        });
+
+        viewPostBtn.setOnClickListener(v ->  {
+
+            Intent intent = new Intent(OrgProfileView.this,viewOrgPosts.class);
+            intent.putExtra("orgUid",orgUid);
+            startActivity(intent);
         });
 
     }

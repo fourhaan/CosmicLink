@@ -10,9 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.volunteerapp.Activities.ProfileViews.OrgProfileView;
+import com.example.volunteerapp.Activities.CustomViews.OrgProfileView;
 import com.example.volunteerapp.Chat.Model.Users;
-import com.example.volunteerapp.Fragments.OrgProfileFragment;
 import com.example.volunteerapp.R;
 import com.example.volunteerapp.Activities.SearchActivity;
 import com.squareup.picasso.Picasso;

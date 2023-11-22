@@ -1,9 +1,7 @@
-package com.example.volunteerapp.Activities.ProfileViews;
+package com.example.volunteerapp.Activities.CustomViews;
 
-import android.icu.text.CaseMap;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.volunteerapp.Adapters.AdapterPosts;
 import com.example.volunteerapp.Adapters.SearchAdapter;
 import com.example.volunteerapp.Chat.Model.Users;
 import com.example.volunteerapp.R;
