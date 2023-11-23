@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">volunteerApp</string>
     <string name="crisis_text">\n \n \n \n \n \nOur Planet Earth \n is in deep <font color="#FF0000">Crisis !</font></string>
+
+    <string-array name="sorting_methods">
+    <item>Location (Default)</item>
+    <item>Date of Event</item>
+    <item>Work Hours</item>
+    <item>Tags</item>
+        <item>Latest Post</item>
+    </string-array>
+
     <!-- Array of Indian states -->
     <string-array name="array_states">
         <item>Select Your State</item>
