@@ -198,7 +198,7 @@
                 app:boxStrokeWidthFocused="0sp"
                 app:hintTextColor="#FFFFFF">
 
-                <com.example.volunteerapp.CustomViews.TagsInputEditText
+                <com.example.volunteerapp.CustomTools.TagsInputEditText
                     android:id="@+id/tagsET"
                     style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"
                     android:layout_width="match_parent"

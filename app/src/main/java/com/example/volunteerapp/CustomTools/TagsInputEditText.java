@@ -1,4 +1,4 @@
-package com.example.volunteerapp.CustomViews;
+package com.example.volunteerapp.CustomTools;
 
 import android.content.Context;
 import android.graphics.Bitmap;

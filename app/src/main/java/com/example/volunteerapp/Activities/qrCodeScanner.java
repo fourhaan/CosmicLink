@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
-import com.example.volunteerapp.Activities.ProfileViews.OrgProfileView;
+import com.example.volunteerapp.Activities.CustomViews.OrgProfileView;
 import com.example.volunteerapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

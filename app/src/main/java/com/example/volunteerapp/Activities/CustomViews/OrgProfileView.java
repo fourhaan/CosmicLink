@@ -1,28 +1,23 @@
-package com.example.volunteerapp.Activities.ProfileViews;
+package com.example.volunteerapp.Activities.CustomViews;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.volunteerapp.Activities.SearchActivity;
-import com.example.volunteerapp.CustomViews.TagsInputEditText;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.volunteerapp.CustomTools.TagsInputEditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-
-import com.example.volunteerapp.databinding.ActivityOrgProfileViewBinding;
 
 import com.example.volunteerapp.R;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,14 +27,15 @@ import com.squareup.picasso.Picasso;
 
 public class OrgProfileView extends AppCompatActivity {
 
-    String orgUid;
-    DatabaseReference orgRef;
+    private String orgUid,orgName;
+    private DatabaseReference orgRef;
     private TextView fullnameTextView, joiningdateTextView, mobileTextView, locationTextView, emailTextView;
     private EditText bioEditText, mobile2EditText, email2EditText, orgTypeEditText;
     private ImageView profileImageView;
     private ProgressBar profileProgressBar;
     private TextInputLayout tagsLayout;
     private TagsInputEditText tagsEditText;
+    private Button followBtn, viewPostBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +44,7 @@ public class OrgProfileView extends AppCompatActivity {
 
         orgUid = getIntent().getStringExtra("userId");
 
-        orgRef = FirebaseDatabase.getInstance().getReference("Registered Users/"+orgUid);
+        orgRef = FirebaseDatabase.getInstance().getReference("Registered Users/" + orgUid);
 
         // Initialize all the XML elements
         fullnameTextView = findViewById(R.id.org_profile_name);
@@ -67,12 +63,15 @@ public class OrgProfileView extends AppCompatActivity {
         profileProgressBar.setVisibility(View.GONE);
         findViewById(R.id.vol_profile_content).setVisibility(View.GONE);
 
-        //initialising tags layout
+        // initializing tags layout
         tagsLayout = findViewById(R.id.tagsLayout);
         tagsEditText = findViewById(R.id.tagsET);
 
         // Show the progress bar while loading
         profileProgressBar.setVisibility(View.VISIBLE);
+
+        followBtn = findViewById(R.id.follow_btn);
+        viewPostBtn = findViewById(R.id.view_post_btn);
 
         orgRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -94,22 +93,20 @@ public class OrgProfileView extends AppCompatActivity {
 
                     // Set the retrieved data to the TextViews
                     fullnameTextView.setText(fullName);
-                    bioEditText.setText("We come under :\n"+orgType+"\n\n"+bio);
+                    bioEditText.setText("We come under :\n" + orgType + "\n\n" + bio);
                     joiningdateTextView.setText(joiningDate);
-                    mobileTextView.setText("+91-"+mobileNo);
+                    mobileTextView.setText("+91-" + mobileNo);
                     emailTextView.setText(email);
                     locationTextView.setText(location);
                     orgTypeEditText.setText(orgType);
-                    if(mobileNo2==null){
+                    if (mobileNo2 == null) {
                         mobile2EditText.setText("");
-                    }
-                    else{
-                        mobile2EditText.setText("+91-"+mobileNo2);
+                    } else {
+                        mobile2EditText.setText("+91-" + mobileNo2);
                     }
                     email2EditText.setText(email2);
 
-
-                    //set tags to tagsEditText
+                    // set tags to tagsEditText
                     tagsEditText.setText(tags);
 
                     // Load and display the profile picture using Picasso
@@ -127,14 +124,80 @@ public class OrgProfileView extends AppCompatActivity {
 
                     // Show the content view
                     findViewById(R.id.vol_profile_content).setVisibility(View.VISIBLE);
+
+                    orgName = fullName;
+
+                    // Check if the user is already following the organization
+                    checkFollowStatus();
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                //error
+                // handle error
             }
         });
 
+        viewPostBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(OrgProfileView.this, viewOrgPosts.class);
+            intent.putExtra("orgUid", orgUid);
+            startActivity(intent);
+        });
     }
+
+    private void checkFollowStatus() {
+        // Get the current user's UID
+        String currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // Reference to the organization's followers node
+        DatabaseReference followersRef = FirebaseDatabase.getInstance().getReference().child("Organisations").child(orgName).child("followers");
+
+        // Check if the current user is already a follower
+        followersRef.child(currentUserUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // User is already a follower, set the button text to "Unfollow"
+                    followBtn.setText("Unfollow");
+                } else {
+                    // User is not a follower, set the button text to "Follow"
+                    followBtn.setText("Follow");
+                }
+
+                // Set OnClickListener for the follow button
+                followBtn.setOnClickListener(v -> {
+                    toggleFollowStatus(currentUserUid, followersRef);
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Handle error
+            }
+        });
+    }
+
+    private void toggleFollowStatus(String currentUserUid, DatabaseReference followersRef) {
+        // Check if the current user is already a follower
+        followersRef.child(currentUserUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // User is already a follower, so remove the follow
+                    followersRef.child(currentUserUid).removeValue();
+                    followBtn.setText("Follow");
+                } else {
+                    // User is not a follower, so add the follow
+                    followersRef.child(currentUserUid).setValue(true);
+                    followBtn.setText("Unfollow");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Handle error
+            }
+        });
+    }
+
 }

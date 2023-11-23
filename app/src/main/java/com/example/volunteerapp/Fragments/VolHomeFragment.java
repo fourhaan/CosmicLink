@@ -92,31 +92,45 @@ public class VolHomeFragment extends Fragment {
         }
     }
 
-    private void loadPosts(){
+    private void loadPosts() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
-        //We will get all data from this reference
+        // We will get all data from this reference
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 postList.clear();
-                for(DataSnapshot ds: snapshot.getChildren()) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     modelPost modelPost = ds.getValue(com.example.volunteerapp.Models.modelPost.class);
-                    postList.add(modelPost);
+
+                    // Check if the current post's pId is present in the Participating reference
+                    if (isParticipating(modelPost.getpId())) {
+                        postList.add(modelPost);
+                    }
                 }
-                    sortPostsByDistance();
-                    adapterPosts = new AdapterPosts(getActivity(),postList);
-                    //Set adapter to recycler view
-                    recyclerView.setAdapter(adapterPosts);
-                    adapterPosts.notifyDataSetChanged();
+                sortPostsByDistance();
+                adapterPosts = new AdapterPosts(getActivity(), postList);
+                // Set adapter to recycler view
+                recyclerView.setAdapter(adapterPosts);
+                adapterPosts.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //If there is an error
-                Toast.makeText(getActivity(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                // If there is an error
+                Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    // Helper method to check if the volunteer is already participating in the post
+    private boolean isParticipating(String postId) {
+        DatabaseReference participatingRef = FirebaseDatabase.getInstance().getReference("Participating")
+                .child(postId)
+                .child(firebaseAuth.getCurrentUser().getUid());
+
+        return participatingRef != null;
+    }
+
 
     private void sortPostsByDistance() {
         // Get the volunteer's location (latitude and longitude)

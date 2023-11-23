@@ -1,8 +1,7 @@
-package com.example.volunteerapp.Activities.ProfileViews;
+package com.example.volunteerapp.Activities.CustomViews;
 
-import android.icu.text.CaseMap;
 import android.os.Bundle;
-import android.view.View;
+import android.text.format.DateFormat;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -12,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.volunteerapp.Adapters.AdapterPosts;
 import com.example.volunteerapp.Adapters.SearchAdapter;
 import com.example.volunteerapp.Chat.Model.Users;
 import com.example.volunteerapp.R;
@@ -25,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class BookmarkPostDetails extends AppCompatActivity {
     String postUid;
@@ -59,7 +59,6 @@ public class BookmarkPostDetails extends AppCompatActivity {
         tag2 = findViewById(R.id.tag2);
         tag3 = findViewById(R.id.tag3);
         addressBtn = findViewById(R.id.address_show);
-        postImg.setVisibility(View.GONE);
 
         postRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -73,32 +72,39 @@ public class BookmarkPostDetails extends AppCompatActivity {
                     String pinterested = snapshot.child("pInterested").getValue(String.class);
                     String pTime = snapshot.child("pTime").getValue(String.class);
                     String pid = snapshot.child("pId").getValue(String.class);
+                    String uDp = snapshot.child("uDp").getValue(String.class);
                     String address = snapshot.child("address").getValue(String.class);
                     String[] tagsArray = pTags.split(" ");
                     tag1.setText(tagsArray[0]);
                     tag2.setText(tagsArray[1]);
                     tag3.setText(tagsArray[2]);
 
+                    //Convert timestamp to dd/mm/yyyy hh:mm am/pm
+                    Calendar calendar = Calendar.getInstance(Locale.getDefault());
+                    calendar.setTimeInMillis(Long.parseLong(pTime));
+                    String Time = DateFormat.format("dd/MM/yyyy hh:mm aa",calendar).toString();
+
                     // Set the retrieved data to the TextViews
                     displayName.setText(uName);
                     title.setText(ptitle);
                     description.setText(pdescription);
                     addressBtn.setText(address);
-                    interested.setText(pinterested);
+                    interested.setText(pinterested+"+"+" Interests");
+                    postTime.setText(Time);
+
+                    Picasso.get().load(uDp).into(profileImageView);
 
 
-                    if (pimg != null) {
                         if(pimg=="no_image") {
+                            postImg.setImageResource(R.drawable.image_holder);
                         }
                         else {
-                            postImg.setVisibility(View.VISIBLE);
                             Picasso.get()
                                     .load(pimg)
                                     .resize(200, 200)  // Set the desired image size
                                     .centerCrop()      // Crop the image to fit the ImageView
                                     .into(postImg);
                         }
-                    }
 
                 }
             }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ECE5E5"
     android:orientation="vertical"
-    tools:context=".Activities.ProfileViews.OrgProfileView">
+    tools:context=".Activities.CustomViews.OrgProfileView">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -139,6 +139,34 @@
                                     android:textColor="@color/black2.0"
                                     android:layout_gravity="center"
                                     android:textSize="22sp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="10dp">
+
+                                    <Button
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="50dp"
+                                        android:text="Follow"
+                                        android:id="@+id/follow_btn"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/white"
+                                        android:backgroundTint="@color/darkGrey"
+                                        android:layout_marginEnd="5dp"/>
+
+                                    <Button
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="50dp"
+                                        android:id="@+id/view_post_btn"
+                                        android:textColor="@color/white"
+                                        android:backgroundTint="@color/darkGrey"
+                                        android:text="View Posts"
+                                        android:textSize="12sp"/>
+                                </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
 
@@ -497,7 +525,8 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/circularbordersolid"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="16dp"
+                        android:layout_marginBottom="50dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -543,7 +572,7 @@
                                     android:enabled="false"
                                     app:boxCornerRadiusBottomEnd="10sp">
 
-                                    <com.example.volunteerapp.CustomViews.TagsInputEditText
+                                    <com.example.volunteerapp.CustomTools.TagsInputEditText
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"

@@ -119,6 +119,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 Toast.makeText(context, "More", Toast.LENGTH_SHORT).show();
             }
         });
+        // In your onBindViewHolder method, use the isParticipating method like this
+        // In your onBindViewHolder method, use the isParticipating method like this
         holder.interestedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,37 +128,43 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 mProcessInterested = true;
                 String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 String postide = postList.get(holder.getAdapterPosition()).getpId();
-
-                interestedRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                isParticipating(postide, new ParticipatingCallback() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(mProcessInterested){
-                            if(snapshot.child(postide).hasChild(myUid)){
-                                //Already liked so remove like
-                                postsRef.child(postide).child("pInterested").setValue(""+(pInterested-1));
-                                interestedRef.child(postide).child(myUid).removeValue();
-                                bookmarkRef.child(userUid).child(pId).removeValue();
-                                mProcessInterested = false;
-                            }
-                            else {
-                                //Like it if not liked already
-                                postsRef.child(postide).child("pInterested").setValue(""+(pInterested+1));
-                                interestedRef.child(postide).child(myUid).setValue("Showed Interest");
-                                bookmarkRef.child(userUid).child(pId).setValue("true");
-                                mProcessInterested = false;
-                            }
+                    public void onResult(boolean isParticipating) {
+                        if (!isParticipating) {
+                            interestedRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (mProcessInterested) {
+                                        if (snapshot.child(postide).hasChild(myUid)) {
+                                            // Already liked so remove like
+                                            postsRef.child(postide).child("pInterested").setValue("" + (pInterested - 1));
+                                            interestedRef.child(postide).child(myUid).removeValue();
+                                            bookmarkRef.child(userUid).child(postide).removeValue(); // Fix here
+                                            mProcessInterested = false;
+                                        } else {
+                                            // Like it if not liked already
+                                            postsRef.child(postide).child("pInterested").setValue("" + (pInterested + 1));
+                                            interestedRef.child(postide).child(myUid).setValue("Showed Interest");
+                                            bookmarkRef.child(userUid).child(postide).setValue("true"); // Fix here
+                                            mProcessInterested = false;
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        } else {
+                            Toast.makeText(context.getApplicationContext(), "Already Participating", Toast.LENGTH_SHORT).show();
+                            holder.interestedBtn.setText("Participating");
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
             }
         });
-
-
 
         holder.notinterestedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +194,30 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+    }
+
+    public interface ParticipatingCallback {
+        void onResult(boolean isParticipating);
+    }
+
+    // Modify the isParticipating method
+    private void isParticipating(String postId, ParticipatingCallback callback) {
+        DatabaseReference participatingRef = FirebaseDatabase.getInstance().getReference("Participating").child(postId).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        participatingRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Check if the snapshot has any children
+                boolean isParticipating = snapshot.exists();
+                callback.onResult(isParticipating);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+                callback.onResult(false); // Assume not participating in case of an error
             }
         });
     }
@@ -224,5 +256,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             tag3 = itemView.findViewById(R.id.tag3);
         }
     }
+
+
 
 }

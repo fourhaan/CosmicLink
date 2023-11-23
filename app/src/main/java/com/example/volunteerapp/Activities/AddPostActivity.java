@@ -24,11 +24,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.volunteerapp.CustomViews.TagsInputEditText;
+import com.example.volunteerapp.CustomTools.TagsInputEditText;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
