@@ -1,6 +1,7 @@
 package com.example.volunteerapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.volunteerapp.Activities.CustomViews.OrgProfileView;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,6 +75,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String pTags = postList.get(position).getpTags();
         String Address = postList.get(position).getAddress();
         String pInterested = postList.get(position).getpInterested();//Contains total number of Interested Volunteers.
+        long workhours = postList.get(position).getWorkhours();
+        String dateofevent = postList.get(position).getDate();
 
         //Convert timestamp to dd/mm/yyyy hh:mm am/pm
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
@@ -86,6 +90,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.description.setText(pDescription);
         holder.interested.setText(pInterested+"+" + " Interests");
         holder.addressBtn.setText("Location : "+Address);
+        holder.date.setText("Start of Mission : "+dateofevent);
+        holder.hours.setText("Total Mission Work Hours : "+workhours+" hours");
 
         //Set interested for each post
         setInterested(holder,pId);
@@ -113,14 +119,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         }
 
         //Handle click buttons
-        holder.moreBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "More", Toast.LENGTH_SHORT).show();
-            }
-        });
-        // In your onBindViewHolder method, use the isParticipating method like this
-        // In your onBindViewHolder method, use the isParticipating method like this
+        holder.moreBtn.setVisibility(View.GONE);
+
         holder.interestedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,6 +171,14 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             public void onClick(View view) {
 
                 Toast.makeText(context, "Not Interested", Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, OrgProfileView.class);
+                intent.putExtra("userId", postList.get(position).getUid());
+                context.startActivity(intent);
             }
         });
     }
@@ -234,7 +242,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         ImageView picture,postImg;
         TextView displayName,postTime,title,description,interested;
         ImageButton moreBtn;
-        Button interestedBtn,notinterestedBtn,shareBtn,tag1,tag2,tag3,addressBtn;
+        Button interestedBtn,notinterestedBtn,shareBtn,tag1,tag2,tag3,addressBtn,date,hours;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -249,8 +257,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             interestedBtn = itemView.findViewById(R.id.interestedBtn);
             notinterestedBtn = itemView.findViewById(R.id.notinterestedBtn);
             addressBtn = itemView.findViewById(R.id.address_show);
-//            commentBtn = itemView.findViewById(R.id.commentBtn);
-//            shareBtn = itemView.findViewById(R.id.shareBtn);
+            date = itemView.findViewById(R.id.date);
+            hours = itemView.findViewById(R.id.hours);
             tag1 = itemView.findViewById(R.id.tag1);
             tag2 = itemView.findViewById(R.id.tag2);
             tag3 = itemView.findViewById(R.id.tag3);
