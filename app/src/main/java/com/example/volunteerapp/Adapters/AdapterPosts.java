@@ -17,8 +17,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.volunteerapp.Activities.CustomViews.OrgProfileView;
+import com.example.volunteerapp.Models.Data;
+import com.example.volunteerapp.Models.NotificationSender;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
+import com.example.volunteerapp.Utils.APIService;
+import com.example.volunteerapp.Utils.MyResponse;
+import com.example.volunteerapp.Utils.Client;
+import com.example.volunteerapp.Models.Token;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,8 +34,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.Calendar;
 import java.util.List;
@@ -36,13 +48,13 @@ import java.util.Locale;
 public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     Context context;
     List<modelPost> postList;
-
-    String myUid;
+    String myUid,senderName;
 
     private DatabaseReference interestedRef; //for interested database node
     private DatabaseReference postsRef;//reference for post
     private DatabaseReference bookmarkRef;
     boolean mProcessInterested = false;
+    private APIService apiService;
 
     public AdapterPosts(Context context, List<modelPost> postList) {
         this.context = context;
@@ -165,8 +177,30 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                         }
                     }
                 });
+
+                //Fetching the token of Organization using his uID.
+                FirebaseDatabase.getInstance().getReference().child("Tokens").child(uid)
+                        .child("token")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String usertoken=snapshot.getValue(String.class);
+                                sendNotifications(usertoken,"Request for Working!",
+                                        senderName + " wants to Volunteer ");
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                //Updating the user tokens so that notification can be sent using the token.
+                UpdateToken();
+
             }
         });
+
+
 
         holder.ReportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,6 +266,58 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     }
 
 
+    //Updating the user tokens to send notifications
+    private void UpdateToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if(!task.isSuccessful()){
+                            Toast.makeText(context.getApplicationContext(),
+                                    "New token failed", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        String token = task.getResult();
+                        updateToken(token);
+                    }
+                });
+    }
+
+    private void updateToken(String token) {
+        Token token1 = new Token(token);
+        //Adding the token to the database so that it can be retrieved to send notifications to the user.
+        FirebaseDatabase.getInstance().getReference("Tokens")
+                .child(FirebaseAuth.getInstance().getUid()).setValue(token1);
+    }
+
+    //This Method Sends the notifications combining all class of
+    //SendNotificationPack Package work together
+    public void sendNotifications(String usertoken, String title, String message) {
+        Data data = new Data(title, message);
+        NotificationSender sender = new NotificationSender(data, usertoken);
+        apiService.sendNotifcation(sender).enqueue(new Callback<MyResponse>() {
+            @Override
+            public void onResponse(Call<MyResponse> call,
+                                   Response<MyResponse> response) {
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().success != 1) {
+                        Toast.makeText(context.getApplicationContext(),
+                                "Sorry Organization could not be informed. Please try again later.",
+                                Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(context.getApplicationContext(),
+                                "Organization has been informed.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<MyResponse> call, Throwable t) {
+            }
+        });
+    }
+
     private void setInterested(MyHolder holder, String postKey) {
         interestedRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -292,8 +378,12 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         TextView displayName,postTime,title,description,interested;
         ImageButton moreBtn;
         Button interestedBtn,ReportBtn,shareBtn,tag1,tag2,tag3,addressBtn,date,hours;
+
         public MyHolder(@NonNull View itemView) {
             super(itemView);
+            //Passing the value of client class to the api service
+            apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+
 
             picture = itemView.findViewById(R.id.picture);
             postImg = itemView.findViewById(R.id.postImg);
