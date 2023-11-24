@@ -12,15 +12,25 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/note_title_text_view"
+        android:id="@+id/title_text_view"
         android:text="Task 1: Title"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:layout_marginVertical="4dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/note_content_text_view"
+        android:id="@+id/timestamp_text_view"
+        android:text="timestamp"
+        android:textColor="@color/darkGrey"
+        android:textSize="12sp"
+        android:layout_marginVertical="4dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/content_text_view"
         android:text="Task Description"
         android:maxLines="2"
         android:ellipsize="end"
@@ -29,9 +39,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/note_hour"
+        android:id="@+id/task_hour"
         android:text="Task Hours required: 8 Hours"
-        android:fontFamily="@font/jockey_one"
+        android:fontFamily="@font/roboto"
         android:maxLines="2"
         android:ellipsize="end"
         android:textSize="17sp"
@@ -44,27 +54,27 @@
         android:orientation="horizontal"
         android:layout_gravity="center">
         <Button
-            android:id="@+id/interestedBtn"
+            android:id="@+id/completedBtn"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:backgroundTint="#C0DD9D"
+            android:background = "@android:color/transparent"
             android:textColor="@color/blue"
             android:padding="5dp"
+            android:drawableLeft="@drawable/baseline_check_24"
             android:gravity="center"
-            android:drawableLeft="@drawable/baseline_thumb_up_24"
-            android:text="Completed"/>
+            android:text="Completed by User"/>
         <Button
-            android:id="@+id/notinterestedBtn"
+            android:id="@+id/notcompletedBtn"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:backgroundTint="#EA7168"
+            android:background = "@android:color/transparent"
             android:textColor="@color/blue"
             android:padding="5dp"
-            android:drawableLeft="@drawable/baseline_thumb_down_24"
-            android:text="Not Completed"
+            android:drawableLeft="@drawable/baseline_clear_24"
+            android:text="Not Yet Completed"
             android:gravity="center"/>
     </LinearLayout>
 

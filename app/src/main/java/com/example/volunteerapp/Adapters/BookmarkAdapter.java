@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.volunteerapp.Activities.CustomViews.BookmarkPostDetails;
+import com.example.volunteerapp.Activities.VolTaskActivity;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,10 +77,19 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
             @Override
             public void onClick(View view) {
                 // Handle the click event, open the profile page
-                Context context = view.getContext();
-                Intent intent = new Intent(context, BookmarkPostDetails.class);
-                intent.putExtra("pId", post.getpId());
-                context.startActivity(intent);
+                if(isBookmarkButtonEnabled) {
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context, BookmarkPostDetails.class);
+                    intent.putExtra("pId", post.getpId());
+                    context.startActivity(intent);
+                }
+                else {
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context, VolTaskActivity.class);
+                    intent.putExtra("pId", post.getpId());
+                    intent.putExtra("workhours",post.getWorkhours());
+                    context.startActivity(intent);
+                }
             }
         });
 

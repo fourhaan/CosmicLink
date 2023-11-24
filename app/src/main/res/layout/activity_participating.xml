@@ -20,8 +20,8 @@
             android:textSize="20sp"
             android:id="@+id/title_for_org"
             android:gravity="center"
-            android:text="Interested Volunteers :"
-             />
+            android:text="Add Tasks here!"
+            />
 
 
     </LinearLayout>

@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BpartFragment extends Fragment {
+public class VolpartFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     RecyclerView recyclerView;
     List<modelPost> participatingLists;

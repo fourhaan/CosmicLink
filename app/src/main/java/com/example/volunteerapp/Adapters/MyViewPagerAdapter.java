@@ -7,7 +7,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.volunteerapp.Fragments.BfollowFragment;
 import com.example.volunteerapp.Fragments.BintFragment;
-import com.example.volunteerapp.Fragments.BpartFragment;
 
 public class MyViewPagerAdapter  extends FragmentStateAdapter {
     public MyViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -21,8 +20,6 @@ public class MyViewPagerAdapter  extends FragmentStateAdapter {
             case 0:
                 return new BintFragment();
             case 1:
-                return new BpartFragment();
-            case 2:
                 return new BfollowFragment();
             default:
                 return new BintFragment();
@@ -31,6 +28,6 @@ public class MyViewPagerAdapter  extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }

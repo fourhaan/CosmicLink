@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.volunteerapp.Activities.InterestedActivity;
+import com.example.volunteerapp.Activities.OrgParticipatingActivity;
 import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.squareup.picasso.Picasso;
@@ -62,6 +63,15 @@ public class AdapterOrgTrackPosts extends RecyclerView.Adapter<AdapterOrgTrackPo
                 // Handle the click event, open the profile page
                 Context context = view.getContext();
                 Intent intent = new Intent(context, InterestedActivity.class);
+                intent.putExtra("pId", post.getpId());
+                context.startActivity(intent);
+            }
+        });
+        holder.checkActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = view.getContext();
+                Intent intent = new Intent(context, OrgParticipatingActivity.class);
                 intent.putExtra("pId", post.getpId());
                 context.startActivity(intent);
             }

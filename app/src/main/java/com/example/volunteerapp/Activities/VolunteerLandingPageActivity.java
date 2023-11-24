@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import com.example.volunteerapp.Chat.Activity.ChatActivity;
 import com.example.volunteerapp.Fragments.VolBookmarkFragment;
 import com.example.volunteerapp.Fragments.VolHomeFragment;
-import com.example.volunteerapp.Fragments.VolMapFragment;
+import com.example.volunteerapp.Fragments.VolpartFragment;
 import com.example.volunteerapp.Fragments.VolProfileFragment;
 import com.example.volunteerapp.R;
 import com.example.volunteerapp.databinding.ActivityVolunteerLandingPageBinding;
@@ -74,7 +74,7 @@ public class VolunteerLandingPageActivity extends AppCompatActivity {
             } else if (itemId == R.id.bookmark) {
                 replaceFragment(new VolBookmarkFragment());
             } else if (itemId == R.id.map) {
-                replaceFragment(new VolMapFragment());
+                replaceFragment(new VolpartFragment());
             } else if (itemId == R.id.profile) {
                 replaceFragment(new VolProfileFragment());
             }
