@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp"
+    app:contentPadding="5dp"
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="#EFECE8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#F5F0F0" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/black"
+            android:text="Task 1"
+            android:backgroundTint="#80AC4841"
+            android:textSize="30dp"/>
+
+        <TextView
+            android:id="@+id/hours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Total Task Hours = 8 hours"
+            android:backgroundTint="#80AC4841"
+            android:textColor="@color/black"
+            android:textSize="30dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remark Of Task by Organization"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            android:backgroundTint="#80AC4841"
+            android:textSize="30dp"
+            android:id="@+id/address_show"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingRight="8dp">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <Button
+                android:id="@+id/interestedBtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#C0DD9D"
+                android:textColor="@color/blue"
+                android:padding="15dp"
+                android:gravity="center"
+                android:drawableLeft="@drawable/baseline_thumb_up_24"
+                android:text="Accept"/>
+            <Button
+                android:id="@+id/notinterestedBtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:backgroundTint="#EA7168"
+                android:textColor="@color/blue"
+                android:padding="15dp"
+                android:drawableLeft="@drawable/baseline_thumb_down_24"
+                android:text="Decline"
+                android:gravity="center"/>
+            <!--            <Button-->
+            <!--                android:id="@+id/commentBtn"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:padding="5dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:drawableLeft="@drawable/ic_comment2"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:text="Comment"/>-->
+            <!--            <Button-->
+            <!--                android:id="@+id/shareBtn"-->
+            <!--                android:drawableLeft="@drawable/ic_shareimg2"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:text="Share"/>-->
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
