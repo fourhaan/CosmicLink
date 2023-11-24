@@ -26,8 +26,8 @@
                 android:scaleType="centerCrop"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/ic_profile"
-                android:layout_width="50dp"
-                android:layout_height="50dp"/>
+                android:layout_width="70dp"
+                android:layout_height="70dp"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                 <TextView
                     android:id="@+id/displayName"
                     android:text="Name"
-                    android:textSize="20dp"
+                    android:textSize="25dp"
                     android:textColor="@color/black2.0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -62,20 +62,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"
+            android:fontFamily="@font/arbutus"
             android:textColor="@color/black2.0"
             android:layout_marginTop="10dp"
             android:textStyle="bold"
             android:textSize="22dp"/>
+
 
         <TextView
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:textColor="@color/black2.0"
+            android:fontFamily="@font/megrim"
             android:text="The description of the Work"
-            android:textSize="16dp"/>
-
+            android:textColor="@color/black2.0"
+            android:textSize="16dp" />
 
         <ImageView
             android:id="@+id/postImg"
@@ -83,15 +85,6 @@
             android:layout_height="200dp"
             android:layout_marginTop="15dp"
             android:textSize="16dp"/>
-        <TextView
-            android:id="@+id/interested"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0 Interests"
-            android:textColor="@color/black2.0"
-            android:textSize="16dp"
-            />
 
         <View
             android:layout_width="match_parent"
@@ -105,17 +98,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:textColor="@color/white"
-            android:text="date of mission = 11/11/11"
-            android:backgroundTint="#80AC4841"
+            android:text="Date of mission = 11/11/11"
+            android:backgroundTint="#872A08"
             android:textSize="16dp"/>
 
         <Button
-            android:id="@+id/hours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="Total Mission Hours = 100 hours"
-            android:backgroundTint="#80AC4841"
+            android:backgroundTint="#8B5D0D"
             android:textColor="@color/white"
             android:textSize="16dp"/>
 
@@ -126,7 +118,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/white"
-            android:backgroundTint="#80AC4841"
+            android:backgroundTint="#FF5100"
             android:id="@+id/address_show"/>
 
         <LinearLayout
@@ -140,32 +132,45 @@
                 android:layout_width="0dp"
                 android:id="@+id/tag1"
                 android:layout_weight="1"
+                android:fontFamily="@font/arbutus"
                 android:layout_marginEnd="5dp"
                 android:layout_height="wrap_content"
                 android:text="tags1"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/blue"/>
+                android:backgroundTint="@color/black"/>
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/arbutus"
                 android:text="tags2"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="@color/black"
                 android:id="@+id/tag2"/>
             <Button
                 android:layout_width="0dp"
                 android:layout_marginStart="5dp"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/arbutus"
                 android:layout_weight="1"
                 android:text="tags3"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="@color/black"
                 android:id="@+id/tag3"/>
 
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/interested"
+            android:fontFamily="@font/bahiana"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0 Interests"
+            android:textColor="@color/black2.0"
+            android:textSize="16dp"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -178,7 +183,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#C0DD9D"
+                android:backgroundTint="#70B51C"
                 android:textColor="@color/blue"
                 android:padding="5dp"
                 android:gravity="center"
@@ -190,7 +195,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:backgroundTint="#EA7168"
+                android:backgroundTint="#D32D21"
                 android:textColor="@color/blue"
                 android:padding="5dp"
                 android:drawableLeft="@drawable/baseline_thumb_down_24"

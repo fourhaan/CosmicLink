@@ -192,16 +192,6 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Edit"
-                                    android:padding="5dp"
-                                    android:id="@+id/edit_vol_bio"
-                                    android:fontFamily="@font/proximanovaregular"
-                                    android:textColor="#FFCF66"
-                                    android:layout_marginEnd="10dp"
-                                    android:textSize="14sp" />
                             </LinearLayout>
 
                             <EditText
@@ -249,17 +239,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Edit"
-                                    android:padding="5dp"
-                                    android:id="@+id/edit_vol_hours"
-                                    android:fontFamily="@font/proximanovaregular"
-                                    android:textColor="#FFCF66"
-                                    android:layout_marginEnd="10dp"
-                                    android:textSize="14sp" />
                             </LinearLayout>
 
                             <TextView
@@ -423,15 +402,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
 
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/edit_vol_skills"
-                                android:text="Edit"
-                                android:padding="5dp"
-                                android:textColor="#FFCF66"
-                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
