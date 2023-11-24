@@ -73,7 +73,21 @@ public class AdapterInterestedVolunteers extends RecyclerView.Adapter<AdapterInt
         });
 
         holder.reject.setOnClickListener(v -> {
+            // Remove the user from the interestedVolunteers list
+            interestedVolunteers.remove(position);
 
+            // Remove the volunteer from the "Interested" reference
+            DatabaseReference interestedRef = FirebaseDatabase.getInstance().getReference()
+                    .child("Interested").child(pId).child(volunteer.getUserId());
+            interestedRef.removeValue();
+
+            // Remove the bookmark from volunteer
+            DatabaseReference bookmarkRef = FirebaseDatabase.getInstance().getReference()
+                    .child("Bookmark").child(volunteer.getUserId()).child(pId);
+            bookmarkRef.removeValue();
+
+            // Notify the adapter that the data set has changed
+            notifyDataSetChanged();
         });
     }
 

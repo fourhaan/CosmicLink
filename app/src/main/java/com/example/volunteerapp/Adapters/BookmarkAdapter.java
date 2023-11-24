@@ -17,6 +17,8 @@ import com.example.volunteerapp.Models.modelPost;
 import com.example.volunteerapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,6 +26,7 @@ import java.util.List;
 public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHolder>{
     Context context;
     List<modelPost> bookmarkedList;
+    private boolean isBookmarkButtonEnabled = true;
     //private DatabaseReference bookmarkRef;
     public BookmarkAdapter(Context context, List<modelPost> bookmarkedList) {
         this.context = context;
@@ -79,7 +82,49 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
             }
         });
 
+        if (isBookmarkButtonEnabled) {
+            holder.bookmarkedButton.setVisibility(View.VISIBLE);
+            holder.status.setText("Click to View Post Info ");
+        } else {
+            holder.bookmarkedButton.setVisibility(View.GONE);
+            holder.status.setText("Click to View Tasks ");
+        }
+
+        holder.bookmarkedButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                    // Remove the post from the "Bookmark" reference for the current user
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String userId = user.getUid();
+                    DatabaseReference bookmarkRef = FirebaseDatabase.getInstance().getReference().child("Bookmark").child(userId).child(pId);
+                    bookmarkRef.removeValue();
+
+                    // Remove the post from the "Interested" reference for the current user
+                    DatabaseReference interestedRef = FirebaseDatabase.getInstance().getReference().child("Interested").child(pId).child(userId);
+                    interestedRef.removeValue();
+
+                    // Retrieve the current value of pInterests
+                    int currentInterests = Integer.parseInt(post.getpInterested());
+
+                    // If the current value is greater than 0, decrement it by 1
+                    if (currentInterests > 0) {
+                        currentInterests--;
+                    }
+
+                    // Update the pInterests in the Firebase Realtime Database
+                    DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference().child("Posts").child(pId);
+                    postsRef.child("pInterested").setValue(String.valueOf(currentInterests));
+
+                    // Remove the post from the bookmarkedList
+                    bookmarkedList.remove(position);
+
+                    // Notify the adapter that the data set has changed
+                    notifyDataSetChanged();
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -98,8 +143,14 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
             postImg = itemView.findViewById(R.id.bookmarkedPic);
             title = itemView.findViewById(R.id.bookmarkedText);
             bookmarkedButton = itemView.findViewById(R.id.bookmarkedBtn);
-//            status = itemView.findViewById(R.id.belowBookmarkedText);
+            status = itemView.findViewById(R.id.below_Text);
         }
     }
+
+    public void setBookmarkButtonEnabled(boolean enabled) {
+        isBookmarkButtonEnabled = enabled;
+        notifyDataSetChanged();
+    }
+
 
 }

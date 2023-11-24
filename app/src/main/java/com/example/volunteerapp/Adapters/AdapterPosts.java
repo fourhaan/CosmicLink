@@ -1,6 +1,7 @@
 package com.example.volunteerapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.volunteerapp.Activities.CustomViews.OrgProfileView;
 import com.example.volunteerapp.Models.Data;
 import com.example.volunteerapp.Models.NotificationSender;
 import com.example.volunteerapp.Models.modelPost;
@@ -29,6 +32,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
@@ -85,6 +89,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String pTags = postList.get(position).getpTags();
         String Address = postList.get(position).getAddress();
         String pInterested = postList.get(position).getpInterested();//Contains total number of Interested Volunteers.
+        long workhours = postList.get(position).getWorkhours();
+        String dateofevent = postList.get(position).getDate();
 
         //Convert timestamp to dd/mm/yyyy hh:mm am/pm
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
@@ -98,6 +104,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.description.setText(pDescription);
         holder.interested.setText(pInterested+"+" + " Interests");
         holder.addressBtn.setText("Location : "+Address);
+        holder.date.setText("Start of Mission : "+dateofevent);
+        holder.hours.setText("Total Mission Work Hours : "+workhours+" hours");
 
         //Set interested for each post
         setInterested(holder,pId);
@@ -125,14 +133,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         }
 
         //Handle click buttons
-        holder.moreBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "More", Toast.LENGTH_SHORT).show();
-            }
-        });
-        // In your onBindViewHolder method, use the isParticipating method like this
-        // In your onBindViewHolder method, use the isParticipating method like this
+        holder.moreBtn.setVisibility(View.GONE);
+
         holder.interestedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,14 +202,69 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
 
 
-        holder.notinterestedBtn.setOnClickListener(new View.OnClickListener() {
+        holder.ReportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Toast.makeText(context, "Not Interested", Toast.LENGTH_SHORT).show();
+                showReportDialog(postList.get(position).getpId(),myUid);
+            }
+        });
+        holder.picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, OrgProfileView.class);
+                intent.putExtra("userId", postList.get(position).getUid());
+                context.startActivity(intent);
             }
         });
     }
+
+    private void showReportDialog(String postId, String userId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Report Post");
+
+        // Define a list of report behavior types
+        String[] reportBehaviors = {"Inappropriate Content", "Spam", "Harassment", "Other"};
+
+        // Initialize boolean array to track selected report behaviors
+        boolean[] checkedItems = new boolean[reportBehaviors.length];
+
+        builder.setMultiChoiceItems(reportBehaviors, checkedItems, (dialog, which, isChecked) -> {
+            // Handle checkbox selection
+            checkedItems[which] = isChecked;
+        });
+
+        builder.setPositiveButton("Submit", (dialog, which) -> {
+            // Handle submit button click
+            submitReport(postId, userId, reportBehaviors, checkedItems);
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+            // Handle cancel button click
+            dialog.dismiss();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void submitReport(String postId, String userId, String[] reportBehaviors, boolean[] checkedItems) {
+        // Generate a toast message
+        Toast.makeText(context, "Thank you for reporting. We will look into it.", Toast.LENGTH_SHORT).show();
+
+        // Add a database reference for the report
+        DatabaseReference reportsRef = FirebaseDatabase.getInstance().getReference("Reports").child(postId).child(userId);
+
+        // Add the timestamp to the report
+        reportsRef.child("timestamp").setValue(ServerValue.TIMESTAMP);
+
+        for (int i = 0; i < reportBehaviors.length; i++) {
+            if (checkedItems[i]) {
+                // Add the reported behavior to the database
+                reportsRef.child(reportBehaviors[i]).setValue(true);
+            }
+        }
+    }
+
 
     //Updating the user tokens to send notifications
     private void UpdateToken() {
@@ -308,8 +365,6 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         });
     }
 
-
-
     @Override
     public int getItemCount() {
         return postList.size();
@@ -322,7 +377,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         ImageView picture,postImg;
         TextView displayName,postTime,title,description,interested;
         ImageButton moreBtn;
-        Button interestedBtn,notinterestedBtn,shareBtn,tag1,tag2,tag3,addressBtn;
+        Button interestedBtn,ReportBtn,shareBtn,tag1,tag2,tag3,addressBtn,date,hours;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -339,10 +394,10 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             interested = itemView.findViewById(R.id.interested);
             moreBtn = itemView.findViewById(R.id.moreBtn);
             interestedBtn = itemView.findViewById(R.id.interestedBtn);
-            notinterestedBtn = itemView.findViewById(R.id.notinterestedBtn);
+            ReportBtn = itemView.findViewById(R.id.notinterestedBtn);
             addressBtn = itemView.findViewById(R.id.address_show);
-//            commentBtn = itemView.findViewById(R.id.commentBtn);
-//            shareBtn = itemView.findViewById(R.id.shareBtn);
+            date = itemView.findViewById(R.id.date);
+            hours = itemView.findViewById(R.id.hours);
             tag1 = itemView.findViewById(R.id.tag1);
             tag2 = itemView.findViewById(R.id.tag2);
             tag3 = itemView.findViewById(R.id.tag3);

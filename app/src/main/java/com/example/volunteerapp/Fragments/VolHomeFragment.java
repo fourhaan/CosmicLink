@@ -4,6 +4,7 @@ import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,7 +40,8 @@ public class VolHomeFragment extends Fragment {
     AdapterPosts adapterPosts;
     private TextView addressTv;
     private String volFullAddress;
-    private double latitude,longitude,postlatitude,postlongitude;
+    private double latitude,longitude;
+    private Button sortingbtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +56,13 @@ public class VolHomeFragment extends Fragment {
         addressTv = view.findViewById(R.id.vol_address);
         loadAddressFromFirebase();
 
+        sortingbtn = view.findViewById(R.id.sorting_button);
+        sortingbtn.setOnClickListener(v -> {
+            showSortingDialog();
+        });
+
+        sortingbtn.setText("Sort By : Location");
+
         //Show newest post first.
         layoutManager.setStackFromEnd(true);
         layoutManager.setReverseLayout(true);
@@ -59,8 +70,45 @@ public class VolHomeFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         postList = new ArrayList<>();
-        loadPosts();
+        loadPosts(0);
         return view;
+    }
+
+    private void showSortingDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Sort By")
+                .setItems(R.array.sorting_methods, (dialog, which) -> {
+                    switch (which) {
+                        case 0:
+                            // Location (Default)
+                            sortingbtn.setText("Sort By : Location");
+                            loadPosts(1);
+                            break;
+                        case 1:
+                            // Date of Event
+                            sortingbtn.setText("Sort By : Date");
+                            loadPosts(2);
+                            break;
+                        case 2:
+                            // Work Hours
+                            sortingbtn.setText("Sort By : Work Hours");
+                            loadPosts(3);
+                            break;
+                        case 3:
+                            // Tags (Match User's Tags)
+                            sortingbtn.setText("Sort By : Tags");
+                            loadPosts(4);
+                            break;
+                        case 4:
+                            // Latest posts
+                            sortingbtn.setText("Sort By : Latest");
+                            loadPosts(5);
+                            break;
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void loadAddressFromFirebase() {
@@ -92,7 +140,7 @@ public class VolHomeFragment extends Fragment {
         }
     }
 
-    private void loadPosts() {
+    private void loadPosts(int choice) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
         // We will get all data from this reference
         ref.addValueEventListener(new ValueEventListener() {
@@ -107,7 +155,20 @@ public class VolHomeFragment extends Fragment {
                         postList.add(modelPost);
                     }
                 }
-                sortPostsByDistance();
+                if(choice == 1) {
+                    sortPostsByDistance();
+                } else if (choice == 2){
+                    sortPostsByDate();
+                } else if (choice == 3) {
+                    sortPostsByWorkHours();
+                } else if (choice ==4){
+                    sortPostsByTags();
+                } else if(choice == 5) {
+                    sortPostsByTime();
+                } else {
+                    //error
+                }
+
                 adapterPosts = new AdapterPosts(getActivity(), postList);
                 // Set adapter to recycler view
                 recyclerView.setAdapter(adapterPosts);
@@ -166,6 +227,76 @@ public class VolHomeFragment extends Fragment {
             return Float.compare(distanceToPost2, distanceToPost1);
         });
     }
+
+    private void sortPostsByDate() {
+        // Sort the postList based on date of the event
+        Collections.sort(postList, (post1, post2) -> {
+            String date1 = post1.getDate();
+            String date2 = post2.getDate();
+
+            return date2.compareTo(date1);
+        });
+
+        adapterPosts.notifyDataSetChanged();
+    }
+
+    private void sortPostsByWorkHours() {
+        // Sort the postList based on work hours
+        Collections.sort(postList, (post1, post2) -> {
+            int workHours1 = post1.getWorkhours();
+            int workHours2 = post2.getWorkhours();
+
+            return Integer.compare(workHours1, workHours2);
+        });
+
+        adapterPosts.notifyDataSetChanged();
+    }
+
+    private void sortPostsByTags() {
+        String userTagsString = getTag();
+        List<String> userTags = Arrays.asList(userTagsString.split("\\s+"));
+
+        Collections.sort(postList, (post1, post2) -> {
+            String tagsString1 = post1.getpTags();
+            String tagsString2 = post2.getpTags();
+
+            // Check for null values
+            if (tagsString1 == null) {
+                tagsString1 = "";
+            }
+            if (tagsString2 == null) {
+                tagsString2 = "";
+            }
+
+            List<String> tags1 = Arrays.asList(tagsString1.split("\\s+"));
+            List<String> tags2 = Arrays.asList(tagsString2.split("\\s+"));
+
+            // Calculate the number of common tags with the user's tags
+            long commonTagsCount1 = userTags.stream().filter(tags1::contains).count();
+            long commonTagsCount2 = userTags.stream().filter(tags2::contains).count();
+
+            return Long.compare(commonTagsCount1, commonTagsCount2);
+        });
+
+        adapterPosts.notifyDataSetChanged();
+
+
+
+    }
+
+    private void sortPostsByTime() {
+        // Sort the postList based on the time of the event
+        Collections.sort(postList, (post1, post2) -> {
+            String time1 = post1.getpTime();
+            String time2 = post2.getpTime();
+
+            return time1.compareTo(time2);
+        });
+
+        adapterPosts.notifyDataSetChanged();
+    }
+
+
 
 
 }

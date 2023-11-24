@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuReportedPosts"
+        android:title="Reported Posts"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuReportedUsers"
+        android:title="Reported Users"
+        app:showAsAction="ifRoom" />
+
+</menu>

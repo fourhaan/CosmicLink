@@ -35,9 +35,9 @@ public class BookmarkPostDetails extends AppCompatActivity {
     FirebaseDatabase database;
     ArrayList<Users> usersArrayList;
     ImageView picture,postImg,profileImageView;
-    TextView displayName,postTime,title,description,hours,interested;
+    TextView displayName,postTime,title,description,interested;
     ImageButton moreBtn;
-    Button interestedBtn,notinterestedBtn,shareBtn,tag1,tag2,tag3,addressBtn;
+    Button interestedBtn,notinterestedBtn,shareBtn,tag1,tag2,tag3,addressBtn,date,hours;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +53,7 @@ public class BookmarkPostDetails extends AppCompatActivity {
         description = findViewById(R.id.description);
         hours = findViewById(R.id.hours);
         profileImageView = findViewById(R.id.picture);
+        date = findViewById(R.id.date);
         postImg = findViewById(R.id.postImg);
         interested = findViewById(R.id.interested);
         tag1 = findViewById(R.id.tag1);
@@ -74,6 +75,9 @@ public class BookmarkPostDetails extends AppCompatActivity {
                     String pid = snapshot.child("pId").getValue(String.class);
                     String uDp = snapshot.child("uDp").getValue(String.class);
                     String address = snapshot.child("address").getValue(String.class);
+                    String dateofevent = snapshot.child("date").getValue(String.class);
+                    String workhours = snapshot.child("workhours").getValue(long.class).toString();
+
                     String[] tagsArray = pTags.split(" ");
                     tag1.setText(tagsArray[0]);
                     tag2.setText(tagsArray[1]);
@@ -88,9 +92,11 @@ public class BookmarkPostDetails extends AppCompatActivity {
                     displayName.setText(uName);
                     title.setText(ptitle);
                     description.setText(pdescription);
-                    addressBtn.setText(address);
+                    addressBtn.setText("Location : "+address);
                     interested.setText(pinterested+"+"+" Interests");
                     postTime.setText(Time);
+                    date.setText("Start of Mission : "+dateofevent);
+                    hours.setText("Total Mission Work Hours : "+workhours+" hours");
 
                     Picasso.get().load(uDp).into(profileImageView);
 

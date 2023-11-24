@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@color/darkGrey">
+
+    <TextView
+        android:id="@+id/textViewReportedById"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/lavender"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/textViewPostId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_below="@id/textViewReportedById"
+        android:textColor="@color/lavender"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/textViewHarassment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_below="@id/textViewPostId"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/textViewInappropriateContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_below="@id/textViewHarassment"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/textViewOther"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_below="@id/textViewInappropriateContent"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/textViewSpam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_below="@id/textViewOther"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewSpam"
+        android:id="@+id/show_post"
+        android:text="show post" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/del_post"
+        android:layout_below="@+id/textViewSpam"
+        android:layout_alignParentEnd="true"
+        android:text="Delete Post" />
+
+
+</RelativeLayout>

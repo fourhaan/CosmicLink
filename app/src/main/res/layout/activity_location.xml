@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/search_item"
+        android:textColor="@color/black2.0"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView

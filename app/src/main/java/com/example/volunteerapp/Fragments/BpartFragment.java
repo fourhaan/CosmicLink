@@ -36,7 +36,6 @@ public class BpartFragment extends Fragment {
     FirebaseDatabase database;
     BookmarkAdapter participatingAdapter;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,6 +91,7 @@ public class BpartFragment extends Fragment {
                                             // Move this line outside of the loop to prevent multiple adapter instances
                                             if (participatingAdapter == null) {
                                                 participatingAdapter = new BookmarkAdapter(getActivity(), participatingLists);
+                                                participatingAdapter.setBookmarkButtonEnabled(false);
                                                 recyclerView.setAdapter(participatingAdapter);
                                             } else {
                                                 participatingAdapter.notifyDataSetChanged();

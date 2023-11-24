@@ -74,6 +74,8 @@ public class AdapterMyPosts extends RecyclerView.Adapter<AdapterMyPosts.MyHolder
         String pTags = postList.get(position).getpTags();
         String Address = postList.get(position).getAddress();
         String pInterested = postList.get(position).getpInterested();//Contains total number of Interested Volunteers.
+        long workhours = postList.get(position).getWorkhours();
+        String dateofevent = postList.get(position).getDate();
 
         //Convert timestamp to dd/mm/yyyy hh:mm am/pm
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
@@ -87,6 +89,8 @@ public class AdapterMyPosts extends RecyclerView.Adapter<AdapterMyPosts.MyHolder
         holder.description.setText(pDescription);
         holder.interested.setText(pInterested+"+" + " Interests");
         holder.addressBtn.setText("Location : "+Address);
+        holder.date.setText("Start of Mission : "+dateofevent);
+        holder.hours.setText("Total Mission Work Hours : "+workhours+" hours");
 
         //adding the three tags to 3 buttons
         String[] tagsArray = pTags.split(" ");
@@ -283,7 +287,7 @@ public class AdapterMyPosts extends RecyclerView.Adapter<AdapterMyPosts.MyHolder
         ImageView picture,postImg;
         TextView displayName,postTime,title,description,interested;
         ImageButton editBtn;
-        Button interestedBtn,deleateBtn,shareBtn,tag1,tag2,tag3,addressBtn;
+        Button interestedBtn,deleateBtn,shareBtn,tag1,tag2,tag3,addressBtn,date,hours;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -298,6 +302,8 @@ public class AdapterMyPosts extends RecyclerView.Adapter<AdapterMyPosts.MyHolder
             interestedBtn = itemView.findViewById(R.id.interestedBtn);
             deleateBtn = itemView.findViewById(R.id.notinterestedBtn);
             addressBtn = itemView.findViewById(R.id.address_show);
+            date = itemView.findViewById(R.id.date);
+            hours = itemView.findViewById(R.id.hours);
 //            commentBtn = itemView.findViewById(R.id.commentBtn);
 //            shareBtn = itemView.findViewById(R.id.shareBtn);
             tag1 = itemView.findViewById(R.id.tag1);
