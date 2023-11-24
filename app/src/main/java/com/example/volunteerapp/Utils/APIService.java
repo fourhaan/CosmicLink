@@ -13,7 +13,7 @@ public interface APIService {
                     "Content-Type:application/json",
 
                     // server key for using firebase messaging services
-                    "Authorization: key=598316097840"//Used Server ID instead of Server Key.
+                    "Authorization: key=598316097840"}//Used Server ID instead of Server Key.
     )
 
     @POST("fcm/send")
