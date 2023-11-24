@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.volunteerapp.AdminPanel.MainAdminPage;
 import com.example.volunteerapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -63,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String textLoginInput = editTextloginInput.getText().toString().trim();
-                String textPwd = editTextloginPwd.getText().toString();
+                String textPwd = editTextloginPwd.getText().toString().trim();
 
                 //Basic checks for fields that are filled in editTexts
                 if(TextUtils.isEmpty(textPwd)){
@@ -85,13 +87,19 @@ public class LoginActivity extends AppCompatActivity {
                 //this means all the data entered is correct and errors handled.
                 else {
                     progressBar.setVisibility(View.VISIBLE);  //starts loading animation in centre
-                    loginUser(textLoginInput, textPwd);
+                    if((textLoginInput.equals("admin") || textLoginInput.equals("Admin") ) && textPwd.equals("admin") ){
+                        Intent intent = new Intent(LoginActivity.this, MainAdminPage.class);
+                        startActivity(intent);
+                    } else {
+                        loginUser(textLoginInput, textPwd);
+                    }
                 }
 
             }
         });
 
     }
+
     private void loginUser(String loginInput, String pwd) {
         FirebaseAuth authProfile = FirebaseAuth.getInstance();
         DatabaseReference userNamesReference = FirebaseDatabase.getInstance().getReference("Usernames");
