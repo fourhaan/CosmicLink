@@ -21,7 +21,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    String title="Heading of notification ", ourmessage = " request for pet volunteerShip";
+    String title="Heading of notification ", ourmessage = " request for Volunteer Ship";
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);

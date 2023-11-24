@@ -185,8 +185,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 String usertoken=snapshot.getValue(String.class);
-                                sendNotifications(usertoken,"Request for Working!",
-                                        senderName + " wants to Volunteer ");
+                                sendNotifications(usertoken,"Request for Working!", "Volunteer Showed Interest");
                             }
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
@@ -277,6 +276,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                                     "New token failed", Toast.LENGTH_SHORT).show();
                             return;
                         }
+                        //String token contains the result of the task i.e tokens
                         String token = task.getResult();
                         updateToken(token);
                     }
