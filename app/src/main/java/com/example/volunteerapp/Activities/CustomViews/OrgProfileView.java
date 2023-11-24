@@ -7,21 +7,26 @@ import com.example.volunteerapp.CustomTools.TagsInputEditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.volunteerapp.R;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -36,6 +41,7 @@ public class OrgProfileView extends AppCompatActivity {
     private TextInputLayout tagsLayout;
     private TagsInputEditText tagsEditText;
     private Button followBtn, viewPostBtn;
+    private ImageButton reportBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +78,7 @@ public class OrgProfileView extends AppCompatActivity {
 
         followBtn = findViewById(R.id.follow_btn);
         viewPostBtn = findViewById(R.id.view_post_btn);
-
+        reportBtn = findViewById(R.id.Report_btn);
         orgRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -143,6 +149,26 @@ public class OrgProfileView extends AppCompatActivity {
             intent.putExtra("orgUid", orgUid);
             startActivity(intent);
         });
+
+        reportBtn.setOnClickListener(v -> {
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            String myUid = currentUser.getUid();
+            String uidToReport = orgUid;
+            // Get a reference to the "Reported Users" in the database
+            DatabaseReference reportedUsersRef = FirebaseDatabase.getInstance().getReference("Reported Users");
+
+            // Add the timestamp to the report
+
+            // Create a child reference with the UID and set its value to true
+            reportedUsersRef.child(uidToReport).child(myUid).setValue(ServerValue.TIMESTAMP)
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(getApplicationContext(), "User reported successfully", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        // Report failed, handle the error
+                        Toast.makeText(getApplicationContext(), "Failed to report user", Toast.LENGTH_SHORT).show();
+                    });
+        });
     }
 
     private void checkFollowStatus() {
@@ -163,7 +189,6 @@ public class OrgProfileView extends AppCompatActivity {
                     // User is not a follower, set the button text to "Follow"
                     followBtn.setText("Follow");
                 }
-
                 // Set OnClickListener for the follow button
                 followBtn.setOnClickListener(v -> {
                     toggleFollowStatus(currentUserUid, followersRef);

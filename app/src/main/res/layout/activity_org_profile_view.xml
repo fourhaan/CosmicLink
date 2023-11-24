@@ -41,6 +41,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_report_24"
+                android:background="@android:color/transparent"
+                android:id="@+id/Report_btn"
+                />
+
 
         </LinearLayout>
 
