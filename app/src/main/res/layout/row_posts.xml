@@ -99,7 +99,7 @@
             android:layout_marginTop="12dp"
             android:textColor="@color/white"
             android:text="Date of mission = 11/11/11"
-            android:backgroundTint="#872A08"
+            android:backgroundTint="#8B5D0D"
             android:textSize="16dp"/>
 
         <Button
@@ -118,7 +118,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/white"
-            android:backgroundTint="#FF5100"
+            android:backgroundTint="#8B5D0D"
             android:id="@+id/address_show"/>
 
         <LinearLayout
