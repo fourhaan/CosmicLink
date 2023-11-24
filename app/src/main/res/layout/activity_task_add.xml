@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/sky3"
     android:padding="16dp"
-    tools:context=".Activities.TaskAddActivity">
+    tools:context=".Activities.OrgTaskActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -73,7 +73,7 @@ public class VolunteerLandingPageActivity extends AppCompatActivity {
                 replaceFragment(new VolHomeFragment());
             } else if (itemId == R.id.bookmark) {
                 replaceFragment(new VolBookmarkFragment());
-            } else if (itemId == R.id.map) {
+            } else if (itemId == R.id.track) {
                 replaceFragment(new VolpartFragment());
             } else if (itemId == R.id.profile) {
                 replaceFragment(new VolProfileFragment());

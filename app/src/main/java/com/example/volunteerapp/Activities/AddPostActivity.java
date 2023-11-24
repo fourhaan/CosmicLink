@@ -52,7 +52,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class AddPostActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -93,7 +98,7 @@ public class AddPostActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds: snapshot.getChildren()){
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     name = "" + ds.child("fullname").getValue();
                     email = "" + ds.child("email").getValue();
                     dp = "" + ds.child("image_url").getValue();
@@ -135,34 +140,26 @@ public class AddPostActivity extends AppCompatActivity {
             editedTags = tagsEditText.getText().toString();
             String[] tagsArray = editedTags.split("\\s+"); // Split the string based on whitespace
 
-            if(TextUtils.isEmpty(title)){
-                Toast.makeText(AddPostActivity.this,"Enter the title",Toast.LENGTH_SHORT).show();
+            if (TextUtils.isEmpty(title)) {
+                Toast.makeText(AddPostActivity.this, "Enter the title", Toast.LENGTH_SHORT).show();
                 return;
-            }
-
-            else if(TextUtils.isEmpty(description)){
-                Toast.makeText(AddPostActivity.this,"Enter the description",Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.isEmpty(description)) {
+                Toast.makeText(AddPostActivity.this, "Enter the description", Toast.LENGTH_SHORT).show();
                 return;
-            }
-
-            else if(workhours == 0){
-                Toast.makeText(AddPostActivity.this,"Work Hour cannot be empty",Toast.LENGTH_SHORT).show();
+            } else if (workhours == 0) {
+                Toast.makeText(AddPostActivity.this, "Work Hour cannot be empty", Toast.LENGTH_SHORT).show();
                 return;
-            }
-
-            else if(TextUtils.isEmpty(fullAddress)){
-                Toast.makeText(AddPostActivity.this,"Add an Address",Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.isEmpty(fullAddress)) {
+                Toast.makeText(AddPostActivity.this, "Add an Address", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             // Check if there are exactly 3 tags
-            else if (tagsArray.length != 3){
-                Toast.makeText(AddPostActivity.this,"Pls enter 3 tags only",Toast.LENGTH_SHORT).show();
+            else if (tagsArray.length != 3) {
+                Toast.makeText(AddPostActivity.this, "Pls enter 3 tags only", Toast.LENGTH_SHORT).show();
                 return;
-            }
-
-            else {
-                uploadData(title,description,imagePath);
+            } else {
+                uploadData(title, description, imagePath);
             }
 
         });
@@ -185,7 +182,14 @@ public class AddPostActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         //for compatibility months are 0-11 so +1 for our use
-                        editTextdate.setText(dayOfMonth + "/" + (month + 1) + "/" + (year));
+                        String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+
+                        if (!isDateBeforeCurrent(selectedDate)) {
+                            editTextdate.setText(selectedDate);
+                        } else {
+                            // Show an error message if the selected date is before the current date
+                            Toast.makeText(AddPostActivity.this, "Please select a date not before the current date", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }, year, month, day);
                 date_picker.show();
@@ -193,8 +197,25 @@ public class AddPostActivity extends AppCompatActivity {
         });
 
     }
+    private boolean isDateBeforeCurrent(String selectedDate) {
+        // Convert the selected date and current date to milliseconds
+        long selectedDateMillis = convertDateToMillis(selectedDate);
+        long currentDateMillis = System.currentTimeMillis();
 
+        // Check if the selected date is before the current date
+        return selectedDateMillis < currentDateMillis;
+    }
 
+    private long convertDateToMillis(String date) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            Date parsedDate = sdf.parse(date);
+            return parsedDate.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 
     private void uploadData(String title, String description,Uri image_Path ) {
         String interested="0";

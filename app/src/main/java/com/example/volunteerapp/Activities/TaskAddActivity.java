@@ -2,76 +2,121 @@ package com.example.volunteerapp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.volunteerapp.Adapters.TaskAddAdapter;
 import com.example.volunteerapp.Models.TaskModel;
 import com.example.volunteerapp.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TaskAddActivity extends AppCompatActivity {
 
-    FloatingActionButton addNoteBtn;
-    RecyclerView recyclerView;
-    TaskAddAdapter taskAdapter;
-    List<TaskModel> task;
-    private String uId,pId;
+    EditText titleEditText, descriptionEditText,taskhourEditText;
+    ImageButton saveTaskBtn;
+    TextView pageTitleTextView;
+    String title, description, taskId, hours;
+    private String uId, pId;
+    private int tasknum,tworkhours;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_add);
+        setContentView(R.layout.row_task);
+        titleEditText = findViewById(R.id.task_title_text);
+        descriptionEditText = findViewById(R.id.task_content_text);
+        saveTaskBtn = findViewById(R.id.save_task_btn);
+        pageTitleTextView = findViewById(R.id.page_title);
+        taskhourEditText = findViewById(R.id.hours_task_text);
 
+
+        // Receive data
         uId = getIntent().getStringExtra("uId");
         pId = getIntent().getStringExtra("pId");
 
-        addNoteBtn = findViewById(R.id.add_note_btn);
-        recyclerView = findViewById(R.id.recycler_view);
+        titleEditText.setText(title);
+        descriptionEditText.setText(description);
+        taskhourEditText.setText(hours);
+        saveTaskBtn.setOnClickListener((v) -> saveTask());
 
+        // Check existing tasks and set tasknum accordingly
+        checkExistingTasks();
 
-        addNoteBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(TaskAddActivity.this, TaskDetailsActivity.class);
-            intent.putExtra("uId",uId);
-            intent.putExtra("pId",pId);
-            startActivity(intent);
-        });
-
-        setupRecyclerView();
     }
 
-    void setupRecyclerView() {
-        task = new ArrayList<>();
-        taskAdapter = new TaskAddAdapter(this, task);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(taskAdapter);
+    void saveTask() {
+        String taskTitle = titleEditText.getText().toString();
+        String taskDescription = descriptionEditText.getText().toString();
+        String taskHoursString  = taskhourEditText.getText().toString();
+        int taskHours = Integer.parseInt(taskHoursString);
+        if (taskTitle == null || taskTitle.isEmpty()) {
+            titleEditText.setError("Title is required");
+            return;
+        }
+        if(tworkhours<taskHours){
+            taskhourEditText.setError("Invalid time");
+            return;
+        }
+        boolean completed=false;
 
+        long timestamp = System.currentTimeMillis();
+        TaskModel task = new TaskModel(taskTitle, taskDescription, timestamp,taskHours,tasknum,completed);
+        task.setTitle(taskTitle);
+        task.setContent(taskDescription);
+        saveTaskToFirebase(task);
+        Intent intent = new Intent(TaskAddActivity.this, OrgTaskActivity.class);
+        intent.putExtra("uId",uId);
+        intent.putExtra("pId",pId);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    void checkExistingTasks() {
         DatabaseReference tasksRef = FirebaseDatabase.getInstance().getReference("Tasks").child(pId).child(uId);
 
-        tasksRef.addValueEventListener(new ValueEventListener() {
+        tasksRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                task.clear();
-                for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
-                    TaskModel taskvalue = taskSnapshot.getValue(TaskModel.class);
-                    task.add(taskvalue);
+                // Check if there are existing tasks
+                if (snapshot.exists()) {
+                    // Find the maximum tasknum
+                    for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
+                        int existingTaskNum = Integer.parseInt(taskSnapshot.getKey());
+                        if (existingTaskNum >= tasknum) {
+                            tasknum = existingTaskNum + 1;
+                        }
+                    }
+                } else {
+                    // No existing tasks, initialize tasknum to 1
+                    tasknum = 1;
                 }
-                taskAdapter.notifyDataSetChanged();
+
+                // Retrieve workhours from posts/pId
+                DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference("Posts").child(pId);
+                postsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            // Retrieve the value of workhours
+                             tworkhours = dataSnapshot.child("workhours").getValue(int.class);
+                            // Do something with the workhours value
+                            // For example, set it to your UI element
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Handle errors if needed
+                    }
+                });
             }
 
             @Override
@@ -82,4 +127,18 @@ public class TaskAddActivity extends AppCompatActivity {
     }
 
 
+    void saveTaskToFirebase(TaskModel task) {
+        DatabaseReference tasksRef = FirebaseDatabase.getInstance().getReference("Tasks").child(pId).child(uId).child(String.valueOf(tasknum));
+        tasksRef.setValue(task);
+        finish();
+    }
+
+    void deleteTaskFromFirebase() {
+        DatabaseReference tasksRef = FirebaseDatabase.getInstance().getReference("Tasks");
+
+        if (taskId != null && !taskId.isEmpty()) {
+            tasksRef.child(taskId).removeValue();
+            finish();
+        }
+    }
 }

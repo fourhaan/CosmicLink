@@ -7,19 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.volunteerapp.Activities.TaskAddActivity;
+import com.example.volunteerapp.Activities.OrgTaskActivity;
 import com.example.volunteerapp.Chat.Model.Users;
 import com.example.volunteerapp.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -55,7 +50,7 @@ public class AdapterParticipatingVolunteers extends RecyclerView.Adapter<Adapter
         Picasso.get().load(img_url).centerCrop().resize(100,100).into(holder.profile);
 
         holder.addTask.setOnClickListener(v -> {
-            Intent intent = new Intent(context.getApplicationContext(), TaskAddActivity.class);
+            Intent intent = new Intent(context.getApplicationContext(), OrgTaskActivity.class);
             intent.putExtra("uId",uid);
             intent.putExtra("pId",pId);
             context.startActivity(intent);

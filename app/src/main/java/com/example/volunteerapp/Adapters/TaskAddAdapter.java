@@ -56,14 +56,14 @@ public class TaskAddAdapter extends RecyclerView.Adapter<TaskAddAdapter.NoteView
 
         holder.timestampTextView.setText(DateTime);
 
-//        // Check the value of the 'completed' boolean
-//        if (tasks.isCompleted()) {
-//            holder.completed.setVisibility(View.VISIBLE);
-//            holder.notcompleted.setVisibility(View.GONE);
-//        } else {
-//            holder.completed.setVisibility(View.GONE);
-//            holder.notcompleted.setVisibility(View.VISIBLE);
-//        }
+        // Check the value of the 'completed' boolean
+        if (tasks.isCompleted()) {
+            holder.completed.setVisibility(View.VISIBLE);
+            holder.notcompleted.setVisibility(View.GONE);
+        } else {
+            holder.completed.setVisibility(View.GONE);
+            holder.notcompleted.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

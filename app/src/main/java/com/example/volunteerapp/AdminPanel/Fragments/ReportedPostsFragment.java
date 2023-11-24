@@ -63,10 +63,17 @@ public class ReportedPostsFragment extends Fragment {
                         reportedPost.setReportedById(uid);
 
                         // Set boolean values based on the structure in your Firebase database
+                        if(userSnapshot.child("Harassment").getValue(Boolean.class)!=null)
                         reportedPost.setHarassment(userSnapshot.child("Harassment").getValue(Boolean.class));
-                        reportedPost.setInappropriateContent(userSnapshot.child("Inappropriate Content").getValue(Boolean.class));
-                        reportedPost.setOther(userSnapshot.child("Other").getValue(Boolean.class));
-                        reportedPost.setSpam(userSnapshot.child("Spam").getValue(Boolean.class));
+
+                        if(userSnapshot.child("Inappropriate Content").getValue(Boolean.class)!=null)
+                            reportedPost.setInappropriateContent(userSnapshot.child("Inappropriate Content").getValue(Boolean.class));
+
+                        if(userSnapshot.child("Other").getValue(Boolean.class)!=null)
+                            reportedPost.setOther(userSnapshot.child("Other").getValue(Boolean.class));
+
+                        if(userSnapshot.child("Spam").getValue(Boolean.class)!=null)
+                            reportedPost.setSpam(userSnapshot.child("Spam").getValue(Boolean.class));
 
                         reportedPostsList.add(reportedPost);
                     }

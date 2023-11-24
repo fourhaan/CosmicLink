@@ -7,6 +7,7 @@ public class TaskModel {
     String content;
     long timestamp;
     int taskhours, tasknum;
+    boolean completed;
 
     public TaskModel() {
 
@@ -19,12 +20,21 @@ public class TaskModel {
 //        this.taskhours = taskhours;
 //    }
 
-    public TaskModel(String title , String content, long timestamp, int taskhours, int tasknum) {
+    public TaskModel(String title , String content, long timestamp, int taskhours, int tasknum,boolean completed) {
         this.title = title;
         this.content = content;
         this.timestamp = timestamp;
         this.taskhours = taskhours;
         this.tasknum = tasknum;
+        this.completed = completed;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public int getTasknum() {

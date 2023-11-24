@@ -74,6 +74,8 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
 
         // Set OnClickListener to open the profile page
         holder.itemView.setOnClickListener(new View.OnClickListener() {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            String myuId = user.getUid();
             @Override
             public void onClick(View view) {
                 // Handle the click event, open the profile page
@@ -87,6 +89,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyHold
                     Context context = view.getContext();
                     Intent intent = new Intent(context, VolTaskActivity.class);
                     intent.putExtra("pId", post.getpId());
+                    intent.putExtra("uId",myuId);
                     intent.putExtra("workhours",post.getWorkhours());
                     context.startActivity(intent);
                 }
