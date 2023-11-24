@@ -1,6 +1,7 @@
 package com.example.volunteerapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.volunteerapp.Activities.CustomViews.BookmarkPostDetails;
+import com.example.volunteerapp.Activities.CustomViews.VolunteerProfileView;
 import com.example.volunteerapp.Chat.Model.Users;
 import com.example.volunteerapp.R;
 import com.google.firebase.database.DatabaseReference;
@@ -88,6 +91,18 @@ public class AdapterInterestedVolunteers extends RecyclerView.Adapter<AdapterInt
 
             // Notify the adapter that the data set has changed
             notifyDataSetChanged();
+        });
+
+        // Set OnClickListener to open the profile page
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the click event, open the profile page
+                Context context = view.getContext();
+                Intent intent = new Intent(context, VolunteerProfileView.class);
+                intent.putExtra("userId", volunteer.getUserId());
+                context.startActivity(intent);
+            }
         });
     }
 

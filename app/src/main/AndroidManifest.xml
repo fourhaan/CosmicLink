@@ -29,6 +29,9 @@
             android:name=".Activities.CustomViews.viewOrgPosts"
             android:exported="false" />
         <activity
+            android:name=".Activities.CustomViews.VolunteerProfileView"
+            android:exported="false" />
+        <activity
             android:name=".Activities.InterestedActivity"
             android:exported="false" />
         <activity
