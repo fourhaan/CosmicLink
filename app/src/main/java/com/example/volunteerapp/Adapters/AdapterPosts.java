@@ -90,6 +90,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String Address = postList.get(position).getAddress();
         String pInterested = postList.get(position).getpInterested();//Contains total number of Interested Volunteers.
         long workhours = postList.get(position).getWorkhours();
+        String workhoursString = String.valueOf(workhours);
         String dateofevent = postList.get(position).getDate();
 
         //Convert timestamp to dd/mm/yyyy hh:mm am/pm
@@ -105,7 +106,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.interested.setText(pInterested+"+" + " Interests");
         holder.addressBtn.setText("Location : "+Address);
         holder.date.setText("Start of Mission : "+dateofevent);
-        holder.hours.setText("Total Mission Work Hours : "+workhours+" hours");
+        holder.hours.setText("Total Mission Work Hours : "+workhoursString+" hours");
 
         //Set interested for each post
         setInterested(holder,pId);

@@ -45,7 +45,7 @@ import java.io.InputStream;
 
 public class VolProfileFragment extends Fragment {
     private Button logoutButton;
-    private TextView fullnameTextView, usernameTextView, joiningdateTextView, mobileTextView, locationTextView, emailTextView, editSkills, editBio,volWorkHours;
+    private TextView fullnameTextView,vol_hours, usernameTextView, joiningdateTextView, mobileTextView, locationTextView, emailTextView, editSkills, editBio,volWorkHours;
     private EditText bioEditText;
     private ImageView profileImageView;
     private ProgressBar profileProgressBar;
@@ -70,6 +70,7 @@ public class VolProfileFragment extends Fragment {
         locationTextView = view.findViewById(R.id.vol_profile_location);
         profileProgressBar = view.findViewById(R.id.vol_profile_ProgressBar);
         editBio = view.findViewById(R.id.edit_vol_bio);
+        vol_hours = view.findViewById(R.id.vol_profile_hours);
 
         // Hide the progressbar and content initially
         profileProgressBar.setVisibility(View.GONE);
@@ -120,6 +121,13 @@ public class VolProfileFragment extends Fragment {
                         String state = snapshot.child("state").getValue(String.class);
                         String location = city + ", " + state;
                         String tags = snapshot.child("tags").getValue(String.class);
+                        Integer workhours = snapshot.child("workhours").getValue(Integer.class);
+                        if (workhours != null) {
+                            String workhoursString = String.valueOf(workhours);
+                            vol_hours.setText("Total Working Hours = " + workhoursString + " hours");
+                        } else {
+                            vol_hours.setText("Total Working Hours = 0 hours");
+                        }
 
                         // Set the retrieved data to the TextViews
                         fullnameTextView.setText(fullName);

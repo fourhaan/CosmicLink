@@ -44,9 +44,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_chat_24_white"
+            android:src="@drawable/baseline_logout_24"
             android:padding="10dp"
-            android:id="@+id/chat_vol"
+            android:id="@+id/logout_vol"
             android:layout_marginRight="10dp"
             android:clickable="true"
             android:layout_marginTop="5dp"

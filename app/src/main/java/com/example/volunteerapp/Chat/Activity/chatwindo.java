@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -58,9 +59,34 @@ public class chatwindo extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        reciverName = getIntent().getStringExtra("fullname");
-        reciverimg = getIntent().getStringExtra("reciverImg");
+//        reciverName = getIntent().getStringExtra("fullname");
+//        reciverimg = getIntent().getStringExtra("reciverImg");
         reciverUid = getIntent().getStringExtra("uid");
+
+        // Create a DatabaseReference
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Registered Users").child(reciverUid);
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again whenever data at this location is updated.
+
+                // Check if the dataSnapshot exists
+                if (dataSnapshot.exists()) {
+                    // Retrieve values using dataSnapshot
+                   reciverName = dataSnapshot.child("fullname").getValue(String.class);
+                    reciverimg = dataSnapshot.child("image_url").getValue(String.class);
+                    updateUI();
+
+
+                } else {
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("FirebaseError", "Error retrieving data", databaseError.toException());
+            }
+        });
 
         messagesArrayList = new ArrayList<>();
 
@@ -81,8 +107,8 @@ public class chatwindo extends AppCompatActivity {
 //        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
 
-        Picasso.get().load(reciverimg).into(profile);
-        reciverNName.setText("" + reciverName);
+//        Picasso.get().load(reciverimg).into(profile);
+//        reciverNName.setText("" + reciverName);
 
         SenderUID = firebaseAuth.getUid();
 
@@ -210,6 +236,13 @@ public class chatwindo extends AppCompatActivity {
         });
 
     }
+
+    void updateUI() {
+        Picasso.get().load(reciverimg).into(profile);
+        reciverNName.setText("" + reciverName);
+
+    }
+
     private void scrollToLatestMessage() {
         // Scroll to the latest message in the RecyclerView
         messageAdpter.scrollToPosition(messagesArrayList.size() - 1);

@@ -20,7 +20,7 @@
             android:textSize="20sp"
             android:id="@+id/title_for_org"
             android:gravity="center"
-            android:text="Add Tasks here!"
+            android:text="Add Tasks here!\n(Click profile to chat 💬)"
             />
 
 

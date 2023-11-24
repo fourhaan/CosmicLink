@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.volunteerapp.Activities.OrgTaskActivity;
+import com.example.volunteerapp.Chat.Activity.chatwindo;
 import com.example.volunteerapp.Chat.Model.Users;
 import com.example.volunteerapp.R;
 import com.squareup.picasso.Picasso;
@@ -53,6 +54,12 @@ public class AdapterParticipatingVolunteers extends RecyclerView.Adapter<Adapter
             Intent intent = new Intent(context.getApplicationContext(), OrgTaskActivity.class);
             intent.putExtra("uId",uid);
             intent.putExtra("pId",pId);
+            context.startActivity(intent);
+        });
+
+        holder.profile.setOnClickListener(v -> {
+            Intent intent = new Intent(context.getApplicationContext(), chatwindo.class);
+            intent.putExtra("uid",uid);
             context.startActivity(intent);
         });
     }

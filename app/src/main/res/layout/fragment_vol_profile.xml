@@ -317,6 +317,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Edit"
+                                    android:visibility="gone"
                                     android:padding="5dp"
                                     android:id="@+id/edit_vol_hours"
                                     android:fontFamily="@font/proximanovaregular"

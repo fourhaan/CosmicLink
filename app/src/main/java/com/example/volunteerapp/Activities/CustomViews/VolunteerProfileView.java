@@ -23,7 +23,7 @@ public class VolunteerProfileView extends AppCompatActivity {
 
     private String volUid;
     private DatabaseReference volRef;
-    private TextView vol_profile_name,vol_profile_username,vol_profile_joining_date,vol_profile_hours,vol_profile_mobile,vol_profile_email,vol_profile_location;
+    private TextView vol_profile_name,vol_profile_username,vol_profile_joining_date,vol_profile_hours,vol_profile_mobile,vol_profile_email,vol_profile_location,vol_hours;
     private EditText vol_profile_bio;
     private TextInputLayout tagsLayout;
     private TagsInputEditText tagsET;
@@ -47,6 +47,7 @@ public class VolunteerProfileView extends AppCompatActivity {
         vol_profile_email = findViewById(R.id.vol_profile_email);
         vol_profile_location = findViewById(R.id.vol_profile_location);
         vol_profile_image = findViewById(R.id.vol_profile_image);
+        vol_hours = findViewById(R.id.vol_profile_hours);
         // initializing tags layout
         tagsLayout = findViewById(R.id.tagsLayout);
         tagsET = findViewById(R.id.tagsET);
@@ -61,12 +62,16 @@ public class VolunteerProfileView extends AppCompatActivity {
                     String bio = snapshot.child("bio").getValue(String.class);
                     String joiningDate = snapshot.child("joining_date").getValue(String.class);
                     String mobileNo = snapshot.child("mobile").getValue(String.class);
+                    String username = snapshot.child("username").getValue(String.class);
                     String email = snapshot.child("email").getValue(String.class);
                     String state = snapshot.child("state").getValue(String.class);
                     String city = snapshot.child("city").getValue(String.class);
                     String usertype = snapshot.child("usertype").getValue(String.class);
                     String location = city + ", " + state;
                     String tags = snapshot.child("tags").getValue(String.class);
+                    int workhours = snapshot.child("workhours").getValue(Integer.class);
+                    String workhoursString = String.valueOf(workhours);
+                    vol_hours.setText("Total Working Hours = "+workhoursString+" hours");
 
                     // Set the retrieved data to the TextViews
                     vol_profile_name.setText(fullName);
@@ -74,6 +79,8 @@ public class VolunteerProfileView extends AppCompatActivity {
                     vol_profile_joining_date.setText(joiningDate);
                     vol_profile_mobile.setText("+91 "+mobileNo);
                     vol_profile_location.setText(location);
+                    vol_profile_email.setText(email);
+                    vol_profile_username.setText("@"+username);
                     // set tags to tagsEditText
                     tagsET.setText(tags);
 

@@ -197,6 +197,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Edit"
                                     android:padding="5dp"
+                                    android:visibility="gone"
                                     android:id="@+id/edit_vol_bio"
                                     android:fontFamily="@font/proximanovaregular"
                                     android:textColor="#FFCF66"
@@ -256,6 +257,7 @@
                                     android:text="Edit"
                                     android:padding="5dp"
                                     android:id="@+id/edit_vol_hours"
+                                    android:visibility="gone"
                                     android:fontFamily="@font/proximanovaregular"
                                     android:textColor="#FFCF66"
                                     android:layout_marginEnd="10dp"
@@ -267,7 +269,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="10dp"
                                 android:id="@+id/vol_profile_hours"
-                                android:text="Total Working Hours"
+                                android:text="Total Working Hours = "
                                 android:inputType="textMultiLine"
                                 android:textColor="@color/black2.0"
                                 android:background="@null"/>
@@ -429,6 +431,7 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/edit_vol_skills"
                                 android:text="Edit"
+                                android:visibility="gone"
                                 android:padding="5dp"
                                 android:textColor="#FFCF66"
                                 android:textSize="14sp" />
@@ -438,6 +441,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            android:layout_marginBottom="20dp"
                             android:orientation="vertical">
 
                             <LinearLayout
