@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/note_title_text_view"
-        android:text="Task Title"
+        android:text="Task 1: Title"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:layout_marginVertical="4dp"/>
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/note_content_text_view"
-        android:text="task content"
+        android:text="Task Description"
         android:maxLines="2"
         android:ellipsize="end"
         android:textSize="17sp"
@@ -30,11 +30,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/note_hour"
-        android:text="8 Hours"
+        android:text="Task Hours required: 8 Hours"
+        android:fontFamily="@font/jockey_one"
         android:maxLines="2"
         android:ellipsize="end"
         android:textSize="17sp"
         android:layout_marginVertical="4dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <Button
+            android:id="@+id/interestedBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#C0DD9D"
+            android:textColor="@color/blue"
+            android:padding="5dp"
+            android:gravity="center"
+            android:drawableLeft="@drawable/baseline_thumb_up_24"
+            android:text="Completed"/>
+        <Button
+            android:id="@+id/notinterestedBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="#EA7168"
+            android:textColor="@color/blue"
+            android:padding="5dp"
+            android:drawableLeft="@drawable/baseline_thumb_down_24"
+            android:text="Not Completed"
+            android:gravity="center"/>
+    </LinearLayout>
 
 
 </LinearLayout>
