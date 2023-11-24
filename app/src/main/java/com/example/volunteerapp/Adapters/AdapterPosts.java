@@ -295,7 +295,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     public void sendNotifications(String usertoken, String title, String message) {
         Data data = new Data(title, message);
         NotificationSender sender = new NotificationSender(data, usertoken);
-        apiService.sendNotifcation(sender).enqueue(new Callback<MyResponse>() {
+        apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
             @Override
             public void onResponse(Call<MyResponse> call,
                                    Response<MyResponse> response) {
