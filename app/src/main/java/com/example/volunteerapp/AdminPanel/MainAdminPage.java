@@ -27,6 +27,7 @@ public class MainAdminPage extends AppCompatActivity {
         adminToolbar = findViewById(R.id.adminToolbar);
         setSupportActionBar(adminToolbar);
 
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setLogo(R.drawable.logorocket);
         }
