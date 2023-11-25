@@ -117,7 +117,7 @@ public class VolunteerSignUpActivity extends AppCompatActivity {
                             editTextdob.setText(selectedDate);
                         } else {
                             // Show an error message if the selected date is before the current date
-                            Toast.makeText(VolunteerSignUpActivity.this, "Please select a date not before the current date", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(VolunteerSignUpActivity.this, "Please select a date not after the current date", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, year, month, day);
@@ -456,7 +456,7 @@ public class VolunteerSignUpActivity extends AppCompatActivity {
         long currentDateMillis = System.currentTimeMillis();
 
         // Check if the selected date is before the current date
-        return selectedDateMillis < currentDateMillis;
+        return selectedDateMillis > currentDateMillis;
     }
 
     private long convertDateToMillis(String date) {
