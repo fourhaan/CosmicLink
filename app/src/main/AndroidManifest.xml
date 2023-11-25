@@ -26,6 +26,9 @@
             android:name=".Activities.TaskAddActivity"
             android:exported="false" />
         <activity
+            android:name=".Activities.CommonTaskActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.OrgTaskActivity"
             android:exported="false" />
         <activity

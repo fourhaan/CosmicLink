@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/top_background1"
     tools:context=".Activities.MainActivity">
 
     <ImageView
@@ -19,16 +20,44 @@
         app:layout_constraintBottom_toTopOf="@+id/buttons_layout" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/megrim"
+        android:padding="5dp"
+        android:text="CosmicLink"
+        android:textColor="@color/white"
+        android:textSize="60dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="150dp"
+        />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/astronaut"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttons_layout"
+        />
+
+    <TextView
         android:id="@+id/panel1_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Main page"
-        android:textSize="40sp"
         android:fontFamily="@font/bebas_neue"
-        app:layout_constraintTop_toTopOf="@id/main_image_view"
-        app:layout_constraintStart_toStartOf="@id/main_image_view"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@id/main_image_view"
         app:layout_constraintEnd_toEndOf="@id/main_image_view"
-        app:layout_constraintBottom_toBottomOf="@id/main_image_view" />
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@id/main_image_view"
+        app:layout_constraintTop_toTopOf="@id/main_image_view"
+        app:layout_constraintVertical_bias="0.134" />
 
     <LinearLayout
         android:id="@+id/buttons_layout"
@@ -43,19 +72,23 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
+            android:fontFamily="@font/arbutus"
+            android:textSize="18dp"
             android:background="@color/black"
             android:text="Register"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/yellow" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login_button"
             android:layout_width="0dp"
+            android:fontFamily="@font/arbutus"
             android:layout_height="60dp"
             android:layout_weight="1"
+            android:textSize="20dp"
             android:background="@color/black"
             android:text="LOG IN"
             android:textColorHighlight="@color/white"
             android:alpha="0.7"
-            android:textColor="@android:color/white" />
+            android:textColor="#15E5FF" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

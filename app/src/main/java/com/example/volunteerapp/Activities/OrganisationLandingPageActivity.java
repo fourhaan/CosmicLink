@@ -1,12 +1,15 @@
 package com.example.volunteerapp.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.volunteerapp.Chat.Activity.ChatActivity;
@@ -18,12 +21,13 @@ import com.example.volunteerapp.Fragments.OrgProfileFragment;
 import com.example.volunteerapp.R;
 import com.example.volunteerapp.databinding.ActivityOrganisationLandingPageBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class OrganisationLandingPageActivity extends AppCompatActivity {
 
     ActivityOrganisationLandingPageBinding binding;
-    private ImageView chatClick;
+    private ImageView logoutClick;
     private FloatingActionButton addPost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +41,40 @@ public class OrganisationLandingPageActivity extends AppCompatActivity {
 //        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         //chat button on top of framelayout
-        chatClick = binding.chatOrg;
+        logoutClick = binding.logoutVol;
+        logoutClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a confirmation dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(OrganisationLandingPageActivity.this);
+                builder.setTitle("Logout Confirmation");
+                builder.setMessage("Do you really want to logout?");
 
-        chatClick.setOnClickListener(v -> {
-            Intent intent = new Intent(OrganisationLandingPageActivity.this, ChatActivity.class);
-            startActivity(intent);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User clicked "Yes," perform the logout action
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        auth.signOut();
+
+                        // Navigate to the MainActivity
+                        Intent intent = new Intent(OrganisationLandingPageActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User clicked "No," do nothing or handle as needed
+                        dialog.dismiss();
+                    }
+                });
+
+                // Show the dialog
+                builder.show();
+            }
         });
 
         addPost = binding.floatingActionButtonOrg;

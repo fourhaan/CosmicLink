@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.volunteerapp.Adapters.AdapterInterestedVolunteers;
@@ -28,6 +30,7 @@ public class OrgParticipatingActivity extends AppCompatActivity {
     List<Users> participatingVolunteers;
     RecyclerView recyclerView;
     AdapterParticipatingVolunteers adapter;
+    Button common_task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +43,18 @@ public class OrgParticipatingActivity extends AppCompatActivity {
         participatingVolunteers = new ArrayList<>();
 
         recyclerView = findViewById(R.id.recycler_view_interested);
+        common_task = findViewById(R.id.add_common_task);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new AdapterParticipatingVolunteers(this, participatingVolunteers,pId);
         recyclerView.setAdapter(adapter);
+
+        common_task.setOnClickListener(v -> {
+            Intent intent = new Intent(OrgParticipatingActivity.this,CommonTaskActivity.class);
+            intent.putExtra("pId",pId);
+            startActivity(intent);
+        });
 
         getInterestedVolunteers();
     }

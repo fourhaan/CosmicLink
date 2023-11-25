@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/ll"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -60,6 +61,26 @@
             />
 
 
+
+
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/complete_del"
+        android:text="Mission Completed  🫡"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/black2.0"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="#A9E65353"
+        android:layout_below="@id/ll"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        />
 
 </RelativeLayout>

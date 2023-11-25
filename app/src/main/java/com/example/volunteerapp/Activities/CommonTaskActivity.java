@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class TaskAddActivity extends AppCompatActivity {
+public class CommonTaskActivity extends AppCompatActivity {
 
     EditText titleEditText, descriptionEditText,taskhourEditText;
     ImageButton saveTaskBtn;
@@ -39,16 +39,12 @@ public class TaskAddActivity extends AppCompatActivity {
 
 
         // Receive data
-        uId = getIntent().getStringExtra("uId");
         pId = getIntent().getStringExtra("pId");
 
         titleEditText.setText(title);
         descriptionEditText.setText(description);
         taskhourEditText.setText(hours);
         saveTaskBtn.setOnClickListener((v) -> saveTask());
-
-        // Check existing tasks and set tasknum accordingly
-        checkExistingTasks();
 
     }
 
@@ -61,6 +57,23 @@ public class TaskAddActivity extends AppCompatActivity {
             titleEditText.setError("Title is required");
             return;
         }
+        DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference("Posts").child(pId);
+        postsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Retrieve the value of workhours
+                    tworkhours = dataSnapshot.child("workhours").getValue(int.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle errors if needed
+            }
+        });
+
+
         if(tworkhours<taskHours){
             taskhourEditText.setError("Invalid time");
             return;
@@ -72,50 +85,30 @@ public class TaskAddActivity extends AppCompatActivity {
         task.setTitle(taskTitle);
         task.setContent(taskDescription);
         saveTaskToFirebase(task);
-        Intent intent = new Intent(TaskAddActivity.this, OrgTaskActivity.class);
-        intent.putExtra("uId",uId);
-        intent.putExtra("pId",pId);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
     void checkExistingTasks() {
-        DatabaseReference tasksRef = FirebaseDatabase.getInstance().getReference("Tasks").child(pId).child(uId);
+        DatabaseReference tasksRef = FirebaseDatabase.getInstance().getReference("Tasks").child(pId);
 
         tasksRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // Check if there are existing tasks
                 if (snapshot.exists()) {
-                    // Find the maximum tasknum
-                    for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
-                        int existingTaskNum = Integer.parseInt(taskSnapshot.getKey());
-                        if (existingTaskNum >= tasknum) {
-                            tasknum = existingTaskNum + 1;
+                    // Iterate over all user IDs
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        // Iterate over tasks for each user and find the maximum tasknum
+                        for (DataSnapshot taskSnapshot : userSnapshot.getChildren()) {
+                            int existingTaskNum = Integer.parseInt(taskSnapshot.getKey());
+                            if (existingTaskNum >= tasknum) {
+                                tasknum = existingTaskNum + 1;
+                            }
                         }
                     }
                 } else {
                     // No existing tasks, initialize tasknum to 1
                     tasknum = 1;
                 }
-
-                // Retrieve workhours from posts/pId
-                DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference("Posts").child(pId);
-                postsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            // Retrieve the value of workhours
-                             tworkhours = dataSnapshot.child("workhours").getValue(int.class);
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        // Handle errors if needed
-                    }
-                });
             }
 
             @Override
@@ -126,11 +119,49 @@ public class TaskAddActivity extends AppCompatActivity {
     }
 
 
+
     void saveTaskToFirebase(TaskModel task) {
-        DatabaseReference tasksRef = FirebaseDatabase.getInstance().getReference("Tasks").child(pId).child(uId).child(String.valueOf(tasknum));
-        tasksRef.setValue(task);
-        finish();
+        DatabaseReference commonTasksRef = FirebaseDatabase.getInstance().getReference("Tasks").child(pId);
+
+        DatabaseReference userTaskRef = commonTasksRef.child(uId).child(String.valueOf(tasknum));
+        userTaskRef.setValue(task);
+
+        DatabaseReference projectUsersRef = FirebaseDatabase.getInstance().getReference("Participating").child(pId);
+
+        projectUsersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Check existing tasks for all users participating under the project
+                checkExistingTasks();
+
+                // Iterate over all user IDs
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    String userId = userSnapshot.getKey();
+
+                    // Skip the current user, as the task has already been saved for them
+                    if (userId.equals(uId)) {
+                        continue;
+                    }
+
+                    // Reference to the task for the other user under the common tasks
+                    DatabaseReference otherUserTaskRef = commonTasksRef.child(userId).child(String.valueOf(tasknum));
+
+                    // Save the task for the other user
+                    otherUserTaskRef.setValue(task);
+                }
+
+                // Finish the activity after saving tasks for all users
+                finish();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle errors if needed
+            }
+        });
     }
+
+
 
     void deleteTaskFromFirebase() {
         DatabaseReference tasksRef = FirebaseDatabase.getInstance().getReference("Tasks");
@@ -141,3 +172,4 @@ public class TaskAddActivity extends AppCompatActivity {
         }
     }
 }
+
