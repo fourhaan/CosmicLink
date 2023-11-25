@@ -70,9 +70,6 @@
             android:name=".Activities.AddPostActivity"
             android:exported="false" />
         <activity
-            android:name=".Chat.Adapter.messagesAdpter"
-            android:exported="false" />
-        <activity
             android:name=".Chat.Activity.chatwindo"
             android:exported="false" />
         <activity
