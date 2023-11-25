@@ -8,6 +8,7 @@
 
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.VolunteerApp" parent="Base.Theme.VolunteerApp" />
 

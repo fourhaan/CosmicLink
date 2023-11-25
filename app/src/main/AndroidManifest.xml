@@ -4,11 +4,13 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -21,10 +23,40 @@
         android:theme="@style/Theme.VolunteerApp"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.TaskAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.CommonTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.OrgTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.OrgParticipatingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.VolTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminPanel.MainAdminPage"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.CustomViews.viewOrgPosts"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.CustomViews.VolunteerProfileView"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.InterestedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.LocationActivityForPost"
+            android:exported="false" />
+        <activity
             android:name=".Activities.qrCodeScanner"
             android:exported="false" />
         <activity
-            android:name=".Activities.ProfileViews.OrgProfileView"
+            android:name=".Activities.CustomViews.OrgProfileView"
             android:exported="false"
             android:label="@string/title_activity_org_profile_view"
             android:theme="@style/Theme.VolunteerApp" />
@@ -32,7 +64,7 @@
             android:name=".Activities.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.LocationActivity"
+            android:name=".Activities.LocationActivityForVol"
             android:exported="false" />
         <activity
             android:name=".Activities.AddPostActivity"
@@ -54,6 +86,9 @@
             android:exported="false" />
         <activity
             android:name=".Activities.OrganisationSignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.CustomViews.BookmarkPostDetails"
             android:exported="false" />
         <activity
             android:name=".Activities.VolunteerLandingPageActivity"
@@ -85,10 +120,18 @@
             android:resource="@array/preloaded_fonts" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_api_key" />
+            android:value="${GMP_KEY}" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <service
+            android:name=".Activities.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

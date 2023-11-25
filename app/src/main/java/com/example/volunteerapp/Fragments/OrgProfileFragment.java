@@ -26,9 +26,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.volunteerapp.Activities.MainActivity;
-import com.example.volunteerapp.Activities.VolunteerSignUpActivity;
 import com.example.volunteerapp.R;
-import com.example.volunteerapp.CustomViews.TagsInputEditText;
+import com.example.volunteerapp.CustomTools.TagsInputEditText;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;

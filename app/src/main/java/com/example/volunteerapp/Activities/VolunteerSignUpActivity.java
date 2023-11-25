@@ -42,8 +42,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -105,13 +107,20 @@ public class VolunteerSignUpActivity extends AppCompatActivity {
                 int year = calendar.get(Calendar.YEAR);
 
                 //date-picker dialog it creates a new dialog like view where we can pick date
-                date_picker = new DatePickerDialog(VolunteerSignUpActivity.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog date_picker = new DatePickerDialog(VolunteerSignUpActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         //for compatibility months are 0-11 so +1 for our use
-                        editTextdob.setText(dayOfMonth+"/"+(month+1)+"/"+(year));
+                        String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+
+                        if (!isDateBeforeCurrent(selectedDate)) {
+                            editTextdob.setText(selectedDate);
+                        } else {
+                            // Show an error message if the selected date is before the current date
+                            Toast.makeText(VolunteerSignUpActivity.this, "Please select a date not before the current date", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                },year,month,day);
+                }, year, month, day);
                 date_picker.show();
             }
         });
@@ -439,6 +448,26 @@ public class VolunteerSignUpActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean isDateBeforeCurrent(String selectedDate) {
+        // Convert the selected date and current date to milliseconds
+        long selectedDateMillis = convertDateToMillis(selectedDate);
+        long currentDateMillis = System.currentTimeMillis();
+
+        // Check if the selected date is before the current date
+        return selectedDateMillis < currentDateMillis;
+    }
+
+    private long convertDateToMillis(String date) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            Date parsedDate = sdf.parse(date);
+            return parsedDate.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     private void hideKeyboardFrom(EditText editText) {

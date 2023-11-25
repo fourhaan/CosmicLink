@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="13.00dp"
+    android:background="@drawable/bordermain">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/ll"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userimg"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:src="@drawable/ic_photo_camera_black_48dp"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textSize="23.40dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_7ssp"
+                android:layout_height="wrap_content"
+                android:text="full name"
+                android:textColor="@color/black2.0"
+                android:id="@+id/fullname"/>
+
+
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/view_tasks"
+            android:text="Add Tasks"
+            android:textColor="@color/black2.0"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="#8BC34A"
+            android:layout_marginEnd="15dp"
+            />
+
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/complete_del"
+        android:text="Mission Completed  🫡"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/black2.0"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="#A9E65353"
+        android:layout_below="@id/ll"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        />
+
+</RelativeLayout>

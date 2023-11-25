@@ -10,36 +10,34 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.volunteerapp.Activities.ProfileViews.OrgProfileView;
-import com.example.volunteerapp.Chat.Model.Users;
-import com.example.volunteerapp.Fragments.OrgProfileFragment;
+import com.example.volunteerapp.Activities.CustomViews.OrgProfileView;
 import com.example.volunteerapp.R;
-import com.example.volunteerapp.Activities.SearchActivity;
+import com.example.volunteerapp.Chat.Model.Users;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.viewholder> {
-    Context searchActivity;
-    ArrayList<Users> usersArrayList;
-    public SearchAdapter(SearchActivity searchActivity, ArrayList<Users> usersArrayList) {
-        this.searchActivity=searchActivity;
-        this.usersArrayList=usersArrayList;
+    private Context context;
+    private ArrayList<Users> usersArrayList;
+
+    public SearchAdapter(Context context, ArrayList<Users> usersArrayList) {
+        this.context = context;
+        this.usersArrayList = usersArrayList;
     }
 
     @NonNull
     @Override
-    public SearchAdapter.viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(searchActivity).inflate(R.layout.user_item,parent,false);
-        return new SearchAdapter.viewholder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.user_item, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchAdapter.viewholder holder, int position) {
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Users users = usersArrayList.get(position);
         holder.username.setText(users.getUsername());
         holder.fullname.setText(users.getFullname());
@@ -50,12 +48,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.viewholder
             @Override
             public void onClick(View view) {
                 // Handle the click event, open the profile page
-                Intent intent = new Intent(searchActivity, OrgProfileView.class);
+                Intent intent = new Intent(context, OrgProfileView.class);
                 intent.putExtra("userId", users.getUserId());
-                searchActivity.startActivity(intent);
+                context.startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -63,11 +60,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.viewholder
         return usersArrayList.size();
     }
 
-    public class viewholder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView userimg;
         TextView username;
         TextView fullname;
-        public viewholder(@NonNull View itemView) {
+
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             userimg = itemView.findViewById(R.id.userimg);
             username = itemView.findViewById(R.id.username);

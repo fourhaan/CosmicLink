@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/bordermain">
+
+    <ImageView
+        android:id="@+id/bookmarkedPic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleY="0.75"
+        android:scaleX="0.75"
+        android:src="@drawable/image_holder"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/bookmarkedText"
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintStart_toEndOf="@+id/bookmarkedPic"
+        app:layout_constraintTop_toTopOf="@+id/bookmarkedPic"
+        android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/below_Text"
+        android:hint="Click to View Post"
+        android:textColorHint="@color/black"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintStart_toEndOf="@+id/bookmarkedPic"
+        app:layout_constraintTop_toBottomOf="@+id/bookmarkedText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"/>
+
+    <ImageButton
+        android:id="@+id/chatBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:src="@drawable/baseline_chat_24"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="@id/bookmarkedBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bookmarkedPic"
+        app:layout_constraintLeft_toLeftOf="@id/bookmarkedBtn"
+        android:layout_marginEnd="60dp"/>
+
+    <ImageButton
+        android:id="@+id/bookmarkedBtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:background="@drawable/ic_bookmark"
+        android:src="@drawable/ic_bookmark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bookmarkedPic"
+        android:layout_marginEnd="22dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

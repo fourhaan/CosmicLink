@@ -1,16 +1,22 @@
 package com.example.volunteerapp.Models;
 
 public class modelPost {
-    private String pId, pTitle, pDescr, pImage, pTime, uid, uEmail, uDp, uName, pTags;
+    private String pId, pTitle, pDescr, pInterested, pImage, pTime, uid, uEmail, uDp, uName, pTags,address,date;
+    private double latitude,longitude;
+
+    private int workhours;
 
     public modelPost() {
         // Default constructor required for Firebase
     }
 
-    public modelPost(String pId, String pTitle, String pDescr, String pImage, String pTime, String uid, String uEmail, String uDp, String uName,String pTags) {
+
+    public modelPost(String pId, String pTitle,int workhours, String pDescr, String pInterested, String pImage, String pTime, String uid, String uEmail, String uDp, String uName, String pTags,String date,String fulladdress, double latitude,double longitude) {
         this.pId = pId;
         this.pTitle = pTitle;
+        this.workhours = workhours;
         this.pDescr = pDescr;
+        this.pInterested = pInterested;
         this.pImage = pImage;
         this.pTime = pTime;
         this.uid = uid;
@@ -18,6 +24,10 @@ public class modelPost {
         this.uDp = uDp;
         this.uName = uName;
         this.pTags = pTags;
+        this.address= fulladdress;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.date = date;
     }
 
     public String getpId() {
@@ -42,6 +52,14 @@ public class modelPost {
 
     public void setpDescr(String pDescr) {
         this.pDescr = pDescr;
+    }
+
+    public String getpInterested() {
+        return pInterested;
+    }
+
+    public void setpInterested(String pInterested) {
+        this.pInterested = pInterested;
     }
 
     public String getpImage() {
@@ -98,5 +116,45 @@ public class modelPost {
 
     public void setpTags(String pTags) {
         this.pTags = pTags;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public int getWorkhours() {
+        return workhours;
+    }
+
+    public void setWorkhours(int workhours) {
+        this.workhours = workhours;
     }
 }

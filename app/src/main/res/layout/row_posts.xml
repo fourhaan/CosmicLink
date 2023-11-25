@@ -76,6 +76,7 @@
             android:text="The description of the Work"
             android:textSize="16dp"/>
 
+
         <ImageView
             android:id="@+id/postImg"
             android:layout_width="match_parent"
@@ -87,16 +88,46 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="100+ Interests"
+            android:text="0 Interests"
             android:textColor="@color/black2.0"
-
-            android:textSize="16dp"/>
+            android:textSize="16dp"
+            />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
             android:background="#F5F0F0" />
+
+        <Button
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/white"
+            android:text="date of mission = 11/11/11"
+            android:backgroundTint="#80AC4841"
+            android:textSize="16dp"/>
+
+        <Button
+            android:id="@+id/hours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Total Mission Hours = 100 hours"
+            android:backgroundTint="#80AC4841"
+            android:textColor="@color/white"
+            android:textSize="16dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/white"
+            android:backgroundTint="#80AC4841"
+            android:id="@+id/address_show"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -150,6 +181,7 @@
                 android:backgroundTint="#C0DD9D"
                 android:textColor="@color/blue"
                 android:padding="5dp"
+                android:gravity="center"
                 android:drawableLeft="@drawable/baseline_thumb_up_24"
                 android:text="I am Interested"/>
             <Button
@@ -162,7 +194,8 @@
                 android:textColor="@color/blue"
                 android:padding="5dp"
                 android:drawableLeft="@drawable/baseline_thumb_down_24"
-                android:text="Not Interested"/>
+                android:text="Report"
+                android:gravity="center"/>
 <!--            <Button-->
 <!--                android:id="@+id/commentBtn"-->
 <!--                android:layout_width="wrap_content"-->
