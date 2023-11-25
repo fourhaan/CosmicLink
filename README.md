@@ -20,13 +20,9 @@ CosmicLink is a platform that connects volunteers and organizations to work toge
 
 - 🌟 **Connect with Organizations:** Follow organizations and receive updates.
 
-- 🌟 **Notification System:** Organizations receive notifications when volunteers express interest in working with them.
-
 - 🌟 **Profile Picture Compression:** Easily upload and manage profile pictures.
 
 - 🌟 **Volunteering Hours Tracking:** Volunteers can track their volunteering hours, which are added to their work experience on their profile.
-
-- 🌟 **Donation Option:** Users can make donations using the GlobalGiving API.
 
 - 🌟 **Tags and Sorting:** Find opportunities based on age, work experience, and other filters.
 
@@ -34,7 +30,7 @@ CosmicLink is a platform that connects volunteers and organizations to work toge
 
 - 🏢 **Post Opportunities:** Organizations can post opportunities to inform volunteers about their interests.
 
-- 🏢 **Receive Notifications:** Organizations receive notifications when volunteers express interest in their work.
+- 🏢 **Work Tracking:** Organizations can track the work of the volunteers who have been accepted.
 
 ### Common Features
 
@@ -43,10 +39,6 @@ CosmicLink is a platform that connects volunteers and organizations to work toge
 - 💬 **Inbuilt Chat:** CosmicLink includes a built-in chat application for communication between users.
 
 - 🔥 **Real-time Database:** The app utilizes Firebase DB for real-time data management.
-
-- 🌎 **Multi-Language Support:** Supports multiple languages to cater to a diverse user base.
-
-- 🚀 **Elasticsearch Integration:** Utilizes Elasticsearch for efficient searching and filtering.
 
 - 🌍 **Geolocation:** Fetches user location and utilizes geolocation data via Geolocation API.
 
