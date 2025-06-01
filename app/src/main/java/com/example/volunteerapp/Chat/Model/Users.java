@@ -1,11 +1,11 @@
 package com.example.volunteerapp.Chat.Model;
-
+// Model for Chat by Users 
 public class Users {
     private String image_url, email, username, password, userId, lastMessage, status,fullname;
 
     public Users() {
     }
-
+    
     public Users(String userId, String username, String email, String password, String image_url,String fullname) {
         this.userId = userId;
         this.username = username;
