@@ -109,6 +109,30 @@ CosmicLink is a platform that connects volunteers and organizations to work toge
   <img src="https://i.imgur.com/UbvdIr5.jpg" width="280" height="580" hspace="10"> 
 </p>
 
+---
+
+## Features (Planned / To Be Added)
+
+- 🎓 **Work Completion Certificates**  
+  Organisations can generate and award certificates to volunteers upon successful completion of missions (Generation of Work Completion Certificate).
+
+- 💬 **Group Chat**  
+  Group chat channels between organisations and volunteers to enable real-time, contextual communication.
+
+- 🎥 **Video Support in Posts & Chats**  
+  Allow uploading/embedding videos in posts and chat messages to improve engagement and reporting.
+
+- 🏫 **Collaboration with Schools & Colleges**  
+  A module to list school-level and college-level tasks separately (filter/UX tailored to students).
+
+- 🗂️ **Post Sorting by Event Type**  
+  Filter and sort posts by event categories (e.g., *Need Volunteers for Blood Donation Drive*, *Need Volunteers for Women Safety Drive*).
+
+- ⭐ **Volunteer Feedback & Organisation Ratings**  
+  After task completion, volunteers can submit feedback and rate organisations; organisations can review aggregate ratings.
+
+---
+
 ## Contributors:
 
 Team Name: Trilluminati FNG (ID 76)
